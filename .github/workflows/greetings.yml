@@ -13,8 +13,8 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const issueMessage = "👋 Welcome to our repository! We're glad you're here. If you have any questions, feel free to ask. Here's a guide to help you get started: [Guide Link].";
-            const prMessage = "🎉 Thank you for your pull request! We appreciate your contribution. Please review the following guidelines to ensure your PR meets our requirements: [PR Guidelines Link].";
+            const issueMessage = "👋 Welcome to our repository! We're glad you're here. If you have any questions, feel free to ask. Here's a guide to help you get started: [GETTING_STARTED.md](./GETTING_STARTED.md).";
+            const prMessage = "🎉 Thank you for your pull request! We appreciate your contribution. Please review the following guidelines to ensure your PR meets our requirements: [GETTING_STARTED.md](./GETTING_STARTED.md).";
 
             if (context.issue) {
               const issueNumber = context.issue.number;
