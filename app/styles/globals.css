@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'code-light.css';
+@import 'code-dark.css';
+
+
 @layer base {
 	:root {
 		--background: 0 0% 100%;

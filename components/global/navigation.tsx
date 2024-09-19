@@ -18,7 +18,7 @@ const routes = [
 		label: "Snippets",
 	},
 	{
-		href: "/addsnippet",
+		href: "/addsnippets",
 		label: "Add Snippet",
 	},
 	{
@@ -40,29 +40,37 @@ export const Navigation = () => {
 	};
 
 	if (isMobile) {
-		return <Sheet open={isOpened} onOpenChange={setIsOpened}>
-            <SheetTrigger asChild>
-                <Button variant="outline"
-                size="sm"
-                className="font-normal bg-foreground/10 hover:bg-foreground/20 hover:text-foreground border-none focus-visible:ring-offset-0 focus-visible:ring-transparent outline-none text-foreground focus:bg-foreground/30 transition">
-                    <Menu className="size-4"/>
-                </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="px-2">
-                <nav className="flex flex-col gap-y-2 pt-6">
-                    {routes.map((route) => (
-                        <Button
-                            key={route.href}
-                            variant={route.href === pathname ? "secondary" : "ghost"}
-                            onClick={()=>onClick(route.href)}
-                            className="w-full justify-start"
-                        >
-                            {route.label}
-                        </Button>
-                    ))}
-                    </nav>
-            </SheetContent>
-        </Sheet>;
+		return (
+			<Sheet open={isOpened} onOpenChange={setIsOpened}>
+				<SheetTrigger asChild>
+					<Button
+						variant="outline"
+						size="sm"
+						className="font-normal bg-foreground/10 hover:bg-foreground/20 hover:text-foreground border-none focus-visible:ring-offset-0 focus-visible:ring-transparent outline-none text-foreground focus:bg-foreground/30 transition"
+					>
+						<Menu className="size-4" />
+					</Button>
+				</SheetTrigger>
+				<SheetContent side="left" className="px-2">
+					<nav className="flex flex-col gap-y-2 pt-6">
+						{routes.map((route) => (
+							<Button
+								key={route.href}
+								variant={
+									route.href === pathname
+										? "secondary"
+										: "ghost"
+								}
+								onClick={() => onClick(route.href)}
+								className="w-full justify-start"
+							>
+								{route.label}
+							</Button>
+						))}
+					</nav>
+				</SheetContent>
+			</Sheet>
+		);
 	}
 	return (
 		<nav className=" hidden lg:flex items-center gap-x-2 overflow-x-auto">
