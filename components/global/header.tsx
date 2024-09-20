@@ -1,15 +1,11 @@
 "use client";
 
 import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
-
 import { Loader2 } from "lucide-react";
 import { Navigation } from "./navigation";
 import { HeaderLogo } from "./header-logo";
-
-import * as React from "react";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
-
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -22,25 +18,20 @@ import { Input } from "../ui/input";
 export const Header = () => {
 	const { setTheme } = useTheme();
 	return (
-		<>
-			<header className="bg-gradient-to-b px-4 py-4 lg:px-14">
-				<div className="max-w-screen-2xl mx-auto from">
+		<div className="mb-20">
+			<header className="fixed top-0 left-0 right-0 bg-transparent bg-opacity-20 backdrop-blur-md px-4 py-4 lg:px-14 z-50">
+				<div className="max-w-screen-2xl mx-auto">
 					<div className="w-full flex items-center justify-between">
-						<div className=" flex items-center lg:gap-x-16">
+						<div className="flex items-center lg:gap-x-16">
 							<HeaderLogo />
 							<Navigation />
 						</div>
-						<div className=" flex justify-center">
+						<div className="flex justify-center">
 							<div className="relative w-full max-w-2xl">
-								{/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" /> */}
 								<Input
 									type="text"
 									placeholder="Search snippets..."
 									className="pl-6 pr-4 py-2 w-full"
-									// value={searchTerm}
-									// onChange={(e) =>
-									// 	setSearchTerm(e.target.value)
-									// }
 								/>
 							</div>
 						</div>
@@ -83,6 +74,6 @@ export const Header = () => {
 					</div>
 				</div>
 			</header>
-		</>
+		</div>
 	);
 };
