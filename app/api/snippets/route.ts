@@ -6,7 +6,7 @@ export async function GET() {
 	try {
 		await dbConnect();
 		const snippets = await Snippet.find({});
-		console.log("Fetched Snippets:", snippets); // Add debug log
+		console.log("Fetched Snippets"); // Add debug log
 		return NextResponse.json(snippets);
 	} catch (error) {
 		console.error("Error fetching snippets:", error); // Add debug log

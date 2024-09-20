@@ -8,6 +8,7 @@ export interface ISnippet extends Document {
 	description?: string;
 	tags?: string[];
 	createdAt: Date;
+	bookmarkedBy: string[];
 }
 
 const snippetSchema: Schema = new mongoose.Schema({
@@ -32,6 +33,10 @@ const snippetSchema: Schema = new mongoose.Schema({
 	createdAt: {
 		type: Date,
 		default: Date.now,
+	},
+	bookmarkedBy: {
+		type: [String], // Array of user IDs who bookmarked
+		default: [], // Initialize as an empty array
 	},
 });
 
