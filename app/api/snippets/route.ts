@@ -1,6 +1,10 @@
+// api/snipets/route.ts
+
 import { NextResponse } from "next/server";
 import Snippet from "@/lib/db/snippetModel";
+import SnippetRequest from "@/lib/db/snippetRequestModel";
 import dbConnect from "@/lib/db/connect";
+import { currentUser } from "@clerk/nextjs/server";
 
 export async function GET() {
 	try {
@@ -20,22 +24,32 @@ export async function GET() {
 export async function POST(req: Request) {
 	try {
 		const { title, language, code, description, tags } = await req.json();
-		await dbConnect();
+		const user = await currentUser();
+		const userId = user?.id;
 
-		const newSnippet = new Snippet({
+		if (!userId) {
+			return NextResponse.json(
+				{ error: "User not authenticated" },
+				{ status: 401 }
+			);
+		}
+		const newSnippet = new SnippetRequest({
 			title,
 			language,
 			code,
 			description,
 			tags,
+            createdAt: new Date(),
+			submittedBy: userId, // Initially not approved
 		});
 		await newSnippet.save();
-
-		return NextResponse.json(newSnippet, { status: 201 });
-	} catch (error) {
-		console.error("Error creating snippet:", error); // Add debug log
 		return NextResponse.json(
-			{ error: "Error creating snippet" },
+			{ message: "Snippet submitted for approval" },
+			{ status: 201 }
+		);
+	} catch (error) {
+		return NextResponse.json(
+			{ message: "Failed to add snippet" },
 			{ status: 500 }
 		);
 	}

@@ -1,10 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import Prism from "prismjs";
-import { Bookmark, BookmarkCheck, Check, Copy, Search } from "lucide-react";
+import Link from "next/link";
+import { toast } from "sonner";
 import { useTheme } from "next-themes";
-import { Toaster } from "@/components/ui/sonner";
+import { useState, useEffect, useRef } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Bookmark, BookmarkCheck, Copy } from "lucide-react";
 import {
 	Card,
 	CardContent,
@@ -12,15 +15,17 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import "prismjs/components/prism-java";
-import "prismjs/components/prism-csharp";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-javascript";
-import { toast } from "sonner";
-import Link from "next/link";
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-css";
+import "prismjs/components/prism-csharp";
+import "prismjs/components/prism-markup";
+import "prismjs/components/prism-json";
+import "prismjs/components/prism-bash";
+import "prismjs/components/prism-sql";
+import "prismjs/components/prism-go";
 
 // Define the snippet type
 type Snippet = {
@@ -89,7 +94,13 @@ export default function Snippets() {
 						: snippet
 				)
 			);
-			toast.success("Snippet bookmark");
+
+			// Show success toast message
+			if (updatedSnippet.bookmarkedBy.includes(userId)) {
+				toast.success("Snippet bookmarked");
+			} else {
+				toast.success("Bookmark removed");
+			}
 		} catch (error) {
 			console.error(error);
 			toast.error("Error toggling bookmark");
@@ -177,7 +188,7 @@ export default function Snippets() {
 								</Button>
 								<Button
 									className="absolute top-8 right-20"
-                                    variant="outline"
+									variant="outline"
 									onClick={(e) => {
 										e.preventDefault();
 										if (snippet._id) {
