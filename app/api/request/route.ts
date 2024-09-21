@@ -8,7 +8,7 @@ export async function GET() {
 	try {
         const { userId } = auth();
 
-        const adminUserIds = process.env.NEXT_PUBLIC_ADMIN_USER_IDS?.split(",") || [];
+        const adminUserIds = process.env.ADMIN_USER_IDS?.split(",") || [];
     
         if (!userId || !adminUserIds.includes(userId)) {
             return new NextResponse("Unauthorized", { status: 401 });

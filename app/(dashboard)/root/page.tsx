@@ -44,7 +44,7 @@ export default function AdminPage() {
 
 				// Get admin user IDs from environment variables
 				const adminUserIds =
-					process.env.NEXT_PUBLIC_ADMIN_USER_IDS?.split(",") || [];
+					process.env.ADMIN_USER_IDS?.split(",") || [];
 
 				// Check if the current user's ID is in the list of admin user IDs
 				if (adminUserIds.includes(userId)) {
