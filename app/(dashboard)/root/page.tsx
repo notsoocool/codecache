@@ -10,6 +10,7 @@ import {
 	CardContent,
 	CardFooter,
 } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 // Define a snippet type
 type SnippetRequest = {
@@ -23,9 +24,42 @@ type SnippetRequest = {
 };
 
 export default function AdminPage() {
+	const [authorized, setAuthorized] = useState(false);
+	const router = useRouter();
 	const [snippetRequests, setSnippetRequests] = useState<SnippetRequest[]>(
 		[]
 	);
+
+	useEffect(() => {
+		// Fetch user ID
+		const checkAuthorization = async () => {
+			try {
+				const response = await fetch("/api/getCurrentUser");
+				if (!response.ok) {
+					throw new Error("User not authenticated");
+				}
+
+				const data = await response.json(); // Convert the response to JSON
+				const userId = data.id; // Access the `id` from the response JSON
+
+				// Get admin user IDs from environment variables
+				const adminUserIds =
+					process.env.NEXT_PUBLIC_ADMIN_USER_IDS?.split(",") || [];
+
+				// Check if the current user's ID is in the list of admin user IDs
+				if (adminUserIds.includes(userId)) {
+					setAuthorized(true); // Authorized access
+				} else {
+					router.push("/"); // Redirect non-admins to homepage
+				}
+			} catch (error) {
+				console.error("Authorization check failed:", error);
+				router.push("/"); // Redirect in case of error
+			}
+		};
+
+		checkAuthorization();
+	}, [router]);
 
 	// Fetch pending snippet requests (unapproved)
 	useEffect(() => {

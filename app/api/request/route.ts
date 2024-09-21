@@ -1,10 +1,20 @@
 import { NextResponse } from "next/server";
 import SnippetRequest from "@/lib/db/snippetRequestModel";
 import dbConnect from "@/lib/db/connect";
+import { auth } from "@clerk/nextjs/server";
 
 // Get all unapproved snippet requests
 export async function GET() {
 	try {
+        const { userId } = auth();
+
+        const adminUserIds = process.env.NEXT_PUBLIC_ADMIN_USER_IDS?.split(",") || [];
+    
+        if (!userId || !adminUserIds.includes(userId)) {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+    
+        // Handle your admin logic here
 		await dbConnect();
 		const pendingSnippets = await SnippetRequest.find();
 		console.log("Fetched Pending Snippets");
