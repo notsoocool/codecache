@@ -2,11 +2,12 @@
 
 import { useMedia } from "react-use";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { NavButton } from "./nav-button";
+import { auth } from "@clerk/nextjs/server";
 
 const routes = [
 	{
@@ -29,10 +30,28 @@ const routes = [
 
 export const Navigation = () => {
 	const [isOpened, setIsOpened] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false); // State for admin status
 
 	const router = useRouter();
 	const pathname = usePathname();
 	const isMobile = useMedia("(max-width: 1024px)", false);
+
+	useEffect(() => {
+		const checkAdminStatus = async () => {
+			const response = await fetch("/api/getCurrentUser");
+
+			const data = await response.json(); // Convert the response to JSON
+			const userId = data.id; // Access the `id` from the response JSON
+
+			const adminIds = process.env.ADMIN_USER_IDS?.split(",") || [];
+
+			if (userId && adminIds.includes(userId)) {
+				setIsAdmin(true); // Set to true if user is admin
+			}
+		};
+
+		checkAdminStatus();
+	}, []);
 
 	const onClick = (href: string) => {
 		router.push(href);
@@ -67,6 +86,17 @@ export const Navigation = () => {
 								{route.label}
 							</Button>
 						))}
+						{isAdmin && (
+							<Button
+								variant={
+									pathname === "/root" ? "secondary" : "ghost"
+								}
+								onClick={() => onClick("/root")}
+								className="w-full justify-start"
+							>
+								Admin
+							</Button>
+						)}
 					</nav>
 				</SheetContent>
 			</Sheet>
@@ -82,6 +112,13 @@ export const Navigation = () => {
 					isActive={pathname === route.href}
 				/>
 			))}
+			{isAdmin && (
+				<NavButton
+					href="/root"
+					label="Admin"
+					isActive={pathname === "/root"}
+				/>
+			)}
 		</nav>
 	);
 };

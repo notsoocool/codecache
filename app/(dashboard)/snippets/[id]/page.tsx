@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Copy } from "lucide-react";
+import { Copy, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 
 // Define the snippet type
 type Snippet = {
@@ -60,11 +62,40 @@ export default function SnippetPage() {
 	};
 
 	if (loading) {
-		return <div>Loading snippet...</div>;
+		return (
+			<div className="max-w-screen-2xl mx-auto w-full">
+				<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300">
+					<CardHeader className="border-b border-primary-100">
+						<Skeleton className="h-6 w-40" />
+					</CardHeader>
+					<CardContent>
+						<div className="h-[300px] w-full flex items-center justify-center">
+							<Loader2 className="size-6 text-slate-300 animate-spin" />
+						</div>
+					</CardContent>
+				</Card>
+			</div>
+		);
 	}
 
 	if (!snippet) {
-		return <div>Snippet not found</div>;
+		return (
+			<div className="max-w-screen-2xl mx-auto w-full">
+				<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300">
+					<CardHeader className="border-b border-primary-100">
+						<CardTitle>Snippet not found</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="h-[300px] w-full flex items-center justify-center">
+							<p className="text-lg text-slate-300">
+                                <ExclamationTriangleIcon className="w-6 h-6 mr-2" />
+                                The snippet you are looking for does not exist.
+                            </p>
+						</div>
+					</CardContent>
+				</Card>
+			</div>
+		);
 	}
 
 	return (
