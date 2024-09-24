@@ -16,6 +16,7 @@ import { Copy, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { useTheme } from "next-themes";
 
 // Define the snippet type
 type Snippet = {
@@ -27,6 +28,8 @@ type Snippet = {
 };
 
 export default function SnippetPage() {
+    const { theme } = useTheme();
+
 	const { id } = useParams(); // Get the snippet ID from the URL
 	const [snippet, setSnippet] = useState<Snippet | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -60,10 +63,17 @@ export default function SnippetPage() {
 			setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
 		});
 	};
+	useEffect(() => {
+		Prism.highlightAll(); // Highlight the code when the page loads and when theme changes
+	}, [theme]);
+
+	useEffect(() => {
+		Prism.highlightAll(); // Reapply syntax highlighting after snippets are rendered
+	}, [snippet]); // Dependency on snippets to trigger highlighting after fetch
 
 	if (loading) {
 		return (
-			<div className="max-w-screen-2xl mx-auto w-full">
+			<div className="max-w-screen-2xl mx-auto w-full p-8">
 				<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300">
 					<CardHeader className="border-b border-primary-100">
 						<Skeleton className="h-6 w-40" />
@@ -88,9 +98,9 @@ export default function SnippetPage() {
 					<CardContent>
 						<div className="h-[300px] w-full flex items-center justify-center">
 							<p className="text-lg text-slate-300">
-                                <ExclamationTriangleIcon className="w-6 h-6 mr-2" />
-                                The snippet you are looking for does not exist.
-                            </p>
+								<ExclamationTriangleIcon className="w-6 h-6 mr-2" />
+								The snippet you are looking for does not exist.
+							</p>
 						</div>
 					</CardContent>
 				</Card>
@@ -99,7 +109,7 @@ export default function SnippetPage() {
 	}
 
 	return (
-		<div className="min-h-screen p-8">
+		<div className="p-8">
 			<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300">
 				<CardHeader className="border-b border-primary-100">
 					<CardTitle>{snippet.title}</CardTitle>
