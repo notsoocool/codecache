@@ -149,29 +149,36 @@ export default function Snippets() {
 
 	return (
 		<div className="flex min-h-screen">
-			{/* Left-side sheet for displaying snippet titles */}
 			<div className="sticky w-4/12 top-24 overflow-auto h-[85vh]">
-				<div className="flex items-start flex-col gap-2">
-					{filteredSnippets.map((snippet) => (
-						<Button
-							key={snippet._id}
-							variant={
-								snippet._id === activeSnippetId
-									? "secondary"
-									: "ghost"
-							}
-							onClick={() =>
-								document
-									.getElementById(snippet._id)
-									?.scrollIntoView({ behavior: "smooth" })
-							}
-						>
-                            <span className=" text-xs font-medium">
-							{snippet.title}
-                            </span>
-						</Button>
-					))}
-				</div>
+				{loading ? (
+					<div className="flex items-start flex-col gap-3">
+                        <Skeleton className=" mt-2 h-6 w-40" />
+                        <Skeleton className=" mt-2 h-6 w-40 delay-150" />
+                        <Skeleton className=" mt-2 h-6 w-40 delay-300" />
+                    </div>
+				) : (
+					<div className="flex items-start flex-col gap-2">
+						{filteredSnippets.map((snippet) => (
+							<Button
+								key={snippet._id}
+								variant={
+									snippet._id === activeSnippetId
+										? "secondary"
+										: "ghost"
+								}
+								onClick={() =>
+									document
+										.getElementById(snippet._id)
+										?.scrollIntoView({ behavior: "smooth" })
+								}
+							>
+								<span className=" text-xs font-medium">
+									{snippet.title}
+								</span>
+							</Button>
+						))}
+					</div>
+				)}
 			</div>
 
 			{/* Main content */}
