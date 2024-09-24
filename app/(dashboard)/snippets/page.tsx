@@ -7,7 +7,9 @@ import { useTheme } from "next-themes";
 import { useState, useEffect, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Bookmark, BookmarkCheck, Copy } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton"; // Assuming you have a Skeleton component
+import { Bookmark, BookmarkCheck, Copy, Loader2 } from "lucide-react";
+
 import {
 	Card,
 	CardContent,
@@ -41,24 +43,26 @@ type Snippet = {
 export default function Snippets() {
 	const { theme } = useTheme();
 	const [searchTerm, setSearchTerm] = useState("");
+	const [loading, setLoading] = useState(true); // Loading state
 	const [snippets, setSnippets] = useState<Snippet[]>([]);
 	const [copied, setCopied] = useState<number | null>(null); // For copy feedback
 	const snippetsRef = useRef<HTMLDivElement>(null); // Reference to the snippets container
 	const [userId, setUserId] = useState<string | null>(null);
 
 	useEffect(() => {
-		// Fetch user ID
-		const fetchUserId = async () => {
-			const response = await fetch("/api/getCurrentUser");
-			if (response.ok) {
+		// Fetch data from the API
+		async function fetchSnippets() {
+			try {
+				setLoading(true); // Start loading
+				const response = await fetch("/api/snippets"); // Adjust URL based on your API
 				const data = await response.json();
-				setUserId(data.id);
-			} else {
-				console.error("Failed to fetch user ID");
-			}
-		};
+				setSnippets(data);
+			} catch (error) {
+				console.error("Error fetching snippets:", error);
+			} 
+		}
 
-		fetchUserId();
+		fetchSnippets();
 	}, []);
 	useEffect(() => {
 		// Fetch data from the API
@@ -69,7 +73,9 @@ export default function Snippets() {
 				setSnippets(data);
 			} catch (error) {
 				console.error("Error fetching snippets:", error);
-			}
+			} finally {
+                setLoading(false); // Stop loading
+            }
 		}
 
 		fetchSnippets();
@@ -138,97 +144,105 @@ export default function Snippets() {
 
 	return (
 		<div className="min-h-screen p-8">
-			{/* Search bar */}
-			{/* <div className="mb-8">
-				<h1 className="text-4xl font-bold text-gray-800 mb-4">
-					All Snippets
-				</h1>
-				<div className="relative">
-					<Input
-						type="text"
-						placeholder="Search snippets..."
-						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)}
-						className="w-full pl-10"
-					/>
-					<Search
-						className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-						size={20}
-					/>
+			{loading ? (
+				// Loading skeleton
+				<div className="max-w-screen-2xl mx-auto w-full">
+					<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300">
+						<CardHeader className="border-b border-primary-100">
+							<Skeleton className="h-6 w-40" />
+						</CardHeader>
+						<CardContent>
+							<div className="h-[300px] w-full flex items-center justify-center">
+								<Loader2 className="size-6 text-slate-300 animate-spin" />
+							</div>
+						</CardContent>
+					</Card>
 				</div>
-			</div> */}
-
-			<div className="grid grid-cols-1 gap-6" ref={snippetsRef}>
-				{filteredSnippets.map((snippet) => (
-					<Link href={`/snippets/${snippet._id}`} key={snippet._id}>
-						<Card
+			) : (
+				<div className="grid grid-cols-1 gap-6" ref={snippetsRef}>
+					{filteredSnippets.map((snippet) => (
+						<Link
+							href={`/snippets/${snippet._id}`}
 							key={snippet._id}
-							className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300"
 						>
-							<CardHeader className="border-b border-primary-100">
-								<CardTitle>{snippet.title}</CardTitle>
-							</CardHeader>
-							<CardContent className="p-4 relative">
-								<pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm">
-									<code
-										className={`language-${snippet.language}`}
-									>
-										{snippet.code}
-									</code>
-								</pre>
-								{/* Copy code button */}
-								<Button
-									variant="outline"
-									className="absolute top-8 right-6"
-									onClick={() =>
-										handleCopy(snippet.code, snippet._id)
-									}
-								>
-									<Copy size={16} />
-								</Button>
-								<Button
-									className="absolute top-8 right-20"
-									variant="outline"
-									onClick={(e) => {
-										e.preventDefault();
-										if (snippet._id) {
-											handleBookmarkToggle(snippet._id);
-										} else {
-											console.error("Snippet ID is null");
-										}
-									}}
-								>
-									{userId &&
-									snippet.bookmarkedBy?.includes(userId) ? (
-										<BookmarkCheck size={16} />
-									) : (
-										<Bookmark size={16} />
-									)}
-								</Button>
-							</CardContent>
-							<CardFooter className="bg-primary-50 p-4 flex justify-between items-center">
-								<Badge
-									variant="secondary"
-									className="text-xs font-medium"
-								>
-									{snippet.language}
-								</Badge>
-								<div className="flex gap-2">
-									{snippet.tags.map((tag) => (
-										<Badge
-											key={`${snippet._id}-${tag}`}
-											variant="outline"
-											className="text-xs"
+							<Card
+								key={snippet._id}
+								className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300"
+							>
+								<CardHeader className="border-b border-primary-100">
+									<CardTitle>{snippet.title}</CardTitle>
+								</CardHeader>
+								<CardContent className="p-4 relative">
+									<pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm">
+										<code
+											className={`language-${snippet.language}`}
 										>
-											{tag}
-										</Badge>
-									))}
-								</div>
-							</CardFooter>
-						</Card>
-					</Link>
-				))}
-			</div>
+											{snippet.code}
+										</code>
+									</pre>
+									{/* Copy code button */}
+									<Button
+										variant="outline"
+										className="absolute top-8 right-6"
+										onClick={() =>
+											handleCopy(
+												snippet.code,
+												snippet._id
+											)
+										}
+									>
+										<Copy size={16} />
+									</Button>
+									<Button
+										className="absolute top-8 right-20"
+										variant="outline"
+										onClick={(e) => {
+											e.preventDefault();
+											if (snippet._id) {
+												handleBookmarkToggle(
+													snippet._id
+												);
+											} else {
+												console.error(
+													"Snippet ID is null"
+												);
+											}
+										}}
+									>
+										{userId &&
+										snippet.bookmarkedBy?.includes(
+											userId
+										) ? (
+											<BookmarkCheck size={16} />
+										) : (
+											<Bookmark size={16} />
+										)}
+									</Button>
+								</CardContent>
+								<CardFooter className="bg-primary-50 p-4 flex justify-between items-center">
+									<Badge
+										variant="secondary"
+										className="text-xs font-medium"
+									>
+										{snippet.language}
+									</Badge>
+									<div className="flex gap-2">
+										{snippet.tags.map((tag) => (
+											<Badge
+												key={`${snippet._id}-${tag}`}
+												variant="outline"
+												className="text-xs"
+											>
+												{tag}
+											</Badge>
+										))}
+									</div>
+								</CardFooter>
+							</Card>
+						</Link>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }
