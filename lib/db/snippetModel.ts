@@ -7,7 +7,9 @@ export interface ISnippet extends Document {
 	code: string;
 	description?: string;
 	tags?: string[];
-	createdAt: Date;
+	category: string;
+	difficulty: string;
+	usage: string;
 	bookmarkedBy: string[];
 }
 
@@ -30,13 +32,21 @@ const snippetSchema: Schema = new mongoose.Schema({
 	tags: {
 		type: [String],
 	},
-	createdAt: {
-		type: Date,
-		default: Date.now,
+	category: {
+		type: String,
+		required: true,
+	},
+	difficulty: {
+		type: String,
+		required: true,
+	},
+	usage: {
+		type: String,
+		required: true,
 	},
 	bookmarkedBy: {
-		type: [String], // Array of user IDs who bookmarked
-		default: [], // Initialize as an empty array
+		type: [String],
+		default: [],
 	},
 });
 

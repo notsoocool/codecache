@@ -23,6 +23,9 @@ type SnippetRequest = {
 	code: string;
 	description?: string;
 	tags?: string[];
+	category?: string;
+	difficulty?: string;
+	usage?: string;
 	approved: boolean;
 };
 
@@ -146,8 +149,21 @@ export default function AdminPage() {
 				{snippetRequests.map((request) => (
 					<Card key={request._id}>
 						<CardHeader>
-							<CardTitle className=" flex justify-between items-center">
+							<CardTitle className="flex justify-between items-center">
 								{request.title}
+								<div className=" flex gap-6 text-muted-foreground text-xs">
+									<p>
+										<strong>Category:</strong>{" "}
+										{request.category}
+									</p>
+									<p>
+										<strong>Difficulty:</strong>{" "}
+										{request.difficulty}
+									</p>
+									<p>
+										<strong>Usage:</strong> {request.usage}
+									</p>
+								</div>
 								<div className="flex gap-4">
 									<Button
 										onClick={() =>

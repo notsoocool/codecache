@@ -27,7 +27,6 @@ export async function PATCH(req: NextRequest) {
 			code: request.code,
 			description: request.description,
 			tags: request.tags,
-			createdAt: new Date(),
 			bookmarkedBy: [], // Initialize as empty
 		});
 

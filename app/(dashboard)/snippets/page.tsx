@@ -37,7 +37,6 @@ type Snippet = {
 	language: string;
 	code: string;
 	tags: string[];
-	createdAt: string;
 	bookmarkedBy: string[];
 };
 
@@ -79,6 +78,16 @@ export default function Snippets() {
 	useEffect(() => {
 		Prism.highlightAll(); // Reapply syntax highlighting after snippets are rendered
 	}, [snippets]); // Dependency on snippets to trigger highlighting after fetch
+
+	useEffect(() => {
+		const fetchCurrentUser = async () => {
+			const response = await fetch("/api/getCurrentUser");
+			const userData = await response.json();
+			setUserId(userData.id); // Assuming the user object contains an 'id' field
+		};
+
+		fetchCurrentUser();
+	}, []);
 
 	const handleBookmarkToggle = async (snippetId: string) => {
 		try {
@@ -149,15 +158,17 @@ export default function Snippets() {
 
 	return (
 		<div className="flex min-h-screen">
-			<div className="sticky w-4/12  -ml-5  top-24 overflow-auto h-[85vh]">
+			<div className="sticky w-4/12 -ml-5  top-24 overflow-auto h-[85vh]">
 				{loading ? (
-					<div className="flex items-start flex-col gap-3">
+					<div className=" flex items-start flex-col gap-3">
+						<strong className="p-2">Snippets</strong>
 						<Skeleton className=" mt-2 h-6 w-48" />
 						<Skeleton className=" mt-2 h-6 w-48 delay-150" />
 						<Skeleton className=" mt-2 h-6 w-48 delay-300" />
 					</div>
 				) : (
 					<div className="flex items-start flex-col gap-2">
+						<strong className="p-2">Snippets</strong>
 						{filteredSnippets.map((snippet) => (
 							<Button
 								key={snippet._id}
@@ -166,13 +177,27 @@ export default function Snippets() {
 										? "secondary"
 										: "ghost"
 								}
-								onClick={() =>
-									document
-										.getElementById(snippet._id)
-										?.scrollIntoView({ behavior: "smooth" })
-								}
+								onClick={() => {
+									const element = document.getElementById(
+										snippet._id
+									);
+									if (element) {
+										const elementTop =
+											element.getBoundingClientRect()
+												.top + window.scrollY; // Get the element's position relative to the document
+										window.scrollTo({
+											top: elementTop - 100, // Adjust this value for your offset
+											behavior: "smooth", // Smooth scrolling
+										});
+									} else {
+										console.error(
+											"Element not found for ID:",
+											snippet._id
+										);
+									}
+								}}
 							>
-								<span className=" text-xs font-medium">
+								<span className="text-xs font-medium">
 									{snippet.title}
 								</span>
 							</Button>
@@ -185,12 +210,12 @@ export default function Snippets() {
 			<div className="p-8 w-full">
 				{loading ? (
 					<div className="max-w-screen-2xl mx-auto w-full">
-						<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300">
+						<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between min-h-[350px] duration-300">
 							<CardHeader className="border-b border-primary-100">
 								<Skeleton className="h-6 w-40" />
 							</CardHeader>
 							<CardContent>
-								<div className="h-[300px] w-full flex items-center justify-center">
+								<div className="h-[200px] w-full flex items-center justify-center">
 									<Loader2 className="size-6 text-slate-300 animate-spin" />
 								</div>
 							</CardContent>
@@ -208,7 +233,7 @@ export default function Snippets() {
 									ref={(el) => {
 										snippetRefs.current[snippet._id] = el;
 									}}
-									className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300"
+									className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300 min-h-[350px]"
 								>
 									<CardHeader className="border-b border-primary-100">
 										<CardTitle>{snippet.title}</CardTitle>

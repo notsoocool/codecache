@@ -1,5 +1,3 @@
-// api/snipets/route.ts
-
 import { NextResponse } from "next/server";
 import Snippet from "@/lib/db/snippetModel";
 import SnippetRequest from "@/lib/db/snippetRequestModel";
@@ -22,35 +20,44 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-	try {
-		const { title, language, code, description, tags } = await req.json();
-		const user = await currentUser();
-		const userId = user?.id;
+    try {
+        await dbConnect();
+        const { title, language, code, description, tags, category, difficulty, usage } = await req.json();
+        // console.log("Request body:", { title, language, code, description, tags, category, difficulty, usage }); // Log the incoming data
+        // console.log("Database Connection Status:", mongoose.connection.readyState);
 
-		if (!userId) {
-			return NextResponse.json(
-				{ error: "User not authenticated" },
-				{ status: 401 }
-			);
-		}
-		const newSnippet = new SnippetRequest({
-			title,
-			language,
-			code,
-			description,
-			tags,
-            createdAt: new Date(),
-			submittedBy: userId, // Initially not approved
-		});
-		await newSnippet.save();
-		return NextResponse.json(
-			{ message: "Snippet submitted for approval" },
-			{ status: 201 }
-		);
-	} catch (error) {
-		return NextResponse.json(
-			{ message: "Failed to add snippet" },
-			{ status: 500 }
-		);
-	}
+        const user = await currentUser();
+        const userId = user?.id;
+
+        if (!userId) {
+            return NextResponse.json(
+                { error: "User not authenticated" },
+                { status: 401 }
+            );
+        }
+        const newSnippet = new SnippetRequest({
+            title,
+            language,
+            code,
+            description,
+            tags,
+            category,          // Ensure this is included
+            difficulty,        // Ensure this is included
+            usage,             // Ensure this is included
+            submittedBy: userId,
+        });
+
+        await newSnippet.save();
+        return NextResponse.json(
+            { message: "Snippet submitted for approval" },
+            { status: 201 }
+        );
+    } catch (error) {
+        console.error("Error saving snippet request:", error); // Log the error
+        return NextResponse.json(
+            { message: "Failed to add snippet" },
+            { status: 500 }
+        );
+    }
 }
+
