@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton"; // Assuming you have a Skeleton component
+import { Skeleton } from "@/components/ui/skeleton";
 import { Bookmark, BookmarkCheck, Copy, Loader2, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -149,13 +149,13 @@ export default function Snippets() {
 
 	return (
 		<div className="flex min-h-screen">
-			<div className="sticky w-4/12 top-24 overflow-auto h-[85vh]">
+			<div className="sticky w-4/12  -ml-5  top-24 overflow-auto h-[85vh]">
 				{loading ? (
 					<div className="flex items-start flex-col gap-3">
-                        <Skeleton className=" mt-2 h-6 w-40" />
-                        <Skeleton className=" mt-2 h-6 w-40 delay-150" />
-                        <Skeleton className=" mt-2 h-6 w-40 delay-300" />
-                    </div>
+						<Skeleton className=" mt-2 h-6 w-48" />
+						<Skeleton className=" mt-2 h-6 w-48 delay-150" />
+						<Skeleton className=" mt-2 h-6 w-48 delay-300" />
+					</div>
 				) : (
 					<div className="flex items-start flex-col gap-2">
 						{filteredSnippets.map((snippet) => (

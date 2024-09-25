@@ -38,7 +38,7 @@ export default function AddSnippet() {
 			});
 			if (response.ok) {
 				setMessage("Snippet added successfully!");
-				router.push("/"); // Redirect to home or another page after success
+				router.push("/");
 			} else {
 				setMessage("Failed to add snippet. Please try again.");
 			}
