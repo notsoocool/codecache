@@ -191,17 +191,17 @@ export default function Snippets() {
 	);
 
 	return (
-		<div className="flex min-h-screen">
-			<div className="sticky w-4/12 -ml-5  top-24 overflow-auto h-[85vh]">
+		<div className="flex">
+			<div className=" w-3/12">
 				{loading ? (
-					<div className=" flex items-start flex-col gap-3">
+					<div className="sticky top-24 overflow-auto h-auto flex items-start flex-col gap-3">
 						<strong className="p-2">Snippets</strong>
 						<Skeleton className=" mt-2 h-6 w-48" />
 						<Skeleton className=" mt-2 h-6 w-48 delay-150" />
 						<Skeleton className=" mt-2 h-6 w-48 delay-300" />
 					</div>
 				) : (
-					<div className="flex items-start flex-col gap-2">
+					<div className="sticky top-24 overflow-auto h-[85vh] flex items-start flex-col gap-2">
 						<div className=" flex items-center justify-between w-full">
 							<strong className="p-2">Snippets</strong>
 							<DropdownMenu>
@@ -301,7 +301,7 @@ export default function Snippets() {
 			</div>
 
 			{/* Main content */}
-			<div className="p-8 w-full">
+			<div className="p-2 pt-8 w-9/12">
 				{loading ? (
 					<div className="max-w-screen-2xl mx-auto w-full">
 						<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between min-h-[350px] duration-300">
