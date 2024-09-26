@@ -138,90 +138,92 @@ export default function AddSnippet() {
 						className="mt-1"
 					/>
 				</div>
-                <div className="flex gap-6">
-				<div>
-					<label
-						htmlFor="category"
-						className="block text-sm font-medium text-gray-700"
-					>
-						Category
-					</label>
-					<Select onValueChange={setCategory}>
-						<SelectTrigger className="w-[180px]">
-							<SelectValue placeholder="Select a category" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectGroup>
-								<SelectItem value="Algorithm">
-									Algorithm
-								</SelectItem>
-								<SelectItem value="Data Structure">
-									Data Structure
-								</SelectItem>
-								<SelectItem value="Web Development">
-									Web Development
-								</SelectItem>
-								<SelectItem value="Mobile Development">
-									Mobile Development
-								</SelectItem>
-								<SelectItem value="Other">Other</SelectItem>
-							</SelectGroup>
-						</SelectContent>
-					</Select>
-				</div>
-				<div>
-					<label
-						htmlFor="difficulty"
-						className="block text-sm font-medium text-gray-700"
-					>
-						Difficulty
-					</label>
-					<Select onValueChange={setDifficulty}>
-						<SelectTrigger className="w-[180px]">
-							<SelectValue placeholder="Select difficulty level" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectGroup>
-								<SelectItem value="Beginner">
-									Beginner
-								</SelectItem>
-								<SelectItem value="Intermediate">
-									Intermediate
-								</SelectItem>
-								<SelectItem value="Advanced">
-									Advanced
-								</SelectItem>
-							</SelectGroup>
-						</SelectContent>
-					</Select>
-				</div>
-				<div>
-					<label
-						htmlFor="usage"
-						className="block text-sm font-medium text-gray-700"
-					>
-						Usage
-					</label>
+				<div className="flex gap-6">
+					<div>
+						<label
+							htmlFor="category"
+							className="block text-sm font-medium text-gray-700"
+						>
+							Category
+						</label>
+						<Select onValueChange={setCategory}>
+							<SelectTrigger className="w-[180px]">
+								<SelectValue placeholder="Select a category" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectItem value="Algorithm">
+										Algorithm
+									</SelectItem>
+									<SelectItem value="Data Structure">
+										Data Structure
+									</SelectItem>
+									<SelectItem value="Web Development">
+										Web Development
+									</SelectItem>
+									<SelectItem value="Mobile Development">
+										Mobile Development
+									</SelectItem>
+									<SelectItem value="Other">Other</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					</div>
+					<div>
+						<label
+							htmlFor="difficulty"
+							className="block text-sm font-medium text-gray-700"
+						>
+							Difficulty
+						</label>
+						<Select onValueChange={setDifficulty}>
+							<SelectTrigger className="w-[180px]">
+								<SelectValue placeholder="Select difficulty level" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectItem value="Beginner">
+										Beginner
+									</SelectItem>
+									<SelectItem value="Intermediate">
+										Intermediate
+									</SelectItem>
+									<SelectItem value="Advanced">
+										Advanced
+									</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					</div>
+					<div>
+						<label
+							htmlFor="usage"
+							className="block text-sm font-medium text-gray-700"
+						>
+							Usage
+						</label>
 
-					<Select onValueChange={setUsage}>
-						<SelectTrigger className="w-[180px]">
-							<SelectValue placeholder="Select usage type" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectGroup>
-								<SelectItem value="Educational">
-									Educational
-								</SelectItem>
-								<SelectItem value="Utility">Utility</SelectItem>
-								<SelectItem value="Template">
-									Template
-								</SelectItem>
-								<SelectItem value="Other">Other</SelectItem>
-							</SelectGroup>
-						</SelectContent>
-					</Select>
+						<Select onValueChange={setUsage}>
+							<SelectTrigger className="w-[180px]">
+								<SelectValue placeholder="Select usage type" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectItem value="Educational">
+										Educational
+									</SelectItem>
+									<SelectItem value="Utility">
+										Utility
+									</SelectItem>
+									<SelectItem value="Template">
+										Template
+									</SelectItem>
+									<SelectItem value="Other">Other</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					</div>
 				</div>
-                </div>
 
 				<div className=" flex justify-end">
 					<Button type="submit" className="mt-4">
