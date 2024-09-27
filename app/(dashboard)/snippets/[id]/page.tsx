@@ -9,17 +9,18 @@ import {
 	CardHeader,
 	CardTitle,
 	CardFooter,
+	CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Copy, Loader2 } from "lucide-react";
+import { Copy, Loader2, Star } from "lucide-react";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 
-// Define the snippet type
 type Snippet = {
+	difficulty: string;
 	_id: string;
 	title: string;
 	language: string;
@@ -28,12 +29,16 @@ type Snippet = {
 };
 
 export default function SnippetPage() {
-    const { theme } = useTheme();
+	const { theme } = useTheme();
 
 	const { id } = useParams(); // Get the snippet ID from the URL
 	const [snippet, setSnippet] = useState<Snippet | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [copied, setCopied] = useState(false);
+	const [averageRating, setAverageRating] = useState(0);
+	const [totalRatings, setTotalRatings] = useState(0);
+	const [userRating, setUserRating] = useState(0);
+	const [hoveredRating, setHoveredRating] = useState(0);
 
 	useEffect(() => {
 		// Fetch the snippet by ID
@@ -55,6 +60,51 @@ export default function SnippetPage() {
 		}
 	}, [id]);
 
+	useEffect(() => {
+		// Fetch the current average rating and total ratings for the snippet
+		async function fetchRatings() {
+			try {
+				const response = await fetch(`/api/ratings/${id}`);
+				const data = await response.json();
+				setAverageRating(data.averageRating);
+				setTotalRatings(data.totalRatings);
+				setUserRating(data.userRating);
+			} catch (error) {
+				console.error("Error fetching ratings:", error);
+			}
+		}
+
+		if (id) {
+			fetchRatings();
+		}
+	}, [id]);
+
+	// Handle user rating submission
+	const handleRating = async (rating: number) => {
+		try {
+			const response = await fetch(`/api/ratings`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ snippetId: id, rating }),
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+				setUserRating(rating);
+				setAverageRating(data.averageRating);
+				setTotalRatings(data.totalRatings);
+				toast("Rating submitted successfully");
+			} else {
+				toast("Error submitting rating");
+			}
+		} catch (error) {
+			console.error("Error submitting rating:", error);
+			toast("Error submitting rating");
+		}
+	};
+
 	// Copy code to clipboard
 	const handleCopy = (code: string) => {
 		navigator.clipboard.writeText(code).then(() => {
@@ -63,6 +113,7 @@ export default function SnippetPage() {
 			setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
 		});
 	};
+
 	useEffect(() => {
 		Prism.highlightAll(); // Highlight the code when the page loads and when theme changes
 	}, [theme]);
@@ -112,7 +163,49 @@ export default function SnippetPage() {
 		<div className="p-8">
 			<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300">
 				<CardHeader className="border-b border-primary-100">
-					<CardTitle>{snippet.title}</CardTitle>
+					<CardTitle>
+						<div className="flex justify-between items-center">
+							{snippet.title}
+							<div className="flex gap-10 flex-row-reverse items-center text-xs font-normal">
+								<div className=" flex gap-2">
+									{averageRating.toFixed(1)}
+									<div className=" flex">
+										{[...Array(5)].map((_, index) => {
+											const ratingValue = index + 1;
+											return (
+												<Star
+													key={index}
+													className={`size-4 cursor-pointer transition-all ${
+														ratingValue <=
+														(hoveredRating ||
+															userRating)
+															? "text-yellow-400 fill-yellow-400"
+															: "text-gray-300"
+													}`}
+													onClick={() =>
+														handleRating(
+															ratingValue
+														)
+													}
+													onMouseEnter={() =>
+														setHoveredRating(
+															ratingValue
+														)
+													}
+													onMouseLeave={() =>
+														setHoveredRating(0)
+													}
+												/>
+											);
+										})}
+									</div>
+									<div className=" text-blue-500">
+										{totalRatings} ratings
+									</div>
+								</div>
+							</div>
+						</div>
+					</CardTitle>
 				</CardHeader>
 				<CardContent className="p-4 relative">
 					<pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm">
@@ -128,21 +221,30 @@ export default function SnippetPage() {
 					>
 						<Copy size={16} />
 					</Button>
+					<span className="flex justify-end w-full pt-2 text-xs text-muted-foreground pr-1">
+						{snippet.difficulty}
+					</span>
 				</CardContent>
-				<CardFooter className="bg-primary-50 p-4 flex justify-between items-center">
-					<Badge variant="secondary" className="text-xs font-medium">
-						{snippet.language}
-					</Badge>
-					<div className="flex gap-2">
-						{snippet.tags.map((tag) => (
-							<Badge
-								key={tag}
-								variant="outline"
-								className="text-xs"
-							>
-								{tag}
-							</Badge>
-						))}
+				<CardFooter className="bg-primary-50 p-4 flex flex-col gap-4">
+					<div className="flex justify-between w-full items-center">
+						<Badge
+							variant="secondary"
+							className="text-xs font-medium"
+						>
+							{snippet.language}
+						</Badge>
+
+						<div className="flex gap-2">
+							{snippet.tags.map((tag) => (
+								<Badge
+									key={tag}
+									variant="outline"
+									className="text-xs"
+								>
+									{tag}
+								</Badge>
+							))}
+						</div>
 					</div>
 				</CardFooter>
 			</Card>

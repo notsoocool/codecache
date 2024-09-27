@@ -8,7 +8,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bookmark, BookmarkCheck, Copy, Loader2, Menu } from "lucide-react";
+import { Bookmark, BookmarkCheck, Copy, Loader2, Filter } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import {
@@ -29,6 +29,14 @@ import "prismjs/components/prism-json";
 import "prismjs/components/prism-bash";
 import "prismjs/components/prism-sql";
 import "prismjs/components/prism-go";
+import {
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Define the snippet type
 type Snippet = {
@@ -38,11 +46,18 @@ type Snippet = {
 	code: string;
 	tags: string[];
 	bookmarkedBy: string[];
+	category: string;
+	difficulty: string;
+	usage: string;
 };
 
 export default function Snippets() {
 	const { theme } = useTheme();
+
 	const [searchTerm, setSearchTerm] = useState("");
+	const [languageFilter, setLanguageFilter] = useState<string[]>([]);
+	const [difficultyFilter, setDifficultyFilter] = useState<string[]>([]);
+
 	const [loading, setLoading] = useState(true); // Loading state
 	const [snippets, setSnippets] = useState<Snippet[]>([]);
 	const [copied, setCopied] = useState<number | null>(null); // For copy feedback
@@ -149,26 +164,105 @@ export default function Snippets() {
 
 	const filteredSnippets = snippets.filter(
 		(snippet) =>
-			snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			snippet.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			snippet.tags.some((tag) =>
-				tag.toLowerCase().includes(searchTerm.toLowerCase())
-			)
+			(snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				snippet.language
+					.toLowerCase()
+					.includes(searchTerm.toLowerCase()) ||
+				snippet.tags.some((tag) =>
+					tag.toLowerCase().includes(searchTerm.toLowerCase())
+				)) &&
+			(languageFilter.length === 0 ||
+				languageFilter.includes(snippet.language)) &&
+			(difficultyFilter.length === 0 ||
+				difficultyFilter.includes(snippet.difficulty))
+	);
+	useEffect(() => {
+		Prism.highlightAll(); // Reapply syntax highlighting after filtered snippets are rendered
+	}, [filteredSnippets, theme]);
+
+	const languages = Array.from(
+		new Set(snippets.map((snippet) => snippet.language))
+	);
+	const difficulties = Array.from(
+		new Set(snippets.map((snippet) => snippet.difficulty))
+	);
+	const categories = Array.from(
+		new Set(snippets.map((snippet) => snippet.category))
 	);
 
 	return (
-		<div className="flex min-h-screen">
-			<div className="sticky w-4/12 -ml-5  top-24 overflow-auto h-[85vh]">
+		<div className="flex">
+			<div className=" w-3/12">
 				{loading ? (
-					<div className=" flex items-start flex-col gap-3">
+					<div className="sticky top-24 overflow-auto h-auto flex items-start flex-col gap-3">
 						<strong className="p-2">Snippets</strong>
 						<Skeleton className=" mt-2 h-6 w-48" />
 						<Skeleton className=" mt-2 h-6 w-48 delay-150" />
 						<Skeleton className=" mt-2 h-6 w-48 delay-300" />
 					</div>
 				) : (
-					<div className="flex items-start flex-col gap-2">
-						<strong className="p-2">Snippets</strong>
+					<div className="sticky top-24 overflow-auto h-[85vh] flex items-start flex-col gap-2">
+						<div className=" flex items-center justify-between w-full">
+							<strong className="p-2">Snippets</strong>
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button variant="outline">
+										<Filter className=" h-4 w-4" />
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent className="w-56">
+									<DropdownMenuLabel>
+										Language
+									</DropdownMenuLabel>
+									<DropdownMenuSeparator />
+									{languages.map((lang) => (
+										<DropdownMenuCheckboxItem
+											key={lang}
+											checked={languageFilter.includes(
+												lang
+											)}
+											onCheckedChange={(checked) => {
+												setLanguageFilter((prev) =>
+													checked
+														? [...prev, lang]
+														: prev.filter(
+																(l) =>
+																	l !== lang
+														)
+												);
+											}}
+										>
+											{lang}
+										</DropdownMenuCheckboxItem>
+									))}
+									<DropdownMenuSeparator />
+									<DropdownMenuLabel>
+										Difficulty
+									</DropdownMenuLabel>
+									<DropdownMenuSeparator />
+									{difficulties.map((diff) => (
+										<DropdownMenuCheckboxItem
+											key={diff}
+											checked={difficultyFilter.includes(
+												diff
+											)}
+											onCheckedChange={(checked) => {
+												setDifficultyFilter((prev) =>
+													checked
+														? [...prev, diff]
+														: prev.filter(
+																(d) =>
+																	d !== diff
+														  )
+												);
+											}}
+										>
+											{diff}
+										</DropdownMenuCheckboxItem>
+									))}
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</div>
 						{filteredSnippets.map((snippet) => (
 							<Button
 								key={snippet._id}
@@ -207,7 +301,7 @@ export default function Snippets() {
 			</div>
 
 			{/* Main content */}
-			<div className="p-8 w-full">
+			<div className="p-2 pt-8 w-9/12">
 				{loading ? (
 					<div className="max-w-screen-2xl mx-auto w-full">
 						<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between min-h-[350px] duration-300">
@@ -235,8 +329,13 @@ export default function Snippets() {
 									}}
 									className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300 min-h-[350px]"
 								>
-									<CardHeader className="border-b border-primary-100">
-										<CardTitle>{snippet.title}</CardTitle>
+									<CardHeader className=" border-b border-primary-100">
+										<CardTitle className="flex justify-between">
+											{snippet.title}{" "}
+											<span className="text-xs text-gray-700">
+												{snippet.difficulty}
+											</span>
+										</CardTitle>
 									</CardHeader>
 									<CardContent className="p-4 relative">
 										<pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm">
