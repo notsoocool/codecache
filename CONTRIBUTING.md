@@ -23,8 +23,12 @@ We use a [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-
    ```
 3. **Create a Branch** 🌳: Create a new branch for your changes.
    ```bash
-   git checkout -b your-branch-name
+   git checkout -b feature/<feature-name>
    ```
+    ```bash
+   git checkout -b fix/<issue-number>
+   ```
+   
 4. **Make Changes** ✏️: Make your changes in this branch. Ensure your code adheres to our coding standards and includes appropriate tests.
 5. **Commit Your Changes** 📦: Commit your changes with a descriptive message.
    ```bash
