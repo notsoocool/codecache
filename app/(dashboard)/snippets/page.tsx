@@ -8,8 +8,14 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bookmark, BookmarkCheck, Copy, Loader2, Filter } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+	Bookmark,
+	BookmarkCheck,
+	Copy,
+	Loader2,
+	Filter,
+	Star,
+} from "lucide-react";
 
 import {
 	Card,
@@ -64,45 +70,52 @@ export default function Snippets() {
 	const snippetsRef = useRef<HTMLDivElement>(null); // Reference to the snippets container
 	const [activeSnippetId, setActiveSnippetId] = useState<string | null>(null); // To track active snippet
 	const [userId, setUserId] = useState<string | null>(null);
+	const [ratings, setRatings] = useState<{ [key: string]: any }>({});
+	const [hoveredRating, setHoveredRating] = useState(0);
 
 	// Refs for each snippet card to track visibility
 	const snippetRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
 	useEffect(() => {
-		// Fetch data from the API
-		async function fetchSnippets() {
+		const fetchSnippets = async () => {
+			setLoading(true);
 			try {
-				setLoading(true); // Start loading
-				const response = await fetch("/api/snippets"); // Adjust URL based on your API
+				const response = await fetch("/api/snippets");
 				const data = await response.json();
 				setSnippets(data);
 			} catch (error) {
 				console.error("Error fetching snippets:", error);
 			} finally {
-				setLoading(false); // Stop loading
+				setLoading(false);
 			}
-		}
+		};
 
-		fetchSnippets();
-	}, []);
-
-	useEffect(() => {
-		Prism.highlightAll(); // Highlight the code when the page loads and when theme changes
-	}, [theme]);
-
-	useEffect(() => {
-		Prism.highlightAll(); // Reapply syntax highlighting after snippets are rendered
-	}, [snippets]); // Dependency on snippets to trigger highlighting after fetch
-
-	useEffect(() => {
 		const fetchCurrentUser = async () => {
 			const response = await fetch("/api/getCurrentUser");
 			const userData = await response.json();
-			setUserId(userData.id); // Assuming the user object contains an 'id' field
+			setUserId(userData.id);
 		};
 
+		fetchSnippets();
 		fetchCurrentUser();
 	}, []);
+
+	useEffect(() => {
+		const fetchRatings = async (snippetId: string) => {
+			try {
+				const response = await fetch(`/api/ratings/${snippetId}`);
+				const data = await response.json();
+				setRatings((prevRatings) => ({
+					...prevRatings,
+					[snippetId]: data,
+				}));
+			} catch (error) {
+				console.error("Error fetching ratings:", error);
+			}
+		};
+
+		snippets.forEach((snippet) => fetchRatings(snippet._id));
+	}, [snippets]);
 
 	const handleBookmarkToggle = async (snippetId: string) => {
 		try {
@@ -176,9 +189,10 @@ export default function Snippets() {
 			(difficultyFilter.length === 0 ||
 				difficultyFilter.includes(snippet.difficulty))
 	);
+
 	useEffect(() => {
 		Prism.highlightAll(); // Reapply syntax highlighting after filtered snippets are rendered
-	}, [filteredSnippets, theme]);
+	}, [filteredSnippets, theme, snippets]);
 
 	const languages = Array.from(
 		new Set(snippets.map((snippet) => snippet.language))
@@ -186,123 +200,19 @@ export default function Snippets() {
 	const difficulties = Array.from(
 		new Set(snippets.map((snippet) => snippet.difficulty))
 	);
-	const categories = Array.from(
-		new Set(snippets.map((snippet) => snippet.category))
-	);
 
-	return (
-		<div className="flex">
-			<div className=" w-3/12">
-				{loading ? (
+	if (loading) {
+		return (
+			<div className="flex">
+				<div className="w-3/12">
 					<div className="sticky top-24 overflow-auto h-auto flex items-start flex-col gap-3">
 						<strong className="p-2">Snippets</strong>
-						<Skeleton className=" mt-2 h-6 w-48" />
-						<Skeleton className=" mt-2 h-6 w-48 delay-150" />
-						<Skeleton className=" mt-2 h-6 w-48 delay-300" />
+						<Skeleton className="mt-2 h-6 w-48" />
+						<Skeleton className="mt-2 h-6 w-48 delay-150" />
+						<Skeleton className="mt-2 h-6 w-48 delay-300" />
 					</div>
-				) : (
-					<div className="sticky top-24 overflow-auto h-[85vh] flex items-start flex-col gap-2">
-						<div className=" flex items-center justify-between w-full">
-							<strong className="p-2">Snippets</strong>
-							<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<Button variant="outline">
-										<Filter className=" h-4 w-4" />
-									</Button>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent className="w-56">
-									<DropdownMenuLabel>
-										Language
-									</DropdownMenuLabel>
-									<DropdownMenuSeparator />
-									{languages.map((lang) => (
-										<DropdownMenuCheckboxItem
-											key={lang}
-											checked={languageFilter.includes(
-												lang
-											)}
-											onCheckedChange={(checked) => {
-												setLanguageFilter((prev) =>
-													checked
-														? [...prev, lang]
-														: prev.filter(
-																(l) =>
-																	l !== lang
-														)
-												);
-											}}
-										>
-											{lang}
-										</DropdownMenuCheckboxItem>
-									))}
-									<DropdownMenuSeparator />
-									<DropdownMenuLabel>
-										Difficulty
-									</DropdownMenuLabel>
-									<DropdownMenuSeparator />
-									{difficulties.map((diff) => (
-										<DropdownMenuCheckboxItem
-											key={diff}
-											checked={difficultyFilter.includes(
-												diff
-											)}
-											onCheckedChange={(checked) => {
-												setDifficultyFilter((prev) =>
-													checked
-														? [...prev, diff]
-														: prev.filter(
-																(d) =>
-																	d !== diff
-														  )
-												);
-											}}
-										>
-											{diff}
-										</DropdownMenuCheckboxItem>
-									))}
-								</DropdownMenuContent>
-							</DropdownMenu>
-						</div>
-						{filteredSnippets.map((snippet) => (
-							<Button
-								key={snippet._id}
-								variant={
-									snippet._id === activeSnippetId
-										? "secondary"
-										: "ghost"
-								}
-								onClick={() => {
-									const element = document.getElementById(
-										snippet._id
-									);
-									if (element) {
-										const elementTop =
-											element.getBoundingClientRect()
-												.top + window.scrollY; // Get the element's position relative to the document
-										window.scrollTo({
-											top: elementTop - 100, // Adjust this value for your offset
-											behavior: "smooth", // Smooth scrolling
-										});
-									} else {
-										console.error(
-											"Element not found for ID:",
-											snippet._id
-										);
-									}
-								}}
-							>
-								<span className="text-xs font-medium">
-									{snippet.title}
-								</span>
-							</Button>
-						))}
-					</div>
-				)}
-			</div>
-
-			{/* Main content */}
-			<div className="p-2 pt-8 w-9/12">
-				{loading ? (
+				</div>
+				<div className="p-2 pt-8 w-9/12">
 					<div className="max-w-screen-2xl mx-auto w-full">
 						<Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between min-h-[350px] duration-300">
 							<CardHeader className="border-b border-primary-100">
@@ -315,98 +225,236 @@ export default function Snippets() {
 							</CardContent>
 						</Card>
 					</div>
-				) : (
-					<div className="grid grid-cols-1 gap-6" ref={snippetsRef}>
-						{filteredSnippets.map((snippet) => (
-							<Link
-								href={`/snippets/${snippet._id}`}
-								key={snippet._id}
-							>
-								<Card
-									id={snippet._id}
-									ref={(el) => {
-										snippetRefs.current[snippet._id] = el;
-									}}
-									className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300 min-h-[350px]"
-								>
-									<CardHeader className=" border-b border-primary-100">
-										<CardTitle className="flex justify-between">
-											{snippet.title}{" "}
-											<span className="text-xs text-gray-700">
-												{snippet.difficulty}
-											</span>
-										</CardTitle>
-									</CardHeader>
-									<CardContent className="p-4 relative">
-										<pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm">
-											<code
-												className={`language-${snippet.language}`}
-											>
-												{snippet.code}
-											</code>
-										</pre>
-										<Button
-											variant="outline"
-											className="absolute top-8 right-6"
-											onClick={() =>
-												handleCopy(
-													snippet.code,
-													snippet._id
-												)
-											}
-										>
-											<Copy size={16} />
-										</Button>
-										<Button
-											className="absolute top-8 right-20"
-											variant="outline"
-											onClick={(e) => {
-												e.preventDefault();
-												if (snippet._id) {
-													handleBookmarkToggle(
-														snippet._id
-													);
-												} else {
-													console.error(
-														"Snippet ID is null"
-													);
-												}
-											}}
-										>
-											{userId &&
-											snippet.bookmarkedBy?.includes(
-												userId
-											) ? (
-												<BookmarkCheck size={16} />
-											) : (
-												<Bookmark size={16} />
-											)}
-										</Button>
-									</CardContent>
-									<CardFooter className="bg-primary-50 p-4 flex justify-between items-center">
-										<Badge
-											variant="secondary"
-											className="text-xs font-medium"
-										>
-											{snippet.language}
-										</Badge>
-										<div className="flex gap-2">
-											{snippet.tags.map((tag) => (
-												<Badge
-													key={`${snippet._id}-${tag}`}
-													variant="outline"
-													className="text-xs"
-												>
-													{tag}
-												</Badge>
-											))}
-										</div>
-									</CardFooter>
-								</Card>
-							</Link>
-						))}
+				</div>
+			</div>
+		);
+	}
+
+	return (
+		<div className="flex">
+			{/* Snippet List */}
+			<div className=" w-3/12">
+				<div className="sticky top-24 overflow-auto h-[85vh] flex items-start flex-col gap-2">
+					<div className=" flex items-center justify-between w-full">
+						<strong className="p-2">Snippets</strong>
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button variant="outline">
+									<Filter className=" h-4 w-4" />
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent className="w-56">
+								<DropdownMenuLabel>Language</DropdownMenuLabel>
+								<DropdownMenuSeparator />
+								{languages.map((lang) => (
+									<DropdownMenuCheckboxItem
+										key={lang}
+										checked={languageFilter.includes(lang)}
+										onCheckedChange={(checked) => {
+											setLanguageFilter((prev) =>
+												checked
+													? [...prev, lang]
+													: prev.filter(
+															(l) => l !== lang
+													  )
+											);
+										}}
+									>
+										{lang}
+									</DropdownMenuCheckboxItem>
+								))}
+								<DropdownMenuSeparator />
+								<DropdownMenuLabel>
+									Difficulty
+								</DropdownMenuLabel>
+								<DropdownMenuSeparator />
+								{difficulties.map((diff) => (
+									<DropdownMenuCheckboxItem
+										key={diff}
+										checked={difficultyFilter.includes(
+											diff
+										)}
+										onCheckedChange={(checked) => {
+											setDifficultyFilter((prev) =>
+												checked
+													? [...prev, diff]
+													: prev.filter(
+															(d) => d !== diff
+													  )
+											);
+										}}
+									>
+										{diff}
+									</DropdownMenuCheckboxItem>
+								))}
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
-				)}
+					{filteredSnippets.map((snippet) => (
+						<Button
+							key={snippet._id}
+							variant={
+								snippet._id === activeSnippetId
+									? "secondary"
+									: "ghost"
+							}
+							onClick={() => {
+								const element = document.getElementById(
+									snippet._id
+								);
+								if (element) {
+									const elementTop =
+										element.getBoundingClientRect().top +
+										window.scrollY; // Get the element's position relative to the document
+									window.scrollTo({
+										top: elementTop - 100, // Adjust this value for your offset
+										behavior: "smooth", // Smooth scrolling
+									});
+								} else {
+									console.error(
+										"Element not found for ID:",
+										snippet._id
+									);
+								}
+							}}
+						>
+							<span className="text-xs font-medium">
+								{snippet.title}
+							</span>
+						</Button>
+					))}
+				</div>
+			</div>
+
+			{/* Snippet Cards */}
+			<div className="p-2 pt-8 w-9/12">
+				<div className="grid grid-cols-1 gap-6" ref={snippetsRef}>
+					{filteredSnippets.map((snippet) => (
+						<Link
+							href={`/snippets/${snippet._id}`}
+							key={snippet._id}
+						>
+							<Card
+								id={snippet._id}
+								ref={(el) => {
+									snippetRefs.current[snippet._id] = el;
+								}}
+								className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300 min-h-[350px]"
+							>
+								<CardHeader className=" border-b border-primary-100">
+									<CardTitle className="flex justify-between">
+										{snippet.title}
+										<div className="flex gap-10 flex-row-reverse items-center text-xs font-normal">
+											<div className=" flex gap-2">
+												{ratings[
+													snippet._id
+												]?.averageRating.toFixed(1)}
+												<div className=" flex">
+													{[...Array(5)].map(
+														(_, index) => {
+															const ratingValue =
+																index + 1;
+															return (
+																<Star
+																	key={index}
+																	className={`size-4 cursor-pointer transition-all ${
+																		ratingValue <=
+																		(hoveredRating ||
+																			ratings[
+																				snippet
+																					._id
+																			]
+																				?.userRating)
+																			? "text-muted-foreground fill-muted-foreground"
+																			: "text-muted-foreground/50"
+																	}`}
+																/>
+															);
+														}
+													)}
+												</div>
+												<div className=" text-blue-500">
+													{ratings[snippet._id]
+														?.totalRatings ||
+														0}{" "}
+													ratings
+												</div>
+											</div>
+										</div>
+									</CardTitle>
+								</CardHeader>
+								<CardContent className="p-4 relative">
+									<pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm">
+										<code
+											className={`language-${snippet.language}`}
+										>
+											{snippet.code}
+										</code>
+									</pre>
+									<Button
+										variant="outline"
+										className="absolute top-8 right-6"
+										onClick={() =>
+											handleCopy(
+												snippet.code,
+												snippet._id
+											)
+										}
+									>
+										<Copy size={16} />
+									</Button>
+									<Button
+										className="absolute top-8 right-20"
+										variant="outline"
+										onClick={(e) => {
+											e.preventDefault();
+											if (snippet._id) {
+												handleBookmarkToggle(
+													snippet._id
+												);
+											} else {
+												console.error(
+													"Snippet ID is null"
+												);
+											}
+										}}
+									>
+										{userId &&
+										snippet.bookmarkedBy?.includes(
+											userId
+										) ? (
+											<BookmarkCheck size={16} />
+										) : (
+											<Bookmark size={16} />
+										)}
+									</Button>
+									<span className="flex justify-end w-full pt-2 text-xs text-muted-foreground pr-1">
+										{snippet.difficulty}
+									</span>
+								</CardContent>
+								<CardFooter className="bg-primary-50 p-4 flex justify-between items-center">
+									<Badge
+										variant="secondary"
+										className="text-xs font-medium"
+									>
+										{snippet.language}
+									</Badge>
+									<div className="flex gap-2">
+										{snippet.tags.map((tag) => (
+											<Badge
+												key={`${snippet._id}-${tag}`}
+												variant="outline"
+												className="text-xs"
+											>
+												{tag}
+											</Badge>
+										))}
+									</div>
+								</CardFooter>
+							</Card>
+						</Link>
+					))}
+				</div>
 			</div>
 		</div>
 	);

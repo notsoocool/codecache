@@ -9,7 +9,6 @@ import {
 	CardHeader,
 	CardTitle,
 	CardFooter,
-	CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -115,12 +114,8 @@ export default function SnippetPage() {
 	};
 
 	useEffect(() => {
-		Prism.highlightAll(); // Highlight the code when the page loads and when theme changes
-	}, [theme]);
-
-	useEffect(() => {
 		Prism.highlightAll(); // Reapply syntax highlighting after snippets are rendered
-	}, [snippet]); // Dependency on snippets to trigger highlighting after fetch
+	}, [snippet, theme]); // Dependency on snippets to trigger highlighting after fetch
 
 	if (loading) {
 		return (
@@ -179,8 +174,8 @@ export default function SnippetPage() {
 														ratingValue <=
 														(hoveredRating ||
 															userRating)
-															? "text-yellow-400 fill-yellow-400"
-															: "text-gray-300"
+															? "text-muted-foreground fill-muted-foreground"
+															: "text-muted-foreground/50"
 													}`}
 													onClick={() =>
 														handleRating(
@@ -213,7 +208,6 @@ export default function SnippetPage() {
 							{snippet.code}
 						</code>
 					</pre>
-					{/* Copy code button */}
 					<Button
 						variant="outline"
 						className="absolute top-8 right-6"
