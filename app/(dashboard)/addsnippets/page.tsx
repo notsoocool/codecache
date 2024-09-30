@@ -14,6 +14,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { ReactLenis } from "@/utils/lenis";
 
 export default function AddSnippet() {
 	const [title, setTitle] = useState("");
@@ -62,176 +63,184 @@ export default function AddSnippet() {
 	};
 
 	return (
-		<div className="p-8">
-			<h1 className="text-4xl font-bold mb-6">Add New Snippet</h1>
-			<form onSubmit={handleSubmit} className="space-y-4">
-				<div>
-					<label
-						htmlFor="title"
-						className="block text-sm font-medium text-gray-700"
-					>
-						Title
-					</label>
-					<Input
-						id="title"
-						type="text"
-						value={title}
-						onChange={(e) => setTitle(e.target.value)}
-						className="mt-1"
-					/>
-				</div>
-				<div>
-					<label
-						htmlFor="language"
-						className="block text-sm font-medium text-gray-700"
-					>
-						Language
-					</label>
-					<Input
-						id="language"
-						type="text"
-						value={language}
-						onChange={(e) => setLanguage(e.target.value)}
-						className="mt-1"
-					/>
-				</div>
-				<div>
-					<label
-						htmlFor="code"
-						className="block text-sm font-medium text-gray-700"
-					>
-						Code
-					</label>
-					<Textarea
-						id="code"
-						value={code}
-						onChange={(e) => setCode(e.target.value)}
-						className="mt-1"
-					/>
-				</div>
-				<div>
-					<label
-						htmlFor="description"
-						className="block text-sm font-medium text-gray-700"
-					>
-						Description
-					</label>
-					<Textarea
-						id="description"
-						value={description}
-						onChange={(e) => setDescription(e.target.value)}
-						className="mt-1"
-					/>
-				</div>
-				<div>
-					<label
-						htmlFor="tags"
-						className="block text-sm font-medium text-gray-700"
-					>
-						Tags (comma-separated)
-					</label>
-					<Input
-						id="tags"
-						type="text"
-						value={tags}
-						onChange={(e) => setTags(e.target.value)}
-						className="mt-1"
-					/>
-				</div>
-				<div className="flex gap-6">
+		<ReactLenis root>
+			<div className="p-8">
+				<h1 className="text-4xl font-bold mb-6">Add New Snippet</h1>
+				<form onSubmit={handleSubmit} className="space-y-4">
 					<div>
 						<label
-							htmlFor="category"
+							htmlFor="title"
 							className="block text-sm font-medium text-gray-700"
 						>
-							Category
+							Title
 						</label>
-						<Select onValueChange={setCategory}>
-							<SelectTrigger className="w-[180px]">
-								<SelectValue placeholder="Select a category" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectGroup>
-									<SelectItem value="Algorithm">
-										Algorithm
-									</SelectItem>
-									<SelectItem value="Data Structure">
-										Data Structure
-									</SelectItem>
-									<SelectItem value="Web Development">
-										Web Development
-									</SelectItem>
-									<SelectItem value="Mobile Development">
-										Mobile Development
-									</SelectItem>
-									<SelectItem value="Other">Other</SelectItem>
-								</SelectGroup>
-							</SelectContent>
-						</Select>
+						<Input
+							id="title"
+							type="text"
+							value={title}
+							onChange={(e) => setTitle(e.target.value)}
+							className="mt-1"
+						/>
 					</div>
 					<div>
 						<label
-							htmlFor="difficulty"
+							htmlFor="language"
 							className="block text-sm font-medium text-gray-700"
 						>
-							Difficulty
+							Language
 						</label>
-						<Select onValueChange={setDifficulty}>
-							<SelectTrigger className="w-[180px]">
-								<SelectValue placeholder="Select difficulty level" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectGroup>
-									<SelectItem value="Beginner">
-										Beginner
-									</SelectItem>
-									<SelectItem value="Intermediate">
-										Intermediate
-									</SelectItem>
-									<SelectItem value="Advanced">
-										Advanced
-									</SelectItem>
-								</SelectGroup>
-							</SelectContent>
-						</Select>
+						<Input
+							id="language"
+							type="text"
+							value={language}
+							onChange={(e) => setLanguage(e.target.value)}
+							className="mt-1"
+						/>
 					</div>
 					<div>
 						<label
-							htmlFor="usage"
+							htmlFor="code"
 							className="block text-sm font-medium text-gray-700"
 						>
-							Usage
+							Code
 						</label>
+						<Textarea
+							id="code"
+							value={code}
+							onChange={(e) => setCode(e.target.value)}
+							className="mt-1"
+						/>
+					</div>
+					<div>
+						<label
+							htmlFor="description"
+							className="block text-sm font-medium text-gray-700"
+						>
+							Description
+						</label>
+						<Textarea
+							id="description"
+							value={description}
+							onChange={(e) => setDescription(e.target.value)}
+							className="mt-1"
+						/>
+					</div>
+					<div>
+						<label
+							htmlFor="tags"
+							className="block text-sm font-medium text-gray-700"
+						>
+							Tags (comma-separated)
+						</label>
+						<Input
+							id="tags"
+							type="text"
+							value={tags}
+							onChange={(e) => setTags(e.target.value)}
+							className="mt-1"
+						/>
+					</div>
+					<div className="flex gap-6">
+						<div>
+							<label
+								htmlFor="category"
+								className="block text-sm font-medium text-gray-700"
+							>
+								Category
+							</label>
+							<Select onValueChange={setCategory}>
+								<SelectTrigger className="w-[180px]">
+									<SelectValue placeholder="Select a category" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectGroup>
+										<SelectItem value="Algorithm">
+											Algorithm
+										</SelectItem>
+										<SelectItem value="Data Structure">
+											Data Structure
+										</SelectItem>
+										<SelectItem value="Web Development">
+											Web Development
+										</SelectItem>
+										<SelectItem value="Mobile Development">
+											Mobile Development
+										</SelectItem>
+										<SelectItem value="Other">
+											Other
+										</SelectItem>
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</div>
+						<div>
+							<label
+								htmlFor="difficulty"
+								className="block text-sm font-medium text-gray-700"
+							>
+								Difficulty
+							</label>
+							<Select onValueChange={setDifficulty}>
+								<SelectTrigger className="w-[180px]">
+									<SelectValue placeholder="Select difficulty level" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectGroup>
+										<SelectItem value="Beginner">
+											Beginner
+										</SelectItem>
+										<SelectItem value="Intermediate">
+											Intermediate
+										</SelectItem>
+										<SelectItem value="Advanced">
+											Advanced
+										</SelectItem>
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</div>
+						<div>
+							<label
+								htmlFor="usage"
+								className="block text-sm font-medium text-gray-700"
+							>
+								Usage
+							</label>
 
-						<Select onValueChange={setUsage}>
-							<SelectTrigger className="w-[180px]">
-								<SelectValue placeholder="Select usage type" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectGroup>
-									<SelectItem value="Educational">
-										Educational
-									</SelectItem>
-									<SelectItem value="Utility">
-										Utility
-									</SelectItem>
-									<SelectItem value="Template">
-										Template
-									</SelectItem>
-									<SelectItem value="Other">Other</SelectItem>
-								</SelectGroup>
-							</SelectContent>
-						</Select>
+							<Select onValueChange={setUsage}>
+								<SelectTrigger className="w-[180px]">
+									<SelectValue placeholder="Select usage type" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectGroup>
+										<SelectItem value="Educational">
+											Educational
+										</SelectItem>
+										<SelectItem value="Utility">
+											Utility
+										</SelectItem>
+										<SelectItem value="Template">
+											Template
+										</SelectItem>
+										<SelectItem value="Other">
+											Other
+										</SelectItem>
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</div>
 					</div>
-				</div>
 
-				<div className=" flex justify-end">
-					<Button type="submit" className="mt-4">
-						Add Snippet
-					</Button>
-				</div>
-				{message && <p className="mt-4 text-green-600">{message}</p>}
-			</form>
-		</div>
+					<div className=" flex justify-end">
+						<Button type="submit" className="mt-4">
+							Add Snippet
+						</Button>
+					</div>
+					{message && (
+						<p className="mt-4 text-green-600">{message}</p>
+					)}
+				</form>
+			</div>
+		</ReactLenis>
 	);
 }

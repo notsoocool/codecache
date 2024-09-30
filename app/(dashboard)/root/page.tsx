@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import Prism from "prismjs";
 import { useTheme } from "next-themes";
+import { ReactLenis } from "@/utils/lenis";
 
 // Define a snippet type
 type SnippetRequest = {
@@ -143,80 +144,83 @@ export default function AdminPage() {
 	}, [snippetRequests]);
 
 	return (
-		<div className="p-8">
-			<h1 className="text-2xl font-bold mb-6">Snippet Requests</h1>
-			<div className="grid grid-cols-1 gap-6">
-				{snippetRequests.map((request) => (
-					<Card key={request._id}>
-						<CardHeader>
-							<CardTitle className="flex justify-between items-center">
-								{request.title}
-								<div className=" flex gap-6 text-muted-foreground text-xs">
-									<p>
-										<strong>Category:</strong>{" "}
-										{request.category}
-									</p>
-									<p>
-										<strong>Difficulty:</strong>{" "}
-										{request.difficulty}
-									</p>
-									<p>
-										<strong>Usage:</strong> {request.usage}
-									</p>
-								</div>
-								<div className="flex gap-4">
-									<Button
-										onClick={() =>
-											handleAccept(request._id)
-										}
+		<ReactLenis root>
+			<div className="p-8">
+				<h1 className="text-2xl font-bold mb-6">Snippet Requests</h1>
+				<div className="grid grid-cols-1 gap-6">
+					{snippetRequests.map((request) => (
+						<Card key={request._id}>
+							<CardHeader>
+								<CardTitle className="flex justify-between items-center">
+									{request.title}
+									<div className=" flex gap-6 text-muted-foreground text-xs">
+										<p>
+											<strong>Category:</strong>{" "}
+											{request.category}
+										</p>
+										<p>
+											<strong>Difficulty:</strong>{" "}
+											{request.difficulty}
+										</p>
+										<p>
+											<strong>Usage:</strong>{" "}
+											{request.usage}
+										</p>
+									</div>
+									<div className="flex gap-4">
+										<Button
+											onClick={() =>
+												handleAccept(request._id)
+											}
+										>
+											Approve
+										</Button>
+										<Button
+											onClick={() =>
+												handleReject(request._id)
+											}
+											variant="destructive"
+										>
+											Reject
+										</Button>
+									</div>
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm">
+									<code
+										className={`language-${request.language}`}
 									>
-										Approve
-									</Button>
-									<Button
-										onClick={() =>
-											handleReject(request._id)
-										}
-										variant="destructive"
+										{request.code}
+									</code>
+								</pre>
+							</CardContent>
+							<CardFooter className="bg-primary-50 p-4 w-full flex flex-col items-center">
+								<div className="w-full flex justify-between">
+									<Badge
+										variant="secondary"
+										className="text-xs font-medium"
 									>
-										Reject
-									</Button>
+										{request.language}
+									</Badge>
+									<div className="flex gap-2">
+										{request.tags &&
+											request.tags.map((tag) => (
+												<Badge
+													key={tag}
+													variant="outline"
+													className="text-xs"
+												>
+													{tag}
+												</Badge>
+											))}
+									</div>
 								</div>
-							</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm">
-								<code
-									className={`language-${request.language}`}
-								>
-									{request.code}
-								</code>
-							</pre>
-						</CardContent>
-						<CardFooter className="bg-primary-50 p-4 w-full flex flex-col items-center">
-							<div className="w-full flex justify-between">
-								<Badge
-									variant="secondary"
-									className="text-xs font-medium"
-								>
-									{request.language}
-								</Badge>
-								<div className="flex gap-2">
-									{request.tags &&
-										request.tags.map((tag) => (
-											<Badge
-												key={tag}
-												variant="outline"
-												className="text-xs"
-											>
-												{tag}
-											</Badge>
-										))}
-								</div>
-							</div>
-						</CardFooter>
-					</Card>
-				))}
+							</CardFooter>
+						</Card>
+					))}
+				</div>
 			</div>
-		</div>
+		</ReactLenis>
 	);
 }
