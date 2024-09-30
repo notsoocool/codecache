@@ -18,7 +18,7 @@ export default function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang="en">
-                <ReactLenis root>
+                {/* <ReactLenis root> */}
 				<body>
 					<ThemeProvider
 						attribute="class"
@@ -29,7 +29,7 @@ export default function RootLayout({
 						{children}
 					</ThemeProvider>
 				</body>
-                </ReactLenis>
+              {/*   </ReactLenis> */}
 			</html>
 		</ClerkProvider>
 	);
