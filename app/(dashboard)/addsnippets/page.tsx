@@ -68,7 +68,6 @@ export default function AddSnippet() {
 	};
 
 	return (
-		<ReactLenis root>
 			<div className="p-8">
 				<h1 className="text-4xl font-bold mb-6">Add New Snippet</h1>
 				<form onSubmit={handleSubmit} className="space-y-4">
@@ -98,17 +97,17 @@ export default function AddSnippet() {
 								<SelectTrigger className="w-[180px]">
 									<SelectValue placeholder="Select Language" />
 								</SelectTrigger>
-								<SelectContent className="overflow-y-auto scroll-auto" >
-								<SelectGroup>
-									{/* choosing each value from the languages array and then rendering it to the dropdown menu
-									the map funtion is to reduce repetition */}
-								{languages.map((language) => (
-									<SelectItem key={language} value={language}>
-									{language}
-									</SelectItem>
-								))}
+								<SelectContent>
+                                    <SelectGroup>
+                                        {/* choosing each value from the languages array and then rendering it to the dropdown menu
+                                        the map funtion is to reduce repetition */}
+                                        {languages.map((language) => (
+                                            <SelectItem key={language} value={language}>
+                                            {language}
+                                            </SelectItem>
+                                        ))}
 
-								</SelectGroup>
+                                    </SelectGroup>
 								</SelectContent>
 							</Select>
 					</div>
@@ -256,6 +255,5 @@ export default function AddSnippet() {
 					)}
 				</form>
 			</div>
-		</ReactLenis>
 	);
 }
