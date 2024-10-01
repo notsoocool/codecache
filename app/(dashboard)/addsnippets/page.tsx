@@ -123,8 +123,8 @@ export default function AddSnippet() {
                   <SelectItem value="Java">Java</SelectItem>
                   <SelectItem value="Python">Python</SelectItem>
                   <SelectItem value="JavaScript">JavaScript</SelectItem>
-                  <SelectItem value="C++">C ++</SelectItem>
-                  <SelectItem value="C#">C #</SelectItem>
+                  <SelectItem value="C++">C++</SelectItem>
+                  <SelectItem value="C#">C#</SelectItem>
                   <SelectItem value="Go">Go</SelectItem>
                   <SelectItem value="Kotlin">Kotlin</SelectItem>
                   <SelectItem value="Ruby">Ruby</SelectItem>
