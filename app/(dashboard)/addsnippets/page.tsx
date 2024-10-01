@@ -15,7 +15,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { ReactLenis } from "@/utils/lenis";
-
 export default function AddSnippet() {
 	const [title, setTitle] = useState("");
 	const [language, setLanguage] = useState("");
@@ -27,6 +26,12 @@ export default function AddSnippet() {
 	const [usage, setUsage] = useState("");
 	const [message, setMessage] = useState("");
 	const router = useRouter();
+
+	const languages = [
+		"Java", "Python", "JavaScript", "C++", "C#", "Go", "Kotlin", "Ruby", 
+		"Swift", "PHP", "TypeScript", "Rust", "Dart", "Scala", "Perl", "R", 
+		"Elixir", "Haskell", "Lua", "C", "MATLAB", "Shell"
+		];
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -94,75 +99,13 @@ export default function AddSnippet() {
 									<SelectValue placeholder="Select Language" />
 								</SelectTrigger>
 								<SelectContent className="overflow-y-auto scroll-smooth" >
-									<SelectGroup>
-										{/* all the popular programming values */}
-									<SelectItem value="Java">
-										Java
-										</SelectItem>
-									<SelectItem value="Python">
-										Python
-										</SelectItem>
-									<SelectItem value="JavaScript">
-										JavaScript
-										</SelectItem>
-									<SelectItem value="C++">
-										C++
-										</SelectItem>
-									<SelectItem value="C#">
-										C#
-										</SelectItem>
-									<SelectItem value="Go">
-										Go
-										</SelectItem>
-									<SelectItem value="Kotlin">
-										Kotlin
-										</SelectItem>
-									<SelectItem value="Ruby">
-										Ruby
-										</SelectItem>
-									<SelectItem value="Swift">
-										Swift
-										</SelectItem>
-									<SelectItem value="PHP">
-										PHP
-										</SelectItem>
-									<SelectItem value="TypeScript">
-										TypeScript
-										</SelectItem>
-									<SelectItem value="Rust">
-										Rust
-										</SelectItem>
-									<SelectItem value="Dart">
-										Dart
-										</SelectItem>
-									<SelectItem value="Scala">
-										Scala
-										</SelectItem>
-									<SelectItem value="Perl">
-										Perl
-										</SelectItem>
-									<SelectItem value="R">
-										R
-										</SelectItem>
-									<SelectItem value="Elixir">
-										Elixir
-										</SelectItem>
-									<SelectItem value="Haskell">
-										Haskell
-										</SelectItem>
-									<SelectItem value="Lua">
-										Lua
-										</SelectItem>
-									<SelectItem value="C">
-										C
-										</SelectItem>
-									<SelectItem value="MATLAB">
-										MATLAB
-										</SelectItem>
-									<SelectItem value="Shell">
-										Shell
-										</SelectItem>
-									</SelectGroup>
+								<SelectGroup>
+								{languages.map((language) => (
+									<SelectItem key={language} value={language}>
+									{language}
+									</SelectItem>
+								))}
+								</SelectGroup>
 								</SelectContent>
 							</Select>
 					</div>
