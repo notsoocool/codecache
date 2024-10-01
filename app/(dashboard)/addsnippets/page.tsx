@@ -15,7 +15,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { ReactLenis } from "@/utils/lenis";
-
 export default function AddSnippet() {
 	const [title, setTitle] = useState("");
 	const [language, setLanguage] = useState("");
@@ -27,6 +26,12 @@ export default function AddSnippet() {
 	const [usage, setUsage] = useState("");
 	const [message, setMessage] = useState("");
 	const router = useRouter();
+
+	const languages = [
+		"Java", "Python", "JavaScript", "C++", "C#", "Go", "Kotlin", "Ruby", 
+		"Swift", "PHP", "TypeScript", "Rust", "Dart", "Scala", "Perl", "R", 
+		"Elixir", "Haskell", "Lua", "C", "MATLAB", "Shell"
+		];
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -63,7 +68,6 @@ export default function AddSnippet() {
 	};
 
 	return (
-		<ReactLenis root>
 			<div className="p-8">
 				<h1 className="text-4xl font-bold mb-6">Add New Snippet</h1>
 				<form onSubmit={handleSubmit} className="space-y-4">
@@ -89,13 +93,23 @@ export default function AddSnippet() {
 						>
 							Language
 						</label>
-						<Input
-							id="language"
-							type="text"
-							value={language}
-							onChange={(e) => setLanguage(e.target.value)}
-							className="mt-1"
-						/>
+						<Select onValueChange={setLanguage}>
+								<SelectTrigger className="w-[180px]">
+									<SelectValue placeholder="Select Language" />
+								</SelectTrigger>
+								<SelectContent>
+                                    <SelectGroup>
+                                        {/* choosing each value from the languages array and then rendering it to the dropdown menu
+                                        the map funtion is to reduce repetition */}
+                                        {languages.map((language) => (
+                                            <SelectItem key={language} value={language}>
+                                            {language}
+                                            </SelectItem>
+                                        ))}
+
+                                    </SelectGroup>
+								</SelectContent>
+							</Select>
 					</div>
 					<div>
 						<label
@@ -241,6 +255,5 @@ export default function AddSnippet() {
 					)}
 				</form>
 			</div>
-		</ReactLenis>
 	);
 }
