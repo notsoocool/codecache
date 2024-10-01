@@ -100,11 +100,14 @@ export default function AddSnippet() {
 								</SelectTrigger>
 								<SelectContent className="overflow-y-auto scroll-smooth" >
 								<SelectGroup>
+									{/* choosing each value from the languages array and then rendering it to the dropdown menu
+									the map funtion is to reduce repetition */}
 								{languages.map((language) => (
 									<SelectItem key={language} value={language}>
 									{language}
 									</SelectItem>
 								))}
+
 								</SelectGroup>
 								</SelectContent>
 							</Select>
