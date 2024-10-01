@@ -98,7 +98,7 @@ export default function AddSnippet() {
 								<SelectTrigger className="w-[180px]">
 									<SelectValue placeholder="Select Language" />
 								</SelectTrigger>
-								<SelectContent className="overflow-y-auto scroll-smooth" >
+								<SelectContent className="overflow-y-auto scroll-auto" >
 								<SelectGroup>
 									{/* choosing each value from the languages array and then rendering it to the dropdown menu
 									the map funtion is to reduce repetition */}
