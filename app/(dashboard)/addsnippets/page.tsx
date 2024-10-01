@@ -106,11 +106,11 @@ export default function AddSnippet() {
 										JavaScript
 										</SelectItem>
 									<SelectItem value="C++">
-										C
-										++</SelectItem>
+										C++
+										</SelectItem>
 									<SelectItem value="C#">
-										C
-										#</SelectItem>
+										C#
+										</SelectItem>
 									<SelectItem value="Go">
 										Go
 										</SelectItem>
