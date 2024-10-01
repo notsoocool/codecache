@@ -8,23 +8,25 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-      contents: write
     steps:
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            const issueMessage = "👋 Welcome to our repository! We're glad you're here. If you have any questions, feel free to ask. Here's a guide to help you get started: [GETTING_STARTED](https://github.com/notsoocool/codecache/blob/main/CONTRIBUTING.md).";
-            const prMessage = "🎉 Thank you for your pull request! We appreciate your contribution. Please review the following guidelines to ensure your PR meets our requirements: [GETTING_STARTED](https://github.com/notsoocool/codecache/blob/main/CONTRIBUTING.md).";
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: |
+          🎉 **Welcome to CodeCache!** 🎉
 
-            if (context.issue) {
-              const issueNumber = context.issue.number;
-              const issueType = context.issue.pull_request ? 'pr' : 'issue';
-              const message = issueType === 'pr' ? prMessage : issueMessage;
+          Thank you for opening your first issue! We're excited to have you contributing to the project.
 
-              // Post a comment on the issue or PR
-              await github.rest.issues.createComment({
-                ...context.repo,
-                issue_number: issueNumber,
-                body: message
-              });
-            }
+          Before you get started, please make sure to check out our **contributing guidelines** and **coding standards** to ensure that everything is aligned with the project's workflow. If you have any questions or need help along the way, don't hesitate to ask.
+
+          We appreciate your input and look forward to collaborating with you. 🚀
+
+          Happy coding!
+        pr-message: |
+          🎉 **Thank you for your first pull request!** 🎉
+
+          We're thrilled to see your contribution to CodeCache. Make sure your code follows the **project guidelines** and has passed all the tests. 
+
+          If you need any assistance or clarification, feel free to ask. We’ll review your PR shortly and provide feedback if needed. Thanks again for helping improve the project!
+
+          Keep up the awesome work! 🚀
