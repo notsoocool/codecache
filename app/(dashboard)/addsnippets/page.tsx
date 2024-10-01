@@ -89,13 +89,82 @@ export default function AddSnippet() {
 						>
 							Language
 						</label>
-						<Input
-							id="language"
-							type="text"
-							value={language}
-							onChange={(e) => setLanguage(e.target.value)}
-							className="mt-1"
-						/>
+						<Select onValueChange={setLanguage}>
+								<SelectTrigger className="w-[180px]">
+									<SelectValue placeholder="Select Language" />
+								</SelectTrigger>
+								<SelectContent className="overflow-y-auto scroll-smooth" >
+									<SelectGroup>
+										{/* all the popular programming values */}
+									<SelectItem value="Java">
+										Java
+										</SelectItem>
+									<SelectItem value="Python">
+										Python
+										</SelectItem>
+									<SelectItem value="JavaScript">
+										JavaScript
+										</SelectItem>
+									<SelectItem value="C++">
+										C
+										++</SelectItem>
+									<SelectItem value="C#">
+										C
+										#</SelectItem>
+									<SelectItem value="Go">
+										Go
+										</SelectItem>
+									<SelectItem value="Kotlin">
+										Kotlin
+										</SelectItem>
+									<SelectItem value="Ruby">
+										Ruby
+										</SelectItem>
+									<SelectItem value="Swift">
+										Swift
+										</SelectItem>
+									<SelectItem value="PHP">
+										PHP
+										</SelectItem>
+									<SelectItem value="TypeScript">
+										TypeScript
+										</SelectItem>
+									<SelectItem value="Rust">
+										Rust
+										</SelectItem>
+									<SelectItem value="Dart">
+										Dart
+										</SelectItem>
+									<SelectItem value="Scala">
+										Scala
+										</SelectItem>
+									<SelectItem value="Perl">
+										Perl
+										</SelectItem>
+									<SelectItem value="R">
+										R
+										</SelectItem>
+									<SelectItem value="Elixir">
+										Elixir
+										</SelectItem>
+									<SelectItem value="Haskell">
+										Haskell
+										</SelectItem>
+									<SelectItem value="Lua">
+										Lua
+										</SelectItem>
+									<SelectItem value="C">
+										C
+										</SelectItem>
+									<SelectItem value="MATLAB">
+										MATLAB
+										</SelectItem>
+									<SelectItem value="Shell">
+										Shell
+										</SelectItem>
+									</SelectGroup>
+								</SelectContent>
+							</Select>
 					</div>
 					<div>
 						<label
