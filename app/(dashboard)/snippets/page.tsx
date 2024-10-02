@@ -394,7 +394,9 @@ export default function Snippets() {
 									<Button
 										variant="outline"
 										className="absolute top-8 right-6"
-										onClick={() =>
+										onClick={(e) =>
+											e.stopPropagation(); // to prevent page navigation onClick of copy
+											e.nativeEvent.preventDefault(); // to prevent page navigation onClick of copy
 											handleCopy(
 												snippet.code,
 												snippet._id
