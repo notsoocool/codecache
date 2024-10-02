@@ -83,6 +83,7 @@ export default function Snippets() {
 				const response = await fetch("/api/snippets");
 				const data = await response.json();
 				setSnippets(data);
+				console.log('snippets',data);
 			} catch (error) {
 				console.error("Error fetching snippets:", error);
 			} finally {
@@ -119,15 +120,19 @@ export default function Snippets() {
 
 	const handleBookmarkToggle = async (snippetId: string) => {
 		try {
+			console.log("Toggling bookmark for snippet:", snippetId);
 			const response = await fetch(`/api/bookmark/${snippetId}`, {
 				method: "PATCH",
 			});
 
 			if (!response.ok) {
+				const errorMessage = await response.text();
+				console.error("Failed to toggle bookmark:", errorMessage);
 				throw new Error("Failed to toggle bookmark");
 			}
 
 			const updatedSnippet = await response.json();
+			console.log("Updated Snippet:", updatedSnippet);
 			// Update your state or UI accordingly
 			setSnippets(
 				snippets.map((snippet) =>
@@ -144,7 +149,7 @@ export default function Snippets() {
 				toast.success("Bookmark removed");
 			}
 		} catch (error) {
-			console.error(error);
+			console.error("Error toggling bookmark:", error);
 			toast.error("Error toggling bookmark");
 		}
 	};

@@ -48,6 +48,21 @@ export async function POST(req: Request) {
         });
 
         await newSnippet.save();
+
+        const newsnippet = new Snippet({
+            title,
+            language,
+            code,
+            description,
+            tags,
+            category,          // Ensure this is included
+            difficulty,        // Ensure this is included
+            usage,             // Ensure this is included
+            // submittedBy: userId,
+        });
+
+        await newsnippet.save();
+
         return NextResponse.json(
             { message: "Snippet submitted for approval" },
             { status: 201 }
