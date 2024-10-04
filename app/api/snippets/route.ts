@@ -1,53 +1,50 @@
 import { NextResponse } from "next/server";
-import Snippet from "@/lib/db/snippetModel";
-import SnippetRequest from "@/lib/db/snippetRequestModel";
-import dbConnect from "@/lib/db/connect";
+
 import { currentUser } from "@clerk/nextjs/server";
+import db from "@/lib/db";
 
 export async function GET() {
-	try {
-		await dbConnect();
-		const snippets = await Snippet.find({});
-		console.log("Fetched Snippets"); // Add debug log
-		return NextResponse.json(snippets);
-	} catch (error) {
-		console.error("Error fetching snippets:", error); // Add debug log
-		return NextResponse.json(
-			{ error: "Error fetching snippets" },
-			{ status: 500 }
-		);
-	}
+    try {
+        const snippets = await db.snippet.findMany({ where: { status: "APPROVED" } });
+        return NextResponse.json(snippets);
+
+    } catch (error) {
+
+        console.error("Error fetching snippets:", error); // Add debug log
+        return NextResponse.json(
+            { error: "Error fetching snippets" },
+            { status: 500 }
+        );
+    }
 }
 
 export async function POST(req: Request) {
     try {
-        await dbConnect();
         const { title, language, code, description, tags, category, difficulty, usage } = await req.json();
-        // console.log("Request body:", { title, language, code, description, tags, category, difficulty, usage }); // Log the incoming data
-        // console.log("Database Connection Status:", mongoose.connection.readyState);
 
         const user = await currentUser();
-        const userId = user?.id;
-
-        if (!userId) {
+        if (!user) {
             return NextResponse.json(
                 { error: "User not authenticated" },
                 { status: 401 }
             );
         }
-        const newSnippet = new SnippetRequest({
-            title,
-            language,
-            code,
-            description,
-            tags,
-            category,          // Ensure this is included
-            difficulty,        // Ensure this is included
-            usage,             // Ensure this is included
-            submittedBy: userId,
-        });
 
-        await newSnippet.save();
+        const userId = user.id;
+        const newSnippet = await db.snippet.create({
+            data: {
+                title,
+                language,
+                code,
+                description,
+                tags,
+                category,          // Ensure this is included
+                difficulty,        // Ensure this is included
+                usage,             // Ensure this is included
+                submittedBy: userId,
+            }
+        })
+
         return NextResponse.json(
             { message: "Snippet submitted for approval" },
             { status: 201 }

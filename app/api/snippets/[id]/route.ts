@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import Snippet from "@/lib/db/snippetModel";
-import dbConnect from "@/lib/db/connect";
-import { ObjectId } from "mongodb";
+import bson from "bson-objectid";
+import db from "@/lib/db";
 
 // Handler for GET requests (fetching snippet by ID)
 export async function GET(
@@ -9,13 +8,11 @@ export async function GET(
 	{ params }: { params: { id: string } }
 ) {
 	try {
-		// Connect to the database
-		await dbConnect();
 
 		const { id } = params; // Extract the snippet ID from the request params
 
 		// Check if the ID is a valid MongoDB ObjectId
-		if (!ObjectId.isValid(id)) {
+		if (!bson.isValid(id)) {
 			return NextResponse.json(
 				{ error: "Invalid snippet ID" },
 				{ status: 400 }
@@ -23,7 +20,7 @@ export async function GET(
 		}
 
 		// Find the snippet by ID in the database
-		const snippet = await Snippet.findById(id);
+		const snippet = await db.snippet.findUnique({ where: { id } });
 
 		// If snippet not found, return a 404 error
 		if (!snippet) {

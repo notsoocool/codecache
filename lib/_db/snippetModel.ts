@@ -1,6 +1,9 @@
 // lib/db/snippetModel.ts
 import mongoose, { Schema, Document, Model } from "mongoose";
 
+/**
+ * @deprecated Use prisma orm instead
+ */
 export interface ISnippet extends Document {
 	title: string;
 	language: string;
@@ -50,6 +53,9 @@ const snippetSchema: Schema = new mongoose.Schema({
 	},
 });
 
+/**
+ * @deprecated Use prisma orm instead
+ */
 const Snippet: Model<ISnippet> =
 	mongoose.models.Snippet ||
 	mongoose.model<ISnippet>("Snippet", snippetSchema);
