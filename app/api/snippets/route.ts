@@ -5,7 +5,7 @@ import db from "@/lib/db";
 
 export async function GET() {
     try {
-        const snippets = await db.snippet.findMany({ where: { status: "APPROVED" } });
+        const snippets = await db.snippet.findMany();
         return NextResponse.json(snippets);
 
     } catch (error) {
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         }
 
         const userId = user.id;
-        const newSnippet = await db.snippet.create({
+        const newSnippet = await db.snippetRequest.create({
             data: {
                 title,
                 language,

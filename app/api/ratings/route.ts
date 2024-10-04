@@ -1,9 +1,7 @@
 // pages/api/ratings/route.ts
 
-import Rating from "@/lib/db/ratingModel";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
-import dbConnect from "@/lib/db/connect";
 import db from "@/lib/db";
 
 export async function POST(req: Request) {

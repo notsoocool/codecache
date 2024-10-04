@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Snippet {
-  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   language      String
   code          String
@@ -24,12 +24,24 @@ model Snippet {
   difficulty    String
   usage         String
   bookmarkedBy  String[]
-  averageRating Int           @default(0)
-  submittedBy   String
-  createdAt     DateTime      @default(now())
-  status        SnippetStatus @default(PENDING)
+  averageRating Int      @default(0)
+  createdAt     DateTime @default(now())
 
   ratings Rating[]
+}
+
+model SnippetRequest {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  language    String
+  code        String
+  description String?
+  tags        String[]
+  category    String
+  difficulty  String
+  usage       String
+  submittedBy String
+  createdAt   DateTime @default(now())
 }
 
 model Rating {

@@ -42,13 +42,13 @@ To get started with CodeCache, follow these steps:
 
 3. **Create Environment Variables**
 
-   Create a `.env` file from the `.env.sample` file provided:
+   Create a `.env.local` file from the `.env.sample` file provided:
 
    ```bash
-   cp .env.sample .env
+   cp .env.sample .env.local
    ```
 
-   Update the `.env` file with your MongoDB connection string and other necessary environment variables.
+   Update the `.env.local` file with your MongoDB connection string and other necessary environment variables.
 
 4. **Run the Development Server**
 

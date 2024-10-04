@@ -13,7 +13,7 @@ export async function GET() {
 			return new NextResponse("Unauthorized", { status: 401 });
 		}
 
-		const pendingSnippets = await db.snippet.findMany({ where: { status: 'PENDING' } });
+		const pendingSnippets = await db.snippetRequest.findMany();
 
 		console.log("Fetched Pending Snippets");
 		return NextResponse.json(pendingSnippets);

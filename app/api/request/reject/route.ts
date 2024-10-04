@@ -8,7 +8,7 @@ export async function DELETE(req: NextRequest) {
 	try {
 		const { requestId } = await req.json();
 
-		const request = await db.snippet.findUnique({ where: { id: requestId } })
+		const request = await db.snippetRequest.findUnique({ where: { id: requestId } })
 
 		if (!request)
 			return NextResponse.json(
@@ -16,7 +16,7 @@ export async function DELETE(req: NextRequest) {
 				{ status: 404 }
 			);
 
-		await db.snippet.update({ where: { id: request.id }, data: { status: 'REJECTED' } })
+		await db.snippetRequest.delete({ where: { id: request.id } })
 
 		return NextResponse.json(
 			{ message: "Snippet request rejected and deleted" },

@@ -10,17 +10,28 @@ export async function PATCH(req: NextRequest) {
 	try {
 		const { requestId } = await req.json();
 
-		const request = await db.snippet.findUnique({ where: { id: requestId } })
+		const request = await db.snippetRequest.findUnique({ where: { id: requestId } })
 		if (!request)
 			return NextResponse.json(
 				{ message: "Snippet request not found" },
 				{ status: 404 }
 			);
 
-		await db.snippet.update({ where: { id: request.id }, data: { status: 'APPROVED' } })
+		await db.snippet.create({
+			data: {
+				code: request.code,
+				difficulty: request.difficulty,
+				description: request.description,
+				title: request.title,
+				language: request.language,
+				category: request.category,
+				tags: request.tags,
+				usage: request.usage,
+			}
+		})
 
 		return NextResponse.json(
-			{ message: "Snippet accepted and approved" },
+			{ message: "Snippet accepted and added to the database" },
 			{ status: 200 }
 		);
 	} catch (error) {
