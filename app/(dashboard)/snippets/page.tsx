@@ -135,17 +135,17 @@ export default function Snippets() {
         )
       );
 
-      // Show success toast message
-      if (updatedSnippet.bookmarkedBy.includes(userId)) {
-        toast.success("Snippet bookmarked");
-      } else {
-        toast.success("Bookmark removed");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Error toggling bookmark");
-    }
-  };
+			// Show success toast message
+			if (updatedSnippet.bookmarkedBy.includes(userId)) {
+				toast.success("Snippet bookmarked");
+			} else {
+				toast.success("Bookmark removed");
+			}
+		} catch (error) {
+			console.error("Error toggling bookmark:", error);
+			toast.error("Error toggling bookmark");
+		}
+	};
 
   const handleCopy = (code: string, id: number) => {
     navigator.clipboard.writeText(code).then(() => {
