@@ -44,18 +44,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// Define the snippet type
-type Snippet = {
-  _id: any;
-  title: string;
-  language: string;
-  code: string;
-  tags: string[];
-  bookmarkedBy: string[];
-  category: string;
-  difficulty: string;
-  usage: string;
-};
+import { Snippet } from "@prisma/client";
+
 
 export default function Snippets() {
   const { theme } = useTheme();
@@ -66,7 +56,9 @@ export default function Snippets() {
 
   const [loading, setLoading] = useState(true); // Loading state
   const [snippets, setSnippets] = useState<Snippet[]>([]);
-  const [copied, setCopied] = useState<number | null>(null); // For copy feedback
+
+  const [copied, setCopied] = useState<string | null>(null); // For copy feedback
+
   const snippetsRef = useRef<HTMLDivElement>(null); // Reference to the snippets container
   const [activeSnippetId, setActiveSnippetId] = useState<string | null>(null); // To track active snippet
   const [userId, setUserId] = useState<string | null>(null);
@@ -114,7 +106,8 @@ export default function Snippets() {
       }
     };
 
-    snippets.forEach((snippet) => fetchRatings(snippet._id));
+    snippets.forEach((snippet) => fetchRatings(snippet.id));
+
   }, [snippets]);
 
   const handleBookmarkToggle = async (snippetId: string) => {
@@ -131,7 +124,8 @@ export default function Snippets() {
       // Update your state or UI accordingly
       setSnippets(
         snippets.map((snippet) =>
-          snippet._id === updatedSnippet._id ? updatedSnippet : snippet
+          snippet.id === updatedSnippet.id ? updatedSnippet : snippet
+
         )
       );
 
@@ -147,7 +141,8 @@ export default function Snippets() {
     }
   };
 
-  const handleCopy = (code: string, id: number) => {
+
+  const handleCopy = (code: string, id: string) => {
     navigator.clipboard.writeText(code).then(() => {
       setCopied(id); // Set the ID of the copied snippet
       toast("Code copied to clipboard");
@@ -277,10 +272,11 @@ export default function Snippets() {
           </div>
           {filteredSnippets.map((snippet) => (
             <Button
-              key={snippet._id}
-              variant={snippet._id === activeSnippetId ? "secondary" : "ghost"}
+              key={snippet.id}
+              variant={snippet.id === activeSnippetId ? "secondary" : "ghost"}
               onClick={() => {
-                const element = document.getElementById(snippet._id);
+                const element = document.getElementById(snippet.id);
+
                 if (element) {
                   const elementTop =
                     element.getBoundingClientRect().top + window.scrollY; // Get the element's position relative to the document
@@ -289,7 +285,8 @@ export default function Snippets() {
                     behavior: "smooth", // Smooth scrolling
                   });
                 } else {
-                  console.error("Element not found for ID:", snippet._id);
+                  console.error("Element not found for ID:", snippet.id);
+
                 }
               }}
             >
@@ -303,11 +300,13 @@ export default function Snippets() {
       <div className="p-2 pt-8 w-9/12">
         <div className="grid grid-cols-1 gap-6" ref={snippetsRef}>
           {filteredSnippets.map((snippet) => (
-            <Link href={`/snippets/${snippet._id}`} key={snippet._id}>
+
+            <Link href={`/snippets/${snippet.id}`} key={snippet.id}>
               <Card
-                id={snippet._id}
+                id={snippet.id}
                 ref={(el) => {
-                  snippetRefs.current[snippet._id] = el;
+                  snippetRefs.current[snippet.id] = el;
+
                 }}
                 className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300 min-h-[350px]"
               >
@@ -316,7 +315,9 @@ export default function Snippets() {
                     {snippet.title}
                     <div className="flex gap-10 flex-row-reverse items-center text-xs font-normal">
                       <div className=" flex gap-2">
-                        {ratings[snippet._id]?.averageRating.toFixed(1)}
+
+                        {ratings[snippet.id]?.averageRating.toFixed(1)}
+
                         <div className=" flex">
                           {[...Array(5)].map((_, index) => {
                             const ratingValue = index + 1;
@@ -326,7 +327,7 @@ export default function Snippets() {
                                 className={`size-4 cursor-pointer transition-all ${
                                   ratingValue <=
                                   (hoveredRating ||
-                                    ratings[snippet._id]?.userRating)
+                                    ratings[snippet.id]?.userRating)
                                     ? "text-muted-foreground fill-muted-foreground"
                                     : "text-muted-foreground/50"
                                 }`}
@@ -335,7 +336,8 @@ export default function Snippets() {
                           })}
                         </div>
                         <div className=" text-blue-500">
-                          {ratings[snippet._id]?.totalRatings || 0} ratings
+                          {ratings[snippet.id]?.totalRatings || 0} ratings
+
                         </div>
                       </div>
                     </div>
@@ -350,11 +352,8 @@ export default function Snippets() {
                   <Button
                     variant="outline"
                     className="absolute top-8 right-6"
-                    onClick={(e) => {
-                      e.stopPropagation(); // to prevent page navigation onClick of copy
-                      e.nativeEvent.preventDefault(); // to prevent page navigation onClick of copy
-                      handleCopy(snippet.code, snippet._id);
-                    }}
+
+                    onClick={() => handleCopy(snippet.code, snippet.id)}
                   >
                     <Copy size={16} />
                   </Button>
@@ -363,8 +362,10 @@ export default function Snippets() {
                     variant="outline"
                     onClick={(e) => {
                       e.preventDefault();
-                      if (snippet._id) {
-                        handleBookmarkToggle(snippet._id);
+
+                      if (snippet.id) {
+                        handleBookmarkToggle(snippet.id);
+
                       } else {
                         console.error("Snippet ID is null");
                       }
@@ -387,7 +388,8 @@ export default function Snippets() {
                   <div className="flex gap-2">
                     {snippet.tags.map((tag) => (
                       <Badge
-                        key={`${snippet._id}-${tag}`}
+                        key={`${snippet.id}-${tag}`}
+
                         variant="outline"
                         className="text-xs"
                       >

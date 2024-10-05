@@ -2,6 +2,9 @@
 
 import mongoose, { Schema, Document, Model } from "mongoose";
 
+/**
+ * @deprecated Use prisma orm instead
+ */
 export interface IRating extends Document {
 	snippetId: mongoose.Schema.Types.ObjectId;
 	userId: string; // Clerk user ID or any unique user identifier
@@ -38,6 +41,9 @@ const ratingSchema: Schema = new mongoose.Schema(
 	}
 );
 
+/**
+ * @deprecated Use prisma orm instead
+ */
 const Rating: Model<IRating> =
 	mongoose.models.Rating || mongoose.model<IRating>("Rating", ratingSchema);
 

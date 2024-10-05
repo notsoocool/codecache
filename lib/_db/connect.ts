@@ -1,11 +1,18 @@
+
 import mongoose from "mongoose";
 
+/**
+ * @deprecated Use prisma orm instead
+ */
 type ConnectionObject = {
 	isConnected?: number;
 };
 
 const connection: ConnectionObject = {};
 
+/**
+ * @deprecated Use prisma orm instead
+ */
 async function dbConnect(): Promise<void> {
 	if (connection.isConnected) {
 		console.log("Already connected to Database");

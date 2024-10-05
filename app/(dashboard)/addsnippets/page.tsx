@@ -6,66 +6,86 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { ReactLenis } from "@/utils/lenis";
 export default function AddSnippet() {
-	const [title, setTitle] = useState("");
-	const [language, setLanguage] = useState("");
-	const [code, setCode] = useState("");
-	const [description, setDescription] = useState("");
-	const [tags, setTags] = useState("");
-	const [category, setCategory] = useState("");
-	const [difficulty, setDifficulty] = useState("");
-	const [usage, setUsage] = useState("");
-	const [message, setMessage] = useState("");
-	const router = useRouter();
+  const [title, setTitle] = useState("");
+  const [language, setLanguage] = useState("");
+  const [code, setCode] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
+  const [category, setCategory] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+  const [usage, setUsage] = useState("");
+  const [message, setMessage] = useState("");
+  const router = useRouter();
 
-	const languages = [
-		"Java", "Python", "JavaScript", "C++", "C#", "Go", "Kotlin", "Ruby", 
-		"Swift", "PHP", "TypeScript", "Rust", "Dart", "Scala", "Perl", "R", 
-		"Elixir", "Haskell", "Lua", "C", "MATLAB", "Shell"
-		];
+  const languages = [
+    "Java",
+    "Python",
+    "JavaScript",
+    "C++",
+    "C#",
+    "Go",
+    "Kotlin",
+    "Ruby",
+    "Swift",
+    "PHP",
+    "TypeScript",
+    "Rust",
+    "Dart",
+    "Scala",
+    "Perl",
+    "R",
+    "Elixir",
+    "Haskell",
+    "Lua",
+    "C",
+    "MATLAB",
+    "Shell",
+  ];
+
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		// Prepare tags as an array
-		const tagsArray = tags.split(",").map((tag) => tag.trim());
+    // Prepare tags as an array
+    const tagsArray = tags.split(",").map((tag) => tag.trim());
 
-		try {
-			const response = await fetch("/api/snippets", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					title,
-					language,
-					code,
-					description,
-					tags: tagsArray,
-					category, // Add category
-					difficulty, // Add difficulty
-					usage, // Add usage
-				}),
-			});
-			if (response.ok) {
-				setMessage("Snippet added successfully!");
-				router.push("/");
-			} else {
-				setMessage("Failed to add snippet. Please try again.");
-			}
-		} catch (error) {
-			setMessage("An error occurred. Please try again.");
-		}
-	};
+    try {
+      const response = await fetch("/api/snippets", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          language,
+          code,
+          description,
+          tags: tagsArray,
+          category, // Add category
+          difficulty, // Add difficulty
+          usage, // Add usage
+        }),
+      });
+      if (response.ok) {
+        setMessage("Snippet added successfully!");
+        router.push("/");
+      } else {
+        setMessage("Failed to add snippet. Please try again.");
+      }
+    } catch (error) {
+      setMessage("An error occurred. Please try again.");
+    }
+  };
 
 	return (
 			<div className="p-8">
@@ -221,29 +241,21 @@ export default function AddSnippet() {
 								Usage
 							</label>
 
-							<Select onValueChange={setUsage}>
-								<SelectTrigger className="w-[180px]">
-									<SelectValue placeholder="Select usage type" />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectGroup>
-										<SelectItem value="Educational">
-											Educational
-										</SelectItem>
-										<SelectItem value="Utility">
-											Utility
-										</SelectItem>
-										<SelectItem value="Template">
-											Template
-										</SelectItem>
-										<SelectItem value="Other">
-											Other
-										</SelectItem>
-									</SelectGroup>
-								</SelectContent>
-							</Select>
-						</div>
-					</div>
+              <Select onValueChange={setUsage}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select usage type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="Educational">Educational</SelectItem>
+                    <SelectItem value="Utility">Utility</SelectItem>
+                    <SelectItem value="Template">Template</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
 
 					<div className=" flex justify-end">
 						<Button type="submit" className="mt-4">

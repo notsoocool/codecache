@@ -1,13 +1,11 @@
 // pages/api/ratings/route.ts
 
-import Rating from "@/lib/db/ratingModel";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
-import dbConnect from "@/lib/db/connect";
+import db from "@/lib/db";
 
 export async function POST(req: Request) {
 	try {
-        await dbConnect();
 		const { snippetId, rating } = await req.json(); // Extracting data from the request body
 		const user = await currentUser(); // Get the current user from Clerk
 
@@ -19,31 +17,42 @@ export async function POST(req: Request) {
 		}
 
 		// Check if the user has already rated this snippet
-		const existingRating = await Rating.findOne({
-			snippetId,
-			userId: user.id,
-		});
+		const existingRating = await db.rating.findFirst({
+			where: { userId: user.id, snippetId }
+		})
 
 		if (existingRating) {
 			// Update the existing rating
-			existingRating.rating = rating;
-			await existingRating.save();
+			await db.rating.update({
+				where: { id: existingRating.id },
+				data: { rating }
+			})
 		} else {
 			// Create a new rating entry
-			await Rating.create({ snippetId, userId: user.id, rating });
+			await db.rating.create({
+				data: {
+					snippetId,
+					userId: user.id,
+					rating
+				}
+			})
 		}
 
 		// Recalculate the average rating for the snippet
-		const ratings = await Rating.find({ snippetId });
+		const ratings = await db.rating.findMany({ where: { snippetId } });
 		const totalRatings = ratings.length;
 		const averageRating =
 			ratings.reduce((sum, rating) => sum + rating.rating, 0) /
 			totalRatings;
 
+		// Updating average rating in snippet
+		await db.snippet.update({ where: { id: snippetId }, data: { averageRating } });
+
+
 		return NextResponse.json({
 			message: "Rating submitted successfully",
 			averageRating,
-            totalRatings,
+			totalRatings,
 		});
 	} catch (error) {
 		return NextResponse.json(

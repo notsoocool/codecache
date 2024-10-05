@@ -3,7 +3,6 @@ import "./styles/globals.css";
 import { ThemeProvider } from "@/components/global/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ReactLenis } from "@/utils/lenis";
-
 export const metadata: Metadata = {
 	title: "CodeCache - Snippet Manager for Developers", 
 	description: "CodeCache is a powerful snippet manager designed to help developers organize, store, and access their code snippets efficiently.", 
@@ -29,9 +28,9 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
 	return (
 		<ClerkProvider>
