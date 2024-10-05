@@ -54,11 +54,11 @@ export default function SnippetPage() {
   const [comments, setComments] = useState<Comment[]>([]);
 
   const [newComment, setNewComment] = useState("");
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	
-	// for dummy author img 
-	const DUMMY_AVATAR_URL = "https://api.dicebear.com/6.x/initials/svg?seed=";
-	
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // for dummy author img
+  const DUMMY_AVATAR_URL = "https://api.dicebear.com/6.x/initials/svg?seed=";
+
   useEffect(() => {
     // Fetch the snippet by ID
     async function fetchSnippet() {
@@ -317,18 +317,16 @@ export default function SnippetPage() {
                   className="mb-4 p-4 bg-card rounded-lg shadow"
                 >
                   <div className="flex items-center mb-2">
-				  <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
-      <img 
-        src={`${DUMMY_AVATAR_URL}${encodeURIComponent(comment.userId)}`}
-        alt={`Avatar for ${comment.userId}`}
-        className="w-full h-full object-cover"
-      />
-    </div>
-                    <CardTitle>
-                      {/* <span className="font-semibold text-foreground">
-                        {comment.userId}
-                      </span> */}
-                    </CardTitle>
+                    <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
+                      <img
+                        src={`${DUMMY_AVATAR_URL}${encodeURIComponent(
+                          comment.userId
+                        )}`}
+                        alt={`Avatar for ${comment.userId}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <CardTitle></CardTitle>
                     <span className="text-sm text-muted-foreground ml-2">
                       {formatDistanceToNow(new Date(comment.createdAt), {
                         addSuffix: true,
