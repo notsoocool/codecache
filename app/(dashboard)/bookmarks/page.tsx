@@ -76,7 +76,7 @@ export default function Bookmarks() {
   // Refs for each snippet card to track visibility
   const snippetRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
-  const fetchBookmarkedSnippets = async (userId) => {
+  const fetchBookmarkedSnippets = async (userId: any) => {
     try {
       const response = await fetch(`/api/bookmark/${userId}`, {
         method: "GET",
@@ -367,7 +367,11 @@ export default function Bookmarks() {
                   <Button
                     variant="outline"
                     className="absolute top-8 right-6"
-                    onClick={() => handleCopy(snippet.code, snippet._id)}
+                    onClick={(e) => {
+                      e.stopPropagation(); // to prevent page navigation onClick of copy
+                      e.nativeEvent.preventDefault(); // to prevent page navigation onClick of copy
+                      handleCopy(snippet.code, snippet._id);
+                    }}
                   >
                     <Copy size={16} />
                   </Button>
