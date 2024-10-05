@@ -43,7 +43,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { Snippet } from "@prisma/client";
+
 
 export default function Snippets() {
   const { theme } = useTheme();
@@ -54,7 +56,9 @@ export default function Snippets() {
 
   const [loading, setLoading] = useState(true); // Loading state
   const [snippets, setSnippets] = useState<Snippet[]>([]);
+
   const [copied, setCopied] = useState<string | null>(null); // For copy feedback
+
   const snippetsRef = useRef<HTMLDivElement>(null); // Reference to the snippets container
   const [activeSnippetId, setActiveSnippetId] = useState<string | null>(null); // To track active snippet
   const [userId, setUserId] = useState<string | null>(null);
@@ -103,6 +107,7 @@ export default function Snippets() {
     };
 
     snippets.forEach((snippet) => fetchRatings(snippet.id));
+
   }, [snippets]);
 
   const handleBookmarkToggle = async (snippetId: string) => {
@@ -120,6 +125,7 @@ export default function Snippets() {
       setSnippets(
         snippets.map((snippet) =>
           snippet.id === updatedSnippet.id ? updatedSnippet : snippet
+
         )
       );
 
@@ -134,6 +140,7 @@ export default function Snippets() {
       toast.error("Error toggling bookmark");
     }
   };
+
 
   const handleCopy = (code: string, id: string) => {
     navigator.clipboard.writeText(code).then(() => {
@@ -269,6 +276,7 @@ export default function Snippets() {
               variant={snippet.id === activeSnippetId ? "secondary" : "ghost"}
               onClick={() => {
                 const element = document.getElementById(snippet.id);
+
                 if (element) {
                   const elementTop =
                     element.getBoundingClientRect().top + window.scrollY; // Get the element's position relative to the document
@@ -278,6 +286,7 @@ export default function Snippets() {
                   });
                 } else {
                   console.error("Element not found for ID:", snippet.id);
+
                 }
               }}
             >
@@ -291,11 +300,13 @@ export default function Snippets() {
       <div className="p-2 pt-8 w-9/12">
         <div className="grid grid-cols-1 gap-6" ref={snippetsRef}>
           {filteredSnippets.map((snippet) => (
+
             <Link href={`/snippets/${snippet.id}`} key={snippet.id}>
               <Card
                 id={snippet.id}
                 ref={(el) => {
                   snippetRefs.current[snippet.id] = el;
+
                 }}
                 className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300 min-h-[350px]"
               >
@@ -304,7 +315,9 @@ export default function Snippets() {
                     {snippet.title}
                     <div className="flex gap-10 flex-row-reverse items-center text-xs font-normal">
                       <div className=" flex gap-2">
+
                         {ratings[snippet.id]?.averageRating.toFixed(1)}
+
                         <div className=" flex">
                           {[...Array(5)].map((_, index) => {
                             const ratingValue = index + 1;
@@ -324,6 +337,7 @@ export default function Snippets() {
                         </div>
                         <div className=" text-blue-500">
                           {ratings[snippet.id]?.totalRatings || 0} ratings
+
                         </div>
                       </div>
                     </div>
@@ -338,6 +352,7 @@ export default function Snippets() {
                   <Button
                     variant="outline"
                     className="absolute top-8 right-6"
+
                     onClick={() => handleCopy(snippet.code, snippet.id)}
                   >
                     <Copy size={16} />
@@ -347,8 +362,10 @@ export default function Snippets() {
                     variant="outline"
                     onClick={(e) => {
                       e.preventDefault();
+
                       if (snippet.id) {
                         handleBookmarkToggle(snippet.id);
+
                       } else {
                         console.error("Snippet ID is null");
                       }
@@ -372,6 +389,7 @@ export default function Snippets() {
                     {snippet.tags.map((tag) => (
                       <Badge
                         key={`${snippet.id}-${tag}`}
+
                         variant="outline"
                         className="text-xs"
                       >
