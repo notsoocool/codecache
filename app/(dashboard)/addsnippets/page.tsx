@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -27,6 +27,8 @@ export default function AddSnippet() {
 	const [usage, setUsage] = useState("");
 	const [message, setMessage] = useState("");
 	const router = useRouter();
+	const descriptionRef = useRef<HTMLTextAreaElement>(null);
+	const codeRef = useRef<HTMLTextAreaElement>(null);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -109,6 +111,7 @@ export default function AddSnippet() {
 							value={code}
 							onChange={(e) => setCode(e.target.value)}
 							className="mt-1"
+							ref={codeRef}
 						/>
 					</div>
 					<div>
@@ -123,6 +126,7 @@ export default function AddSnippet() {
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 							className="mt-1"
+							ref={descriptionRef}
 						/>
 					</div>
 					<div>
