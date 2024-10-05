@@ -31,13 +31,11 @@ type Snippet = {
 
 type Comment = {
   _id: string;
+  snippetId: string;
+  userId: string;
   content: string;
-  author: {
-    _id: string;
-    name: string;
-    image: string;
-  };
   createdAt: string;
+  updatedAt: string;
 };
 
 export default function SnippetPage() {
@@ -56,7 +54,11 @@ export default function SnippetPage() {
   const [comments, setComments] = useState<Comment[]>([]);
 
   const [newComment, setNewComment] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	
+	// for dummy author img 
+	const DUMMY_AVATAR_URL = "https://api.dicebear.com/6.x/initials/svg?seed=";
+	
   useEffect(() => {
     // Fetch the snippet by ID
     async function fetchSnippet() {
@@ -93,6 +95,28 @@ export default function SnippetPage() {
 
     if (id) {
       fetchRatings();
+    }
+  }, [id]);
+
+  useEffect(() => {
+    async function fetchComments() {
+      try {
+        const response = await fetch(`/api/snippets/${id}/comments`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch comments");
+        }
+        const data = await response.json();
+        setComments(data);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+        // Optionally, you can set an error state here
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (id) {
+      fetchComments();
     }
   }, [id]);
 
@@ -268,20 +292,57 @@ export default function SnippetPage() {
             </div>
           </div>
         </CardFooter>
-        <form onSubmit={handleSubmitComment} className="mt-6 w-full">
-          <div className="flex gap-2">
-            <Input
-              type="text"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Write your comment..."
-              className="flex-grow"
-            />
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Posting..." : "Post"}
-            </Button>
+        <CardFooter className="bg-primary-50 p-4 flex flex-col gap-4">
+          <form onSubmit={handleSubmitComment} className="mt-6 w-full">
+            <div className="flex gap-2">
+              <Input
+                type="text"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Write your comment..."
+                className="flex-grow"
+              />
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Posting..." : "Post"}
+              </Button>
+            </div>
+          </form>
+
+          <div className="mt-6 w-full">
+            <h3 className="text-lg font-semibold mb-4">Comments</h3>
+            {comments.length > 0 ? (
+              comments.map((comment) => (
+                <div
+                  key={comment._id}
+                  className="mb-4 p-4 bg-card rounded-lg shadow"
+                >
+                  <div className="flex items-center mb-2">
+				  <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
+      <img 
+        src={`${DUMMY_AVATAR_URL}${encodeURIComponent(comment.userId)}`}
+        alt={`Avatar for ${comment.userId}`}
+        className="w-full h-full object-cover"
+      />
+    </div>
+                    <CardTitle>
+                      {/* <span className="font-semibold text-foreground">
+                        {comment.userId}
+                      </span> */}
+                    </CardTitle>
+                    <span className="text-sm text-muted-foreground ml-2">
+                      {formatDistanceToNow(new Date(comment.createdAt), {
+                        addSuffix: true,
+                      })}
+                    </span>
+                  </div>
+                  <p className="text-foreground">{comment.content}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500">No comments yet.</p>
+            )}
           </div>
-        </form>
+        </CardFooter>
       </Card>
     </div>
   );
