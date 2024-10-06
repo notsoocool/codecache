@@ -30,9 +30,8 @@ export async function PATCH(req: NextRequest) {
 			userId: request.submittedBy,
 			bookmarkedBy: [], // Initialize as empty
 			category: request.category, // Include category
-			difficulty: request.difficulty, // Include difficulty
-			usage: request.usage // Include usage
-
+				difficulty: request.difficulty, // Include difficulty
+				usage: request.usage // Include usage
 		});
 
 		await newSnippet.save();

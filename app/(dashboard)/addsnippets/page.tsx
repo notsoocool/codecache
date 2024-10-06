@@ -70,7 +70,7 @@ export default function AddSnippet() {
 	};
 
 	return (
-			<div className="w-full p-8">
+			<div className="p-8">
 				<h1 className="text-4xl font-bold mb-6">Add New Snippet</h1>
 				<form onSubmit={handleSubmit} className="space-y-4">
 					<div>
