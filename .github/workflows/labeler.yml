@@ -1,23 +1,53 @@
-# This workflow will triage pull requests and apply a label based on the
-# paths that are modified in the pull request.
-#
-# To use this workflow, you will need to set up a .github/labeler.yml
-# file with configuration.  For more information, see:
-# https://github.com/actions/labeler
+name: Auto Labeler
 
-name: Labeler
-on: [pull_request_target]
+on:
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited]
 
 jobs:
-  label:
-
+  labeler:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
     steps:
-    - uses: actions/labeler@v4
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
-        configuration-path: .github/workflows/labeler.yml
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Label issues and PRs
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = context.payload.issue || context.payload.pull_request;
+            const labels = [];
+
+            // Define keywords and their associated labels
+            const labelMappings = {
+              'bug': 'bug',
+              'enhancement': 'enhancement',
+              'feature': 'feature',
+              'good first issue': 'good first issue',
+              'ui': 'ui',
+              'hacktoberfest': 'hacktoberfest',
+              'hacktoberfest-accepted': 'hacktoberfest-accepted',
+              'documentation': 'documentation',
+              'gssoc-ext': 'gssoc-ext',
+              'workflow': 'workflow',
+              'automation': 'automation',
+              // Add more mappings as needed
+            };
+
+            // Apply labels based on title or body content
+            for (const [keyword, label] of Object.entries(labelMappings)) {
+              if (issue.title.toLowerCase().includes(keyword) || issue.body.toLowerCase().includes(keyword)) {
+                labels.push(label);
+              }
+            }
+
+            if (labels.length > 0) {
+              github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labels
+              });
+            }
