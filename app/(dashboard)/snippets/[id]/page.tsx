@@ -292,7 +292,12 @@ export default function SnippetPage() {
             </div>
           </div>
         </CardFooter>
-        <CardFooter className="bg-primary-50 p-4 flex flex-col gap-4">
+        <CardFooter className="bg-primary-50 p-4 flex flex-col gap-4"></CardFooter>
+      </Card>
+
+      {/* comments card */}
+      <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300 mt-6">
+        <div className="flex flex-col p-4 ">
           <form onSubmit={handleSubmitComment} className="mt-6 w-full">
             <div className="flex gap-2">
               <Input
@@ -314,7 +319,7 @@ export default function SnippetPage() {
               comments.map((comment) => (
                 <div
                   key={comment._id}
-                  className="mb-4 p-4 bg-card rounded-lg shadow"
+                  className="mb-4  bg-card rounded-lg shadow"
                 >
                   <div className="flex items-center mb-2">
                     <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
@@ -340,7 +345,7 @@ export default function SnippetPage() {
               <p className="text-gray-500">No comments yet.</p>
             )}
           </div>
-        </CardFooter>
+        </div>
       </Card>
     </div>
   );
