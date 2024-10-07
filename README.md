@@ -98,7 +98,3 @@ Specially thanks ❤️ for contributors bellow:
   <img src="https://contrib.rocks/image?repo=notsoocool/codecache" />
 </a>
 
-## Contributors
-
-| [MIGHTY1o1](https://github.com/MIGHTY1o1) | [Yajush Vyas](https://github.com/Yajush Vyas) |  |
-
