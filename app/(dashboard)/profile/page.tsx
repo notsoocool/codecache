@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Activity, Code } from "lucide-react";
 import moment from "moment";
 import ProfileTabs from "@/components/profile-tabs";
+import { headers } from "next/headers";
 
 interface User {
     id: string;
@@ -32,6 +33,7 @@ const fetchProfile = async (userId?: string): Promise<ProfileData | null> => {
 		return null;
 	}
 };
+
 
 export default function ProfilePage() {
     const [user, setUser] = useState<User | null>(null); // Define state with User type
