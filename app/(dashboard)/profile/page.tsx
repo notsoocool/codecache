@@ -11,12 +11,20 @@ import { Badge } from "@/components/ui/badge";
 import { Activity, Code, Trophy } from "lucide-react";
 import { currentUser } from "@clerk/nextjs/server";
 import moment from "moment";
-import { baseURL } from "@/lib/utils";
 import ProfileTabs from "@/components/profile-tabs";
+import { headers } from "next/headers";
 
 const fetchProfile = async (userId?: string): Promise<ProfileData | null> => {
   try {
-    const response = await fetch(`${baseURL}/api/getUserProfile/${userId}`);
+    // console.log("USERID", userId)
+    const headersList = headers();
+    // to get domain
+    const host = headersList.get("host");
+    const protocol = process.env.NODE_ENV == "development" ? "http" : "https";
+    const response = await fetch(
+      `${protocol}://${host}/api/getUserProfile/${userId}`
+    );
+
     const userData = await response.json();
 
     return userData;
@@ -24,7 +32,6 @@ const fetchProfile = async (userId?: string): Promise<ProfileData | null> => {
     return null;
   }
 };
-
 export default async function ProfilePage() {
   const user = await currentUser();
   const profileData = await fetchProfile(user?.id);
@@ -43,8 +50,6 @@ export default async function ProfilePage() {
       </div>
     );
   }
-
-  console.log(profileData);
 
   return (
     <div className="container mx-auto p-4 space-y-8">
