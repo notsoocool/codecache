@@ -1,6 +1,6 @@
 "use client";
 
-import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
+import { ClerkLoading } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 import { Navigation } from "./navigation";
 import { HeaderLogo } from "./header-logo";
@@ -14,6 +14,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "../ui/input";
+import { ProfileDropdown } from "./ProfileDropdown";
 
 export const Header = () => {
 	const { setTheme } = useTheme();
@@ -63,9 +64,7 @@ export const Header = () => {
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
-						<ClerkLoaded>
-							<UserButton />
-						</ClerkLoaded>
+						<ProfileDropdown />
 						<ClerkLoading>
 							<Loader2 className="size-8 animate-spin text-slate-400" />
 						</ClerkLoading>
