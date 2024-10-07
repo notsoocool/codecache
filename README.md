@@ -64,11 +64,6 @@ To get started with CodeCache, follow these steps:
 - **Authentication**: Sign in using Clerk to access personalized features. 🔑
 - **Snippet Management**: Add, view, and organize code snippets through the provided interface. 📝
 
-### Contributors
-
-| [MIGHTY1o1](https://github.com/MIGHTY1o1) | [Yajush Vyas](https://github.com/Yajush Vyas) |  |
-
-
 ## Contributing 🤝
 
 We welcome contributions to CodeCache! To contribute:
