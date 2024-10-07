@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-
+}
 
 //  Automatically adjusts the height of a textarea based on its content.
 export function autoGrow(ref: React.RefObject<HTMLTextAreaElement>) {
