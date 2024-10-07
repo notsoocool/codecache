@@ -64,7 +64,12 @@ To get started with CodeCache, follow these steps:
 - **Authentication**: Sign in using Clerk to access personalized features. 🔑
 - **Snippet Management**: Add, view, and organize code snippets through the provided interface. 📝
 
-### Contributing 🤝
+### Contributors
+
+| [MIGHTY1o1](https://github.com/MIGHTY1o1) | [Yajush Vyas](https://github.com/Yajush Vyas) |  |
+
+
+## Contributing 🤝
 
 We welcome contributions to CodeCache! To contribute:
 
@@ -87,6 +92,11 @@ For any questions or support, please reach out to [vyasyajush@gmail.com](mailto:
 **Join us in building CodeCache with notsoocool!** 🌟
 
 Explore the project on [GitHub](https://github.com/notsoocool/codecache) and join our community to contribute, provide feedback, or stay updated with our latest developments. 💬
+
+## Contributors
+
+| [MIGHTY1o1](https://github.com/MIGHTY1o1) | [Yajush Vyas](https://github.com/Yajush Vyas) |  |
+
 
 ## Contributing People List
 
