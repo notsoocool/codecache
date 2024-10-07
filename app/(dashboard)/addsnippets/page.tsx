@@ -70,7 +70,7 @@ export default function AddSnippet() {
 	};
 
 	return (
-			<div className="p-8">
+			<div className="w-full p-8">
 				<h1 className="text-4xl font-bold mb-6">Add New Snippet</h1>
 				<form onSubmit={handleSubmit} className="space-y-4">
 					<div>
@@ -158,7 +158,7 @@ export default function AddSnippet() {
 							className="mt-1"
 						/>
 					</div>
-					<div className="flex gap-6">
+					<div className="flex gap-4 flex-wrap">
 						<div>
 							<label
 								htmlFor="category"
@@ -250,7 +250,7 @@ export default function AddSnippet() {
 					</div>
 
 					<div className=" flex justify-end">
-						<Button type="submit" className="mt-4">
+						<Button type="submit" className="mt-4 hover:border hover:border-gray-50 hover:text-gray-50 hover:bg-transparent activer:border active:border-blue-500">
 							Add Snippet
 						</Button>
 					</div>
