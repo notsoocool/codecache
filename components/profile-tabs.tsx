@@ -62,7 +62,7 @@ const renderSnippetList = (snippets: Snippet[]) => (
   <div className="space-y-4">
     {snippets.map((snippet) => (
       <Link href={`/snippets/${snippet._id}`} key={snippet._id}>
-        <Card key={snippet._id}>
+        <Card key={snippet._id} className="mb-2">
           <CardHeader>
             <CardTitle>{snippet.title}</CardTitle>
             <CardDescription>{snippet.description}</CardDescription>
@@ -78,7 +78,7 @@ const renderSnippetList = (snippets: Snippet[]) => (
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-2">
                 <Bookmark className="w-4 h-4" />
-                <span>{snippet.bookmarkedBy.length}</span>
+                <span>{snippet.bookmarkedBy ? snippet.bookmarkedBy.length : 0}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Badge variant="secondary">{snippet.language}</Badge>
