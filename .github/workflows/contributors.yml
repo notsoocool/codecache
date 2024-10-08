@@ -22,5 +22,6 @@ jobs:
           commit_message: "Updated contributors list"
           committer_username: "notsoocool"
           committer_email: "dryashhoney@gmail.com"
+          columns_per_row: 8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
