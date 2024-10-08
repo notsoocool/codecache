@@ -15,6 +15,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { ReactLenis } from "@/utils/lenis";
+import { toast } from "sonner";
 export default function AddSnippet() {
 	const [title, setTitle] = useState("");
 	const [language, setLanguage] = useState("");
@@ -59,10 +60,12 @@ export default function AddSnippet() {
 				}),
 			});
 			if (response.ok) {
-				setMessage("Snippet added successfully!");
-				router.push("/");
+                toast.success("Snippet requested for review");
+                setTimeout(() => {
+                    router.push("/");
+                }, 2000);
 			} else {
-				setMessage("Failed to add snippet. Please try again.");
+                toast.error("Failed to add snippet. Please try again.");
 			}
 		} catch (error) {
 			setMessage("An error occurred. Please try again.");
@@ -250,7 +253,7 @@ export default function AddSnippet() {
 					</div>
 
 					<div className=" flex justify-end">
-						<Button type="submit" className="mt-4 hover:border hover:border-gray-50 hover:text-gray-50 hover:bg-transparent activer:border active:border-blue-500">
+						<Button type="submit" className="mt-4 hover:border hover:border-foreground hover:text-foreground hover:bg-transparent activer:border active:border-blue-500">
 							Add Snippet
 						</Button>
 					</div>
