@@ -4,6 +4,7 @@ import Prism from "prismjs";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -72,6 +73,8 @@ export default function Bookmarks() {
   const [userId, setUserId] = useState<string | null>(null);
   const [ratings, setRatings] = useState<{ [key: string]: any }>({});
   const [hoveredRating, setHoveredRating] = useState(0);
+  const router = useRouter();
+
 
   // Refs for each snippet card to track visibility
   const snippetRefs = useRef<{ [key: string]: HTMLElement | null }>({});
@@ -141,7 +144,8 @@ export default function Bookmarks() {
       
       if (!userId) {
         toast.error("User not logged in");
-        return;
+        router.push('/home');
+        return null;
       }
       
       console.log("Toggling bookmark for snippet:", snippetId);
