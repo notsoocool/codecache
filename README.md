@@ -222,8 +222,8 @@ Thank you once again to all our contributors! Your efforts are truly appreciated
 
 <!-- readme: contributors -start -->
 <!-- readme: contributors -end -->
-
 ---
+<!-- 
 ### &#8627; Stargazers
 
 <div align='center'>
@@ -237,4 +237,4 @@ Thank you once again to all our contributors! Your efforts are truly appreciated
 
 [![Forkers repo roster for @notsoocool/codecache](https://reporoster.com/forks/notsoocool/codecache)](https://github.com/notsoocool/codecache/network/members)
 
-</div>
+</div> -->
