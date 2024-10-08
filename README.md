@@ -239,13 +239,6 @@ Thank you once again to all our contributors! Your efforts are truly appreciated
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/samyak-aditya">
-                    <img src="https://avatars.githubusercontent.com/u/91079592?v=4" width="100;" alt="samyak-aditya"/>
-                    <br />
-                    <sub><b>Samyak Aditya</b></sub>
-                </a>
-            </td>
-            <td align="center">
                 <a href="https://github.com/yashksaini-coder">
                     <img src="https://avatars.githubusercontent.com/u/115717039?v=4" width="100;" alt="yashksaini-coder"/>
                     <br />
