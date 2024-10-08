@@ -1,26 +1,26 @@
-name: Update Contributors in README
-
+name: Add contributors
 on:
+  schedule:
+    - cron:  '0 0 * * *'
+
   push:
-    branches: ["main"]
+    branches:
+      - main
+
   workflow_dispatch:
 
 jobs:
-  contrib-readme-job:
+  add-contributors:
     runs-on: ubuntu-latest
-    name: A job to automate contrib in readme
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Update Contributors List
-        uses: akhilmhdh/contributors-readme-action@v2.3.10
-        with:
-          commit_message: "Updated contributors list"
-          committer_username: "notsoocool"
-          committer_email: "dryashhoney@gmail.com"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v2
+    - uses: BobAnkh/add-contributors@master
+      with:
+        CONTRIBUTOR: '### Contributors'
+        COLUMN_PER_ROW: '6'
+        ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        IMG_WIDTH: '100'
+        FONT_SIZE: '14'
+        PATH: '/README.md'
+        COMMIT_MESSAGE: 'docs(README): update contributors'
+        AVATAR_SHAPE: 'square'
