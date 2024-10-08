@@ -3,7 +3,6 @@ import { currentUser } from "@clerk/nextjs/server";
 import dbConnect from "@/lib/db/connect";
 import Snippet from "@/lib/db/snippetModel";
 import Rating from "@/lib/db/ratingModel";
-import SnippetRequest from "@/lib/db/snippetRequestModel";
 
 // score points constants
 const SNIPPET_POINTS = 5;
