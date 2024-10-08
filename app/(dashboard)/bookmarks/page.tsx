@@ -75,7 +75,6 @@ export default function Bookmarks() {
   const [hoveredRating, setHoveredRating] = useState(0);
   const router = useRouter();
 
-
   // Refs for each snippet card to track visibility
   const snippetRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
@@ -112,7 +111,10 @@ export default function Bookmarks() {
         // Fetch the bookmarked snippets using the user ID
         await fetchBookmarkedSnippets(userData.id);
       } catch (error) {
-        console.error("Error fetching current user or bookmarked snippets:", error);
+        console.error(
+          "Error fetching current user or bookmarked snippets:",
+          error
+        );
       } finally {
         setLoading(false);
       }
@@ -141,13 +143,12 @@ export default function Bookmarks() {
 
   const handleBookmarkToggle = async (snippetId: string) => {
     try {
-      
       if (!userId) {
         toast.error("User not logged in");
-        router.push('/home');
+        router.push("/home");
         return null;
       }
-      
+
       console.log("Toggling bookmark for snippet:", snippetId);
       const response = await fetch(`/api/bookmark/${snippetId}`, {
         method: "PATCH",
@@ -204,18 +205,19 @@ export default function Bookmarks() {
   }, [handleScroll]);
 
   const filteredSnippets = snippets
-  ? snippets.filter(
-      (snippet) =>
-        (snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          snippet.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          snippet.tags.some((tag) =>
-            tag.toLowerCase().includes(searchTerm.toLowerCase())
-          )) &&
-        (languageFilter.length === 0 || languageFilter.includes(snippet.language)) &&
-        (difficultyFilter.length === 0 || difficultyFilter.includes(snippet.difficulty))
-    )
-  : [];
-
+    ? snippets.filter(
+        (snippet) =>
+          (snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            snippet.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            snippet.tags.some((tag) =>
+              tag.toLowerCase().includes(searchTerm.toLowerCase())
+            )) &&
+          (languageFilter.length === 0 ||
+            languageFilter.includes(snippet.language)) &&
+          (difficultyFilter.length === 0 ||
+            difficultyFilter.includes(snippet.difficulty))
+      )
+    : [];
 
   useEffect(() => {
     Prism.highlightAll(); // Reapply syntax highlighting after filtered snippets are rendered
@@ -346,12 +348,15 @@ export default function Bookmarks() {
                 className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between duration-300 min-h-[350px]"
               >
                 <CardHeader className=" border-b border-primary-100">
-                  <CardTitle className="flex justify-between">
-                    {snippet.title}
-                    <div className="flex gap-10 flex-row-reverse items-center text-xs font-normal">
-                      <div className=" flex gap-2">
+                  <CardTitle className="flex flex-col sm:flex-row justify-between">
+                    {/* Title */}
+                    <span className="block w-full">{snippet.title}</span>
+
+                    {/* Ratings and Stars */}
+                    <div className="flex flex-col sm:flex-row gap-10 items-center text-xs font-normal sm:justify-end">
+                      <div className="flex gap-2 items-center">
                         {ratings[snippet._id]?.averageRating.toFixed(1)}
-                        <div className=" flex">
+                        <div className="flex">
                           {[...Array(5)].map((_, index) => {
                             const ratingValue = index + 1;
                             return (
@@ -368,9 +373,9 @@ export default function Bookmarks() {
                             );
                           })}
                         </div>
-                        <div className=" text-blue-500">
-                          {ratings[snippet._id]?.totalRatings || 0} ratings
-                        </div>
+                      </div>
+                      <div className="block text-blue-500 sm:w-auto sm:text-right">
+                        {ratings[snippet._id]?.totalRatings || 0} ratings
                       </div>
                     </div>
                   </CardTitle>
