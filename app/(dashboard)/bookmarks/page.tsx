@@ -95,7 +95,13 @@ export default function Bookmarks() {
       try {
         // Fetch the current user
         const response = await fetch("/api/getCurrentUser");
+        if (!response.ok) throw new Error("Failed to fetch current user");
+
         const userData = await response.json();
+
+        if (!userData || !userData.id) {
+          throw new Error("Invalid user data");
+        }
 
         // Set the user ID
         setUserId(userData.id);
@@ -132,6 +138,12 @@ export default function Bookmarks() {
 
   const handleBookmarkToggle = async (snippetId: string) => {
     try {
+      
+      if (!userId) {
+        toast.error("User not logged in");
+        return;
+      }
+      
       console.log("Toggling bookmark for snippet:", snippetId);
       const response = await fetch(`/api/bookmark/${snippetId}`, {
         method: "PATCH",
@@ -187,18 +199,19 @@ export default function Bookmarks() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const filteredSnippets = snippets.filter(
-    (snippet) =>
-      (snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        snippet.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        snippet.tags.some((tag) =>
-          tag.toLowerCase().includes(searchTerm.toLowerCase())
-        )) &&
-      (languageFilter.length === 0 ||
-        languageFilter.includes(snippet.language)) &&
-      (difficultyFilter.length === 0 ||
-        difficultyFilter.includes(snippet.difficulty))
-  );
+  const filteredSnippets = snippets
+  ? snippets.filter(
+      (snippet) =>
+        (snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          snippet.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          snippet.tags.some((tag) =>
+            tag.toLowerCase().includes(searchTerm.toLowerCase())
+          )) &&
+        (languageFilter.length === 0 || languageFilter.includes(snippet.language)) &&
+        (difficultyFilter.length === 0 || difficultyFilter.includes(snippet.difficulty))
+    )
+  : [];
+
 
   useEffect(() => {
     Prism.highlightAll(); // Reapply syntax highlighting after filtered snippets are rendered
