@@ -43,3 +43,45 @@ export async function GET(
 		);
 	}
 }
+
+
+export async function DELETE(
+	req: Request,
+	{ params }: { params: { id: string } }
+) {
+	try {
+		// Connect to the database
+		await dbConnect();
+
+		const { id } = params; // Extract the snippet ID from the request params
+
+		// Check if the ID is a valid MongoDB ObjectId
+		if (!ObjectId.isValid(id)) {
+			return NextResponse.json(
+				{ error: "Invalid snippet ID" },
+				{ status: 400 }
+			);
+		}
+
+		// Find the snippet by ID in the database
+		const snippet = await Snippet.findById(id);
+		await Snippet.deleteOne({ _id: new ObjectId(id) });
+
+		// If snippet not found, return a 404 error
+		if (!snippet) {
+			return NextResponse.json(
+				{ error: "Snippet not found" },
+				{ status: 404 }
+			);
+		}
+
+		// Return the snippet as JSON
+		return NextResponse.json({message:"Snippet deleted successfully"}, { status: 200 });
+	} catch (error) {
+		console.error("Error deleting snippet:", error);
+		return NextResponse.json(
+			{ error: "Error deleting snippet" },
+			{ status: 500 }
+		);
+	}
+}
