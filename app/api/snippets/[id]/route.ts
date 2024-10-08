@@ -55,10 +55,10 @@ export async function POST(
 		await dbConnect();
 
 		const { id } = params; // Extract the snippet ID from the request params
-		const { userId, reason } = await req.json(); // Expecting userId and reason in the request body
+		const { userId, snippetId, reason } = await req.json(); // Expecting userId and reason in the request body
 
 		// Log the parameters for debugging
-		console.log("Snippet ID:", id);
+		console.log("Snippet ID:", snippetId);
 		console.log("Requested By (User ID):", userId);
 		console.log("Reason for Deletion:", reason);
 
@@ -70,27 +70,18 @@ export async function POST(
 			);
 		}
 
-		// Find the snippet by ID in the database
-		const snippet = await Snippet.findById(id);
+		// const snippet = await Snippet.findById(id);
 
-		// If snippet not found, return a 404 error
-		if (!snippet) {
-			return NextResponse.json(
-				{ error: "Snippet not found" },
-				{ status: 404 }
-			);
-		}
+		// if (!snippet) {
+		// 	return NextResponse.json(
+		// 		{ error: "Snippet not found" },
+		// 		{ status: 404 }
+		// 	);
+		// }
 
 		// Create a delete request entry
 		const deleteRequest = new DeleteRequest({
-			title: snippet.title,
-			language: snippet.language,
-			code: snippet.code,
-			description: snippet.description,
-			tags: snippet.tags,
-			category: snippet.category,
-			difficulty: snippet.difficulty,
-			usage: snippet.usage,
+			snippetId: snippetId,
 			deletionRequestedBy: userId, // User ID of the person submitting the request
 			reason: reason, // Reason for deletion
 		});

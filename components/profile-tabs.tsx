@@ -31,6 +31,14 @@ import {
 import Prism from "prismjs";
 import Link from "next/link";
 
+interface userDetails {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+  createdAt: string;
+}
+
 export default function ProfileTabs({
   profileData,
   userDetails,
@@ -72,10 +80,10 @@ export default function ProfileTabs({
         <h2 className="text-xl font-semibold">Bookmarked Snippets</h2>
         {renderBookmarkedSnippetList(profileData.bookmarked)}
       </TabsContent>
-      <TabsContent value="rated" className="space-y-4">
+      {/* <TabsContent value="rated" className="space-y-4">
         <h2 className="text-xl font-semibold">Rated Snippets</h2>
         {renderRatingList(profileData.ratings)}
-      </TabsContent>
+      </TabsContent> */}
     </Tabs>
   );
 }
