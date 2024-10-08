@@ -30,6 +30,10 @@ const routes = [
 		href: "/bookmarks",
 		label: "Bookmarks",
 	},
+	{
+		href: "/mysnippets",
+		label: "My Snippets",
+	},
 ];
 
 export const Navigation = () => {
