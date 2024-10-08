@@ -3,7 +3,6 @@ import dbConnect from "@/lib/db/connect";
 import Snippet from "@/lib/db/snippetModel";
 import Comment from "@/lib/db/commentModel";
 import { currentUser } from "@clerk/nextjs/server";
-import { Types } from "mongoose";
 
 export async function POST(
   req: NextRequest,
@@ -35,11 +34,6 @@ export async function POST(
       content,
     });
     await newComment.save();
-
-    snippet.comments = snippet.comments || [];
-    snippet.comments.push(newComment._id as Types.ObjectId);
-    await snippet.save();
-
     return NextResponse.json(
       { message: "Comment added successfully", comment: newComment },
       { status: 201 }

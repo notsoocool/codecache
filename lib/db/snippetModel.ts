@@ -12,7 +12,7 @@ export interface ISnippet extends Document {
 	usage: string;
 	userId: string;
 	bookmarkedBy: string[];
-	comments: Types.ObjectId[];
+	
 }
 
 const snippetSchema: Schema = new mongoose.Schema({
@@ -54,10 +54,7 @@ const snippetSchema: Schema = new mongoose.Schema({
 		type: [String],
 		default: [],
 	},
-	comments: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Comment'
-	  }],
+	
 });
 
 const Snippet: Model<ISnippet> =
