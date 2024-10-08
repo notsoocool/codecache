@@ -249,18 +249,3 @@ Thank you once again to all our contributors! Your efforts are truly appreciated
 	<tbody>
 </table>
 <!-- readme: contributors -end -->
-
-### &#8627; Stargazers
-
-<div align='center'>
-
-[![Stargazers repo roster for @notsoocool/codecache](https://reporoster.com/stars/notsoocool/codecache)](https://github.com/notsoocool/codecache/stargazers)
-
-</div>
-
-### &#8627; Forkers
-<div align='center'>
-
-[![Forkers repo roster for @notsoocool/codecache](https://reporoster.com/forks/notsoocool/codecache)](https://github.com/notsoocool/codecache/network/members)
-
-</div>
