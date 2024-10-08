@@ -221,6 +221,26 @@ We look forward to your continued support and collaboration. Together, we can ac
 Thank you once again to all our contributors! Your efforts are truly appreciated. 💖👏
 
 <!-- readme: contributors -start -->
+<table>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/notsoocool">
+                    <img src="https://avatars.githubusercontent.com/u/35025375?v=4" width="100;" alt="notsoocool"/>
+                    <br />
+                    <sub><b>Yajush Vyas</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/shubhagarwal1">
+                    <img src="https://avatars.githubusercontent.com/u/105449260?v=4" width="100;" alt="shubhagarwal1"/>
+                    <br />
+                    <sub><b>Shubh Agarwal</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
+</table>
 <!-- readme: contributors -end -->
 ---
 <!-- 
