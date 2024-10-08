@@ -217,28 +217,28 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
 <tr>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/notsoocool>
-            <img src=https://avatars.githubusercontent.com/u/35025375?v=4 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Yajush Vyas/>
+            <img src=https://avatars.githubusercontent.com/u/35025375?v=4 width="100;"  alt=Yajush Vyas/>
             <br />
             <sub style="font-size:14px"><b>Yajush Vyas</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/yashksaini-coder>
-            <img src=https://avatars.githubusercontent.com/u/115717039?v=4 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Yash Kumar Saini/>
+            <img src=https://avatars.githubusercontent.com/u/115717039?v=4 width="100;"  alt=Yash Kumar Saini/>
             <br />
             <sub style="font-size:14px"><b>Yash Kumar Saini</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/shubhagarwal1>
-            <img src=https://avatars.githubusercontent.com/u/105449260?v=4 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Shubh Agarwal/>
+            <img src=https://avatars.githubusercontent.com/u/105449260?v=4 width="100;"  alt=Shubh Agarwal/>
             <br />
             <sub style="font-size:14px"><b>Shubh Agarwal</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/samyak-aditya>
-            <img src=https://avatars.githubusercontent.com/u/91079592?v=4 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Samyak Aditya/>
+            <img src=https://avatars.githubusercontent.com/u/91079592?v=4 width="100;"  alt=Samyak Aditya/>
             <br />
             <sub style="font-size:14px"><b>Samyak Aditya</b></sub>
         </a>
