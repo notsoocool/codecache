@@ -243,34 +243,6 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
             <sub style="font-size:14px"><b>Samyak Aditya</b></sub>
         </a>
     </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/Vivek7038>
-            <img src=https://avatars.githubusercontent.com/u/95691809?v=4 width="100;"  alt=Vivek Chavan/>
-            <br />
-            <sub style="font-size:14px"><b>Vivek Chavan</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/ZayedShahcode>
-            <img src=https://avatars.githubusercontent.com/u/115407231?v=4 width="100;"  alt=Zayed>
-            <br />
-            <sub style="font-size:14px"><b>Zayed</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/inkerton>
-            <img src=https://avatars.githubusercontent.com/u/127668005?v=4 width="100;"  alt=Janvi/>
-            <br />
-            <sub style="font-size:14px"><b>Janvi</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/myselfshivams>
-            <img src=https://avatars.githubusercontent.com/u/143623476?v=4 width="100;"  alt=Shivam/>
-            <br />
-            <sub style="font-size:14px"><b>Shivam</b></sub>
-        </a>
-    </td>
 </tr>
 </table>
 
