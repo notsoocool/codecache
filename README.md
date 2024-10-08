@@ -211,7 +211,9 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
 
 ---
 
-## Contributors
+### Contributors
+
+
 We are immensely grateful to the following amazing individuals who have contributed their time, effort, and expertise to make this project better. Your contributions, whether through code, documentation, bug reports, or feature suggestions, have been invaluable. Thank you for helping us build and improve CodeCache! 🌟✨
 
 Your dedication and hard work are what drive this project forward, and we couldn't have done it without you. Each contribution, no matter how small, plays a crucial role in our journey towards creating a more efficient and user-friendly tool for developers. 🙌💻
@@ -219,45 +221,3 @@ Your dedication and hard work are what drive this project forward, and we couldn
 We look forward to your continued support and collaboration. Together, we can achieve even greater heights! 🚀🌐
 
 Thank you once again to all our contributors! Your efforts are truly appreciated. 💖👏
-
-<div align="center">
-   <img src="CONTRIBUTORS.svg">
-</div>
-
-<!-- readme: contributors -start 
-<table>
-	<tbody>
-		<tr>
-            <td align="center">
-                <a href="https://github.com/notsoocool">
-                    <img src="https://avatars.githubusercontent.com/u/35025375?v=4" width="100;" alt="notsoocool"/>
-                    <br />
-                    <sub><b>Yajush Vyas</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/yashksaini-coder">
-                    <img src="https://avatars.githubusercontent.com/u/115717039?v=4" width="100;" alt="yashksaini-coder"/>
-                    <br />
-                    <sub><b>Yash Kumar Saini</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/shubhagarwal1">
-                    <img src="https://avatars.githubusercontent.com/u/105449260?v=4" width="100;" alt="shubhagarwal1"/>
-                    <br />
-                    <sub><b>Shubh Agarwal</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/samyak-aditya">
-                    <img src="https://avatars.githubusercontent.com/u/91079592?v=4" width="100;" alt="samyak-aditya"/>
-                    <br />
-                    <sub><b>Samyak Aditya</b></sub>
-                </a>
-            </td>
-		</tr>
-	<tbody>
-</table>
-<!-- readme: contributors -end -->
-
