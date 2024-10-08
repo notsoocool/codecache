@@ -20,18 +20,20 @@ export async function PATCH(req: NextRequest) {
         { status: 404 }
       );
 
-    // Create a new Snippet from the request
-    const newSnippet = new Snippet({
-      title: request.title,
-      language: request.language,
-      code: request.code,
-      description: request.description,
-      tags: request.tags,
-      bookmarkedBy: [], // Initialize as empty
-      category: request.category, // Include category
-      difficulty: request.difficulty, // Include difficulty
-      usage: request.usage, // Include usage
-    });
+		// Create a new Snippet from the request
+		const newSnippet = new Snippet({
+			title: request.title,
+			language: request.language,
+			code: request.code,
+			description: request.description,
+			tags: request.tags,
+			userId: request.submittedBy,
+			bookmarkedBy: [], // Initialize as empty
+			category: request.category, // Include category
+			difficulty: request.difficulty, // Include difficulty
+			usage: request.usage // Include usage
+
+		});
 
     await newSnippet.save();
     await SnippetRequest.findByIdAndDelete(requestId);

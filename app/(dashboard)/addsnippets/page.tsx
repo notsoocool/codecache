@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,8 @@ export default function AddSnippet() {
 	const [usage, setUsage] = useState("");
 	const [message, setMessage] = useState("");
 	const router = useRouter();
+	const descriptionRef = useRef<HTMLTextAreaElement>(null);
+	const codeRef = useRef<HTMLTextAreaElement>(null);
 
 	const languages = [
 		"Java", "Python", "JavaScript", "C++", "C#", "Go", "Kotlin", "Ruby", 
@@ -68,7 +70,7 @@ export default function AddSnippet() {
 	};
 
 	return (
-			<div className="p-8">
+			<div className="w-full p-8">
 				<h1 className="text-4xl font-bold mb-6">Add New Snippet</h1>
 				<form onSubmit={handleSubmit} className="space-y-4">
 					<div>
@@ -123,6 +125,7 @@ export default function AddSnippet() {
 							value={code}
 							onChange={(e) => setCode(e.target.value)}
 							className="mt-1"
+							ref={codeRef}
 						/>
 					</div>
 					<div>
@@ -137,6 +140,7 @@ export default function AddSnippet() {
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 							className="mt-1"
+							ref={descriptionRef}
 						/>
 					</div>
 					<div>
@@ -154,7 +158,7 @@ export default function AddSnippet() {
 							className="mt-1"
 						/>
 					</div>
-					<div className="flex gap-6">
+					<div className="flex gap-4 flex-wrap">
 						<div>
 							<label
 								htmlFor="category"
@@ -246,7 +250,7 @@ export default function AddSnippet() {
 					</div>
 
 					<div className=" flex justify-end">
-						<Button type="submit" className="mt-4">
+						<Button type="submit" className="mt-4 hover:border hover:border-gray-50 hover:text-gray-50 hover:bg-transparent activer:border active:border-blue-500">
 							Add Snippet
 						</Button>
 					</div>
