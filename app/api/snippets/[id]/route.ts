@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Snippet from "@/lib/db/snippetModel";
 import dbConnect from "@/lib/db/connect";
 import { ObjectId } from "mongodb";
+import DeleteRequest from "@/lib/db/deleteRequestModel";
 
 // Handler for GET requests (fetching snippet by ID)
 export async function GET(
@@ -45,7 +46,7 @@ export async function GET(
 }
 
 
-export async function DELETE(
+export async function POST(
 	req: Request,
 	{ params }: { params: { id: string } }
 ) {
@@ -54,6 +55,12 @@ export async function DELETE(
 		await dbConnect();
 
 		const { id } = params; // Extract the snippet ID from the request params
+		const { userId, reason } = await req.json(); // Expecting userId and reason in the request body
+
+		// Log the parameters for debugging
+		console.log("Snippet ID:", id);
+		console.log("Requested By (User ID):", userId);
+		console.log("Reason for Deletion:", reason);
 
 		// Check if the ID is a valid MongoDB ObjectId
 		if (!ObjectId.isValid(id)) {
@@ -65,7 +72,6 @@ export async function DELETE(
 
 		// Find the snippet by ID in the database
 		const snippet = await Snippet.findById(id);
-		await Snippet.deleteOne({ _id: new ObjectId(id) });
 
 		// If snippet not found, return a 404 error
 		if (!snippet) {
@@ -75,12 +81,32 @@ export async function DELETE(
 			);
 		}
 
-		// Return the snippet as JSON
-		return NextResponse.json({message:"Snippet deleted successfully"}, { status: 200 });
-	} catch (error) {
-		console.error("Error deleting snippet:", error);
+		// Create a delete request entry
+		const deleteRequest = new DeleteRequest({
+			title: snippet.title,
+			language: snippet.language,
+			code: snippet.code,
+			description: snippet.description,
+			tags: snippet.tags,
+			category: snippet.category,
+			difficulty: snippet.difficulty,
+			usage: snippet.usage,
+			deletionRequestedBy: userId, // User ID of the person submitting the request
+			reason: reason, // Reason for deletion
+		});
+
+		// Save the delete request to the database
+		await deleteRequest.save();
+
+		// Return a success message
 		return NextResponse.json(
-			{ error: "Error deleting snippet" },
+			{ message: "Deletion request submitted successfully" },
+			{ status: 200 }
+		);
+	} catch (error) {
+		console.error("Error submitting deletion request:", error);
+		return NextResponse.json(
+			{ error: "Error submitting deletion request" },
 			{ status: 500 }
 		);
 	}

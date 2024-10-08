@@ -114,7 +114,7 @@ export default function ProfilePage() {
 					</div>
 				</CardContent>
 			</Card>
-			<ProfileTabs profileData={profileData} />
+			<ProfileTabs profileData={profileData} userDetails={user} />
 		</div>
 	);
 }
