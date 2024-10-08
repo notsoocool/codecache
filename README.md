@@ -221,7 +221,7 @@ We look forward to your continued support and collaboration. Together, we can ac
 Thank you once again to all our contributors! Your efforts are truly appreciated. 💖👏
 
 <div align="center">
-   <img src="CONTRIBUTORS.svg.svg">
+   <img src="CONTRIBUTORS.svg">
 </div>
 
 <!-- readme: contributors -start 
