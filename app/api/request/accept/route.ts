@@ -32,7 +32,6 @@ export async function PATCH(req: NextRequest) {
 			category: request.category, // Include category
 			difficulty: request.difficulty, // Include difficulty
 			usage: request.usage // Include usage
-
 		});
 
 		await newSnippet.save();
