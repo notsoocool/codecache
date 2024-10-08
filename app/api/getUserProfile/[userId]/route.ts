@@ -33,7 +33,7 @@ export async function GET(req: NextRequest, { params: { userId } }: { params: { 
 
     // Fetch data
     const bookmarked = await Snippet.find({ bookmarkedBy: authenticatedUserId });
-    const snippets = await SnippetRequest.find({ submittedBy: authenticatedUserId });
+    const snippets = await Snippet.find({ userId: authenticatedUserId });
     const ratings = await Rating.find({ userId: authenticatedUserId }).populate('snippetId');
 
     // Calculate total points
