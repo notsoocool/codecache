@@ -62,14 +62,24 @@ const renderSnippetList = (snippets: Snippet[]) => (
   <div className="space-y-4">
     {snippets.map((snippet) => (
       <Link href={`/snippets/${snippet._id}`} key={snippet._id}>
-        <Card key={snippet._id}>
+        <Card key={snippet._id} className="mt-4 shadow-lg transition-transform transform hover:scale-102 hover:shadow-xl">
           <CardHeader>
-            <CardTitle>{snippet.title}</CardTitle>
+            <CardTitle  className="text-lg font-semibold">{snippet.title}</CardTitle>
             <CardDescription>{snippet.description}</CardDescription>
+            <div className="flex">
+              <h3 className="text-gray-500 mt-2 text-sm mr-1">Related Tags:</h3>
+              <div className="flex gap-2 flex-wrap mt-2">
+                {snippet.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="p-4 relative">
-              <pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm">
+              <pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm bg-gray-50 border border-gray-200">
                 <code className={`language-${snippet.language}`}>
                   {snippet.code}
                 </code>
@@ -78,11 +88,14 @@ const renderSnippetList = (snippets: Snippet[]) => (
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-2">
                 <Bookmark className="w-4 h-4" />
-                <span>{snippet.bookmarkedBy.length}</span>
+                <span>
+                  {snippet.bookmarkedBy ? snippet.bookmarkedBy.length : 0}
+                </span>
               </div>
               <div className="flex items-center space-x-2">
                 <Badge variant="secondary">{snippet.language}</Badge>
                 <Badge variant="secondary">{snippet.category}</Badge>
+                <Badge variant="secondary">{snippet.usage}</Badge>
               </div>
             </div>
           </CardContent>
