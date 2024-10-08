@@ -220,7 +220,11 @@ We look forward to your continued support and collaboration. Together, we can ac
 
 Thank you once again to all our contributors! Your efforts are truly appreciated. 💖👏
 
-<!-- readme: contributors -start -->
+<div align="center">
+   <img src="CONTRIBUTORS.svg.svg">
+</div>
+
+<!-- readme: contributors -start 
 <table>
 	<tbody>
 		<tr>
@@ -229,6 +233,13 @@ Thank you once again to all our contributors! Your efforts are truly appreciated
                     <img src="https://avatars.githubusercontent.com/u/35025375?v=4" width="100;" alt="notsoocool"/>
                     <br />
                     <sub><b>Yajush Vyas</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/yashksaini-coder">
+                    <img src="https://avatars.githubusercontent.com/u/115717039?v=4" width="100;" alt="yashksaini-coder"/>
+                    <br />
+                    <sub><b>Yash Kumar Saini</b></sub>
                 </a>
             </td>
             <td align="center">
@@ -245,30 +256,8 @@ Thank you once again to all our contributors! Your efforts are truly appreciated
                     <sub><b>Samyak Aditya</b></sub>
                 </a>
             </td>
-            <td align="center">
-                <a href="https://github.com/yashksaini-coder">
-                    <img src="https://avatars.githubusercontent.com/u/115717039?v=4" width="100;" alt="yashksaini-coder"/>
-                    <br />
-                    <sub><b>Yash Kumar Saini</b></sub>
-                </a>
-            </td>
 		</tr>
 	<tbody>
 </table>
 <!-- readme: contributors -end -->
----
-<!-- 
-### &#8627; Stargazers
 
-<div align='center'>
-
-[![Stargazers repo roster for @notsoocool/codecache](https://reporoster.com/stars/notsoocool/codecache)](https://github.com/notsoocool/codecache/stargazers)
-
-</div>
-
-### &#8627; Forkers
-<div align='center'>
-
-[![Forkers repo roster for @notsoocool/codecache](https://reporoster.com/forks/notsoocool/codecache)](https://github.com/notsoocool/codecache/network/members)
-
-</div> -->

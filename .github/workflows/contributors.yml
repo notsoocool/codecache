@@ -1,26 +1,48 @@
-name: Update Contributors in README
-
+name: Contributors SVG
 on:
+  schedule:
+    - cron: '0 0 * * *' # At 00:00 every day.
   push:
-    branches: ["main"]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
-  contrib-readme-job:
+  contributors:
     runs-on: ubuntu-latest
-    name: A job to automate contrib in readme
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Update Contributors List
-        uses: akhilmhdh/contributors-readme-action@v2.3.10
+      - uses: wow-actions/contributors-list@v1
         with:
-          commit_message: "Updated contributors list"
-          committer_username: "notsoocool"
-          committer_email: "dryashhoney@gmail.com"
-        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          svgPath: CONTRIBUTORS.svg
+          includeBots: false
+          commitMessage: '✅ chore: Update contributors'
+          userNameHeight: 19
+          itemTemplate: >
+            <g transform="translate({{ x }}, {{ y }})">
+              <a xlink:href="{{{ url }}}" class="contributor-link" target="_blank" rel="nofollow sponsored" title="{{{ name }}}" id="{{{ name }}}">
+                <image width="{{ width }}" height="{{ height }}" xlink:href="{{{ avatar }}}" />
+                <text x="32" y="74" color="white" text-anchor="middle" alignment-baseline="middle" font-size="10">{{{ name }}}</text>
+              </a>
+            </g>
+            
+          svgTemplate: |
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              version="1.1"
+              width="{{ width }}"
+              height="{{#sum}} {{ contributorsHeight }} +  {{ botsHeight }} + 32 + 32 {{/sum}}"
+            >
+              <style>.contributor-link { cursor: pointer; }</style>
+
+              <text x="5" y="8" text-anchor="start" alignment-baseline="before-edge" font-size="24">Contributors</text>
+              <g transform="translate(0, 32)">
+                {{{ contributors }}}
+              </g>
+
+              <text x="5" y="{{#sum}} {{ contributorsHeight }} + 32 + 8 {{/sum}}" text-anchor="start" alignment-baseline="before-edge" font-size="24">Bots</text>
+              <g transform="translate(0, {{#sum}} {{ contributorsHeight }} + 32 + 32 {{/sum}})">
+                {{{ bots }}}
+              </g>
+            </svg>
