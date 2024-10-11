@@ -121,8 +121,8 @@ export default function AdminPage() {
       if (response.ok) {
         setSnippetRequests((prev) =>
           prev.filter((request) => request._id !== requestId)
-        );
-        toast.success("Snippet accepted and added to the database!");
+      );
+      toast.success("Snippet accepted and added to the database!");
       } else {
         toast.error("Failed to accept snippet request.");
       }

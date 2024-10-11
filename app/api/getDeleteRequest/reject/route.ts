@@ -26,6 +26,7 @@ export async function PATCH(req: NextRequest) {
 			);		
             
             console.log("Fetched Pending DeleteRequest");
+			await DeleteRequest.findByIdAndDelete(requestId);
 
 		return NextResponse.json({message: "Request Rejected"},{ status: 200 });
 	} catch (error) {

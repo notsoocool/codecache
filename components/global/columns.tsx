@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 // This type is used to define the shape of our data.
 export type DeleteRequest = {
@@ -51,10 +52,13 @@ export const columns: ColumnDef<DeleteRequest>[] = [
 
           if (!response.ok) {
             console.error("Error accepting request:", response.statusText);
+            toast.error("Snippet can't be deleted from the database!");
           } else {
             console.log(`Accepted request with ID: ${requestId}`);
+            toast.success("Snippet deleted from the database!");
           }
         } catch (error) {
+          toast.error("Snippet deleted from the database!"+error);
           console.error("Error accepting request:", error);
         }
       };
@@ -72,11 +76,15 @@ export const columns: ColumnDef<DeleteRequest>[] = [
 
           if (!response.ok) {
             console.error("Error rejecting request:", response.statusText);
+            toast.error("Snippet request can't be deleted from the database!");
           } else {
             console.log(`Rejected request with ID: ${requestId}`);
+            toast.success(`Rejected request with ID: ${requestId}`);
           }
         } catch (error) {
           console.error("Error rejecting request:", error);
+          toast.error("Error rejecting request:"+error);
+
         }
       };
 

@@ -21,6 +21,10 @@ export async function PATCH(req: NextRequest) {
 			);
 
 		await DeleteRequest.findByIdAndDelete(requestId);
+		console.log(request);
+		const snippetId=request.snippetId;
+		console.log(snippetId);
+		await Snippet.findByIdAndDelete(snippetId);
 
 		return NextResponse.json(
 			{ message: "Snippet deleted from the database" },
