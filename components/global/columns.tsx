@@ -1,8 +1,6 @@
-"use client";
+"use client"
 
-import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,7 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from "sonner";
+import { MoreHorizontal } from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
 
 // This type is used to define the shape of our data.
 export type DeleteRequest = {
@@ -22,7 +21,7 @@ export type DeleteRequest = {
   reason: string;
 };
 
-export const columns: ColumnDef<DeleteRequest>[] = [
+export const columns: (updateDeleteRequests: (id: string) => void) => ColumnDef<DeleteRequest>[] = (updateDeleteRequests) => [
   {
     accessorKey: "snippetId",
     header: "Snippet ID",
@@ -54,18 +53,17 @@ export const columns: ColumnDef<DeleteRequest>[] = [
             console.error("Error accepting request:", response.statusText);
             toast.error("Snippet can't be deleted from the database!");
           } else {
-            console.log(`Accepted request with ID: ${requestId}`);
+            updateDeleteRequests(requestId);
             toast.success("Snippet deleted from the database!");
           }
         } catch (error) {
-          toast.error("Snippet deleted from the database!"+error);
+          toast.error("Error deleting snippet from the database: " + error);
           console.error("Error accepting request:", error);
         }
       };
 
       const handleReject = async (requestId: string) => {
         try {
-            console.log('first')
           const response = await fetch("/api/getDeleteRequest/reject", {
             method: "PATCH",
             headers: {
@@ -76,15 +74,14 @@ export const columns: ColumnDef<DeleteRequest>[] = [
 
           if (!response.ok) {
             console.error("Error rejecting request:", response.statusText);
-            toast.error("Snippet request can't be deleted from the database!");
+            toast.error("Snippet request can't be rejected!");
           } else {
-            console.log(`Rejected request with ID: ${requestId}`);
+            updateDeleteRequests(requestId);
             toast.success(`Rejected request with ID: ${requestId}`);
           }
         } catch (error) {
           console.error("Error rejecting request:", error);
-          toast.error("Error rejecting request:"+error);
-
+          toast.error("Error rejecting request: " + error);
         }
       };
 
@@ -98,15 +95,11 @@ export const columns: ColumnDef<DeleteRequest>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onSelect={() => handleAccept(request._id)}
-            >
+            <DropdownMenuItem onSelect={() => handleAccept(request._id)}>
               Accept
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onSelect={() => handleReject(request._id)}
-            >
+            <DropdownMenuItem onSelect={() => handleReject(request._id)}>
               Reject
             </DropdownMenuItem>
           </DropdownMenuContent>

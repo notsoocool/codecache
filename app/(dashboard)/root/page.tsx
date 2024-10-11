@@ -78,6 +78,11 @@ export default function AdminPage() {
     checkAuthorization();
   }, [router]);
 
+  // Remove a delete request after processing
+  const updateDeleteRequests = (id: string) => {
+    setDeleteRequests((prev) => prev.filter((request) => request._id !== id));
+  };
+
   // Fetch pending snippet requests (unapproved)
   useEffect(() => {
     async function fetchRequests() {
@@ -234,7 +239,7 @@ export default function AdminPage() {
         </TabsContent>
         <TabsContent value="delete">
           <div className="container mx-auto py-10">
-            <DataTable columns={columns} data={deleteRequests} />
+            <DataTable columns={columns(updateDeleteRequests)} data={deleteRequests} />
           </div>
         </TabsContent>
       </Tabs>
