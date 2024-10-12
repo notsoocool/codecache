@@ -326,6 +326,6 @@ export default function Home() {
           ))}
         </Accordion>
       </main>
-    </ReactLenis>
+    </ReactLenis> 
   );
 }
