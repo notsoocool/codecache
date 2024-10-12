@@ -1,3 +1,4 @@
+//initial
 // import {
 // 	Accordion,
 // 	AccordionContent,
@@ -283,7 +284,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
           >
-            CodeCache is a tool that allows developers to store, categorize, and retrieve code snippets seamlessly.
+             CodeCache is a tool that allows developers to store, categorize, and retrieve code snippets seamlessly.
           </motion.p>
         </section>
 
@@ -310,6 +311,7 @@ export default function Home() {
           </ul>
         </section>
 
+			  
         {/* FAQ Section */}
         <h2 className="pt-4 font-bold text-lg text-center" data-aos="fade-up">FAQ</h2>
         <Accordion type="multiple" className="py-4">

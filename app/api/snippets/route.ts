@@ -48,6 +48,7 @@ export async function POST(req: Request) {
         });
 
         await newSnippet.save();
+
         return NextResponse.json(
             { message: "Snippet submitted for approval" },
             { status: 201 }
