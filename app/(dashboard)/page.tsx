@@ -164,6 +164,7 @@ import { ReactLenis } from "@/utils/lenis";
 import { motion } from "framer-motion"; // for animations
 import { useEffect } from "react";
 import AOS from "aos"; // for scroll animations
+
 import "aos/dist/aos.css"; // AOS styles
 import styles from './Home.module.css'; // Importing custom styles
 
@@ -193,7 +194,7 @@ export default function Home() {
         {/* Hero Section */}
         <section
           className={`${styles.heroSection} relative h-screen flex items-center justify-center bg-cover bg-center overflow-hidden`}
-          style={{ backgroundImage: "url('..app\\(dashboard)\\Images\\codecache.jpg')" }}
+          style={{ backgroundImage: "url('/codecache.jpg')" }}
         >
           {/* Bouncing Colorful Circles */}
           <motion.div
