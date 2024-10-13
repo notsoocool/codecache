@@ -22,11 +22,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.1",
     "@shadcn/ui": "^0.0.4",
-<<<<<<< HEAD
-    "aos": "^2.3.4",
-=======
     "@types/moment": "^2.13.0",
->>>>>>> 5317e77e6677bec5e661000846f59645862db4ac
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.8",
