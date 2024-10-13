@@ -56,7 +56,6 @@ export const Header = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-
             <ClerkLoaded>
               <UserButton>
                 <UserButton.MenuItems>
