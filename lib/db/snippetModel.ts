@@ -10,6 +10,7 @@ export interface ISnippet extends Document {
 	category: string;
 	difficulty: string;
 	usage: string;
+	userId: string;
 	bookmarkedBy: string[];
 }
 
@@ -41,6 +42,10 @@ const snippetSchema: Schema = new mongoose.Schema({
 		required: true,
 	},
 	usage: {
+		type: String,
+		required: true,
+	},
+	userId: {
 		type: String,
 		required: true,
 	},
