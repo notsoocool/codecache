@@ -1,5 +1,4 @@
 import dbConnect from "@/lib/db/connect";
-import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 import DeleteRequest from "@/lib/db/deleteRequestModel";
 import { auth } from "@clerk/nextjs/server";

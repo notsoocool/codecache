@@ -77,7 +77,7 @@ export const columns: (updateDeleteRequests: (id: string) => void) => ColumnDef<
             toast.error("Snippet request can't be rejected!");
           } else {
             updateDeleteRequests(requestId);
-            toast.success(`Rejected request with ID: ${requestId}`);
+            toast.success("Snippet deletion request rejected!")
           }
         } catch (error) {
           console.error("Error rejecting request:", error);
