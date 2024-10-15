@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "lint-staged": {
-    "**/**/*.{js,ts,tsx,jsx}": [
+    "**/*.{js,ts,tsx,jsx}": [
       "npx prettier --write"
     ]
   },
