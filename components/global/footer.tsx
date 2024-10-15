@@ -8,7 +8,7 @@ export const Footer = () => {
 			<div className="py-8 px-10">
 				<div className="flex flex-col justify-between sm:flex-row sm:items-center">
 					<p className="text-center text-sm leading-loose text-muted-foreground sm:text-left">
-                    Join us in building CodeCache with{" "}
+						Join us in building CodeCache with{" "}
 						<a
 							href="https://yajushvyas.in"
 							target="_blank"
@@ -50,6 +50,10 @@ export const Footer = () => {
 							</Button>
 						</Link> */}
 					</div>
+				</div>
+				{/* Copyright Section */}
+				<div className="mt-4 text-center text-sm text-muted-foreground">
+					<p>© CodeCache. All Rights Reserved. Designed by Yajush Vyas.</p>
 				</div>
 			</div>
 		</footer>
