@@ -29,26 +29,26 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<ClerkProvider>
-			<html lang="en">
-				{/* <ReactLenis root> */}
-				<body>
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="dark"
-						enableSystem
-						disableTransitionOnChange
-					>
-						{children}
-					</ThemeProvider>
-				</body>
-				{/* </ReactLenis> */}
-			</html>
-		</ClerkProvider>
-	);
+  return (
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        {/* <ReactLenis root> */}
+        <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+        {/* </ReactLenis> */}
+      </html>
+    </ClerkProvider>
+  );
 }

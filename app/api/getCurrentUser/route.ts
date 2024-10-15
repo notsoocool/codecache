@@ -10,6 +10,6 @@ export async function GET() {
 			{ status: 401 }
 		);
 	}
-
-	return NextResponse.json({ id: user.id });
+    const full_name = user.firstName + " " + user.lastName;
+	return NextResponse.json({ id: user.id, email: user.emailAddresses[0].emailAddress, name: full_name, image: user.imageUrl, createdAt: user.createdAt });
 }
