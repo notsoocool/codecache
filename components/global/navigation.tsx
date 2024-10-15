@@ -26,6 +26,10 @@ const routes = [
     href: "/docs",
     label: "Documentation",
   },
+  {
+    href: "/contributor",
+    label: "Contributor",
+  }
 ];
 
 export const Navigation = () => {
