@@ -1,0 +1,12 @@
+/* Home.css */
+.heroSection {
+    background-attachment: fixed; /* Parallax effect */
+    transition: background-color 0.5s ease-in-out; /* Smooth background color change */
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 2px 2px 8px rgba(222, 9, 9, 0.7);
+  }
+  
+ 
+  
