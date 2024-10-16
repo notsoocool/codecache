@@ -67,7 +67,7 @@ export default function AddSnippet() {
       return;
     }
     if (!language) {
-      toast.error("Language cannot be empty");
+      toast.error("Language can't be empty");
       return;
     }
     if (!code) {
