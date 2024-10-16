@@ -26,7 +26,7 @@ export const Footer = () => {
 						>
 							GitHub
 						</a>
-						.
+						. © CodeCache. All Rights Reserved. Designed by Yajush Vyas.
 					</p>
 					<div className="flex items-center justify-center space-x-4 sm:ml-auto sm:justify-end">
 						<Link
@@ -50,10 +50,6 @@ export const Footer = () => {
 							</Button>
 						</Link> */}
 					</div>
-				</div>
-				{/* Copyright Section */}
-				<div className="mt-4 text-center text-sm text-muted-foreground">
-					<p>© CodeCache. All Rights Reserved. Designed by Yajush Vyas.</p>
 				</div>
 			</div>
 		</footer>
