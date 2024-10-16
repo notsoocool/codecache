@@ -1,6 +1,44 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Github } from "lucide-react";
+import { useState, useEffect } from 'react';
+import './BackToTopButton.css'; // Import the CSS 
+
+// Back to Top Button 
+const BackToTopButton = () => {
+	const [isVisible, setIsVisible] = useState(false);
+
+	const toggleVisibility = () => {
+		if (window.pageYOffset > 300) {
+			setIsVisible(true);
+		} else {
+			setIsVisible(false);
+		}
+	};
+
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		});
+	};
+
+	useEffect(() => {
+		window.addEventListener('scroll', toggleVisibility);
+		return () => {
+			window.removeEventListener('scroll', toggleVisibility);
+		};
+	}, []);
+
+	return (
+		<button
+			onClick={scrollToTop}
+			className={`back-to-top ${isVisible ? 'visible' : ''}`} // Includes the 'visible' class if isVisible is true
+		>
+			Back to Top
+		</button>
+	);
+};
 
 export const Footer = () => {
 	return (
@@ -52,6 +90,7 @@ export const Footer = () => {
 					</div>
 				</div>
 			</div>
+			<BackToTopButton /> {/* Added BackToTopButton component here */}
 		</footer>
 	);
 };
