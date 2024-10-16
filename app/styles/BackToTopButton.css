@@ -1,0 +1,22 @@
+.back-to-top {
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom */
+    right: 20px;  /* Distance from the right */
+    padding: 10px 15px; /* Padding */
+    background-color: #007bff; /* Button background color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: none; /* Hidden by default; will be controlled via JavaScript */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.back-to-top.visible {
+    display: inline; /* Show button when it has the 'visible' class */
+}
+
+.back-to-top:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
