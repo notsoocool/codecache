@@ -1,5 +1,4 @@
 "use client";
-
 import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
 import { Loader2, User2 } from "lucide-react";
 import { Navigation } from "./navigation";
@@ -16,7 +15,8 @@ import {
 import { Input } from "../ui/input";
 
 export const Header = () => {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme(); // Access theme state and setter
+
   return (
     <header className="sticky top-0 left-0 right-0 bg-transparent bg-opacity-20 backdrop-blur-md px-4 py-4 lg:px-14 z-50">
       <div className="max-w-screen-2xl mx-auto">
@@ -45,13 +45,13 @@ export const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setTheme("light")}>
-                  Light
+                  Light Mode
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("dark")}>
-                  Dark
+                  Dark Mode
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("system")}>
-                  System
+                  System Default
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
