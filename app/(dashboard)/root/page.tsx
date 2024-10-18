@@ -18,6 +18,7 @@ import { ReactLenis } from "@/utils/lenis";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataTable } from "@/components/global/data-table";
 import { columns } from "@/components/global/columns";
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog"; // Adjust this import based on your actual structure
 
 // Define a snippet type
 type SnippetRequest = {
@@ -42,14 +43,18 @@ type DeleteRequest = {
 
 export default function AdminPage() {
   const { theme } = useTheme();
-
   const [authorized, setAuthorized] = useState(false);
   const router = useRouter();
   const [snippetRequests, setSnippetRequests] = useState<SnippetRequest[]>([]);
   const [deleteRequests, setDeleteRequests] = useState<DeleteRequest[]>([]);
+  
+  // New state for dialog and reason
+  const [openAcceptDialog, setOpenAcceptDialog] = useState(false);
+  const [openRejectDialog, setOpenRejectDialog] = useState(false);
+  const [reason, setReason] = useState<string>('');
+  const [currentSnippetId, setCurrentSnippetId] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch user ID
     const checkAuthorization = async () => {
       try {
         const response = await fetch("/api/getCurrentUser");
@@ -57,37 +62,32 @@ export default function AdminPage() {
           throw new Error("User not authenticated");
         }
 
-        const data = await response.json(); // Convert the response to JSON
-        const userId = data.id; // Access the `id` from the response JSON
-
-        // Get admin user IDs from environment variables
+        const data = await response.json();
+        const userId = data.id;
         const adminUserIds = process.env.ADMIN_USER_IDS?.split(",") || [];
 
-        // Check if the current user's ID is in the list of admin user IDs
         if (adminUserIds.includes(userId)) {
-          setAuthorized(true); // Authorized access
+          setAuthorized(true);
         } else {
-          router.push("/"); // Redirect non-admins to homepage
+          router.push("/");
         }
       } catch (error) {
         console.error("Authorization check failed:", error);
-        router.push("/"); // Redirect in case of error
+        router.push("/");
       }
     };
 
     checkAuthorization();
   }, [router]);
 
-  // Remove a delete request after processing
   const updateDeleteRequests = (id: string) => {
     setDeleteRequests((prev) => prev.filter((request) => request._id !== id));
   };
 
-  // Fetch pending snippet requests (unapproved)
   useEffect(() => {
     async function fetchRequests() {
       try {
-        const response = await fetch("/api/request"); // Fetch all pending requests (unapproved snippets)
+        const response = await fetch("/api/request");
         const data = await response.json();
         setSnippetRequests(data);
       } catch (error) {
@@ -98,7 +98,7 @@ export default function AdminPage() {
 
     async function fetchDeleteRequests() {
       try {
-        const response = await fetch("/api/getDeleteRequest"); // Fetch all pending requests (unapproved snippets)
+        const response = await fetch("/api/getDeleteRequest");
         const data = await response.json();
         setDeleteRequests(data);
       } catch (error) {
@@ -110,7 +110,6 @@ export default function AdminPage() {
     fetchRequests();
     fetchDeleteRequests();
   }, []);
-  console.log("first", deleteRequests);
 
   // Approve snippet request
   const handleAccept = async (requestId: string) => {
@@ -120,14 +119,17 @@ export default function AdminPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ requestId }),
+        body: JSON.stringify({ requestId, reason }), // Include reason in request body
       });
 
       if (response.ok) {
         setSnippetRequests((prev) =>
           prev.filter((request) => request._id !== requestId)
-      );
-      toast.success("Snippet accepted and added to the database!");
+        );
+        toast.success("Snippet accepted and added to the database!");
+        setOpenAcceptDialog(false);
+        setReason('');
+        setCurrentSnippetId(null);
       } else {
         toast.error("Failed to accept snippet request.");
       }
@@ -144,7 +146,7 @@ export default function AdminPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ requestId }),
+        body: JSON.stringify({ requestId, reason }), // Include reason in request body
       });
 
       if (response.ok) {
@@ -152,6 +154,9 @@ export default function AdminPage() {
           prev.filter((request) => request._id !== requestId)
         );
         toast.success("Snippet request rejected and deleted.");
+        setOpenRejectDialog(false);
+        setReason('');
+        setCurrentSnippetId(null);
       } else {
         toast.error("Failed to reject snippet request.");
       }
@@ -162,11 +167,11 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    Prism.highlightAll(); // Highlight the code when the page loads and when theme changes
+    Prism.highlightAll();
   }, [theme]);
 
   useEffect(() => {
-    Prism.highlightAll(); // Reapply syntax highlighting after snippets are rendered
+    Prism.highlightAll();
   }, [snippetRequests]);
 
   return (
@@ -195,15 +200,68 @@ export default function AdminPage() {
                       </p>
                     </div>
                     <div className="flex gap-4">
-                      <Button onClick={() => handleAccept(request._id)}>
-                        Approve
-                      </Button>
-                      <Button
-                        onClick={() => handleReject(request._id)}
-                        variant="destructive"
-                      >
-                        Reject
-                      </Button>
+                      <AlertDialog open={openAcceptDialog} onOpenChange={setOpenAcceptDialog}>
+                        <AlertDialogTrigger>
+                          <Button onClick={() => { setCurrentSnippetId(request._id); setReason(''); }}>Approve</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Accept Snippet Request</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Please provide a reason for accepting this snippet.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <input
+                            type="text"
+                            value={reason}
+                            onChange={(e) => setReason(e.target.value)}
+                            placeholder="Reason for acceptance"
+                            className="border p-2 mt-2 w-full"
+                          />
+                          <AlertDialogFooter>
+                            <AlertDialogCancel onClick={() => setOpenAcceptDialog(false)}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={async () => {
+                                await handleAccept(request._id);
+                                setOpenAcceptDialog(false);
+                              }}
+                            >
+                              Confirm Accept
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                      <AlertDialog open={openRejectDialog} onOpenChange={setOpenRejectDialog}>
+                        <AlertDialogTrigger>
+                          <Button variant="destructive" onClick={() => { setCurrentSnippetId(request._id); setReason(''); }}>Reject</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Reject Snippet Request</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Please provide a reason for rejecting this snippet.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <input
+                            type="text"
+                            value={reason}
+                            onChange={(e) => setReason(e.target.value)}
+                            placeholder="Reason for rejection"
+                            className="border p-2 mt-2 w-full"
+                          />
+                          <AlertDialogFooter>
+                            <AlertDialogCancel onClick={() => setOpenRejectDialog(false)}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={async () => {
+                                await handleReject(request._id);
+                                setOpenRejectDialog(false);
+                              }}
+                            >
+                              Confirm Reject
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </CardTitle>
                 </CardHeader>
