@@ -27,7 +27,7 @@ const Custom404: React.FC = () => {
                     <div className="text-9xl font-bold text-gray-800 dark:text-white">4</div>
                 </div>
                 <p className="text-center my-5 text-lg text-gray-700 dark:text-gray-300">
-                    The link is broken, please navigate to the following pages:
+                    The link is broken, please navigate to the following pages :
                 </p>
 
                 <nav className="flex items-center justify-center flex-wrap gap-4 my-8">
