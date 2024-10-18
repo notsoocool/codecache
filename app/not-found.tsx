@@ -18,11 +18,11 @@ const Custom404: React.FC = () => {
                 <div className="flex items-center justify-between w-4/5 max-w-xl">
                     <div className="text-9xl font-bold text-gray-800 dark:text-white">4</div>
                     <Image
-                        src={resolvedTheme === 'dark' ? DarkModeLogo : LightModeLogo} // Use resolvedTheme
+                        src="/logo.svg" // Use resolvedTheme
                         alt="Theme Specific Image"
                         width={200}
                         height={200}
-                        className="rounded-full object-cover z-100"
+                        className="invert-0 dark:invert rounded-full object-cover z-100"
                     />
                     <div className="text-9xl font-bold text-gray-800 dark:text-white">4</div>
                 </div>
