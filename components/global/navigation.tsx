@@ -26,6 +26,10 @@ const routes = [
 //     href: "/docs",
 //     label: "Documentation",
 //   },
+  {
+    href: "/contributor",
+    label: "Contributor",
+  }
 ];
 
 export const Navigation = () => {
@@ -122,13 +126,13 @@ export const Navigation = () => {
           isActive={pathname === route.href}
         />
       ))}
-	  {isUser && (
+	  {/* {isUser && (
         <NavButton
           href="/bookmarks"
           label="Bookmarks"
           isActive={pathname === "/bookmarks"}
         />
-      )}
+      )} */}
       {isAdmin && (
         <NavButton href="/root" label="Admin" isActive={pathname === "/root"} />
       )}
