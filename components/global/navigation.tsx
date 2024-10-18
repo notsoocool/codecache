@@ -22,10 +22,10 @@ const routes = [
     href: "/addsnippets",
     label: "Add Snippet",
   },
-  {
-    href: "/docs",
-    label: "Documentation",
-  },
+  //   {
+  //     href: "/docs",
+  //     label: "Documentation",
+  //   },
 ];
 
 export const Navigation = () => {
@@ -44,9 +44,9 @@ export const Navigation = () => {
       const data = await response.json(); // Convert the response to JSON
       const userId = data.id; // Access the `id` from the response JSON
 
-	 if(userId) {
-		setIsUser(true);
-	 } 
+      if (userId) {
+        setIsUser(true);
+      }
 
       const adminIds = process.env.ADMIN_USER_IDS?.split(",") || [];
 
@@ -122,7 +122,7 @@ export const Navigation = () => {
           isActive={pathname === route.href}
         />
       ))}
-	  {isUser && (
+      {isUser && (
         <NavButton
           href="/bookmarks"
           label="Bookmarks"
