@@ -1,5 +1,5 @@
 // lib/db/snippetModel.ts
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Document, Model ,Types} from "mongoose";
 
 export interface ISnippet extends Document {
 	title: string;
@@ -12,6 +12,7 @@ export interface ISnippet extends Document {
 	usage: string;
 	userId: string;
 	bookmarkedBy: string[];
+	
 }
 
 const snippetSchema: Schema = new mongoose.Schema({
@@ -53,6 +54,7 @@ const snippetSchema: Schema = new mongoose.Schema({
 		type: [String],
 		default: [],
 	},
+	
 });
 
 const Snippet: Model<ISnippet> =
