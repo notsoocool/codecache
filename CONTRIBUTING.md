@@ -40,6 +40,9 @@ We use a [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-
    git push origin your-branch-name
    ```
 7. **Open a Pull Request** 🔄: Go to the [Pull Requests](https://github.com/notsoocool/codecache/pulls) tab and open a new pull request from your branch. Provide a clear description of your changes.
+ 
+## Important Note:
+**Kindly push changes from the `develop` branch only and always push to the `develop` branch**. This ensures we maintain a stable `master` branch and test all changes thoroughly before merging them into the main codebase.
 
 ## Coding Guidelines 📜
 

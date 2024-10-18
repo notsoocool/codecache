@@ -22,10 +22,10 @@ const routes = [
     href: "/addsnippets",
     label: "Add Snippet",
   },
-  {
-    href: "/docs",
-    label: "Documentation",
-  },
+//   {
+//     href: "/docs",
+//     label: "Documentation",
+//   },
 ];
 
 export const Navigation = () => {
