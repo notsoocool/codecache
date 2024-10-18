@@ -55,12 +55,13 @@ export async function POST(
 		await dbConnect();
 
 		const { id } = params; // Extract the snippet ID from the request params
-		const { userId, snippetId, reason } = await req.json(); // Expecting userId and reason in the request body
+		const { userId, snippetId, reason, userName } = await req.json(); // Expecting userId and reason in the request body
 
 		// Log the parameters for debugging
 		console.log("Snippet ID:", snippetId);
 		console.log("Requested By (User ID):", userId);
 		console.log("Reason for Deletion:", reason);
+        console.log("User requesting: ",  userName)
 
 		// Check if the ID is a valid MongoDB ObjectId
 		if (!ObjectId.isValid(id)) {
@@ -84,6 +85,7 @@ export async function POST(
 			snippetId: snippetId,
 			deletionRequestedBy: userId, // User ID of the person submitting the request
 			reason: reason, // Reason for deletion
+            name: userName
 		});
 
 		// Save the delete request to the database

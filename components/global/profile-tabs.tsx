@@ -44,7 +44,8 @@ export default function ProfileTabs({
 	userDetails: userDetails;
 }) {
 	const [activeTab, setActiveTab] = useState("submitted");
-	const currentUserId = userDetails.name;
+	const currentUserId = userDetails.id;
+    const currentUserName = userDetails.name;
 
 	const tabVariants = {
 		hidden: { opacity: 0, x: -10 },
@@ -92,7 +93,7 @@ export default function ProfileTabs({
 						Submitted Snippets
 					</h2>
 					{profileData.snippets.length > 0 ? (
-						renderSnippetList(profileData.snippets, currentUserId)
+						renderSnippetList(profileData.snippets, currentUserId, currentUserName)
 					) : (
 						<SkeletonCard type="submitted" />
 					)}
@@ -197,7 +198,7 @@ const SkeletonCard = ({
 	);
 };
 
-const renderSnippetList = (snippets: Snippet[], currentUserId: string) => (
+const renderSnippetList = (snippets: Snippet[], currentUserId: string, currentUserName: string) => (
 	<div className="space-y-4">
 		{snippets.map((snippet) => {
 			const [openDialog, setOpenDialog] = useState(false);
@@ -212,7 +213,8 @@ const renderSnippetList = (snippets: Snippet[], currentUserId: string) => (
 					body: JSON.stringify({
 						userId: currentUserId, // Send the current user ID
 						snippetId: snippetId, // Snippet ID to be deleted
-						reason: deletionReason, // Send the deletion reason
+						reason: deletionReason,
+                        userName: currentUserName,
 					}),
 				});
 

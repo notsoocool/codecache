@@ -5,6 +5,7 @@ export interface ISDeleteRequest extends Document {
 	snippetId: string; // New field
 	deletionRequestedBy: string; // User ID of the person submitting the request
     reason: string;
+    name: string;
 }
 
 const deleteRequestSchema: Schema = new mongoose.Schema({
@@ -20,6 +21,10 @@ const deleteRequestSchema: Schema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    name: {
+        type: String,
+        required: true,
+    }
 });
 
 

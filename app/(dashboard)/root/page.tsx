@@ -37,6 +37,7 @@ type SnippetRequest = {
 type DeleteRequest = {
   _id: string;
   snippetId: string;
+  name: string;
   deletionRequestedBy: string;
   reason: string;
 };
