@@ -28,7 +28,7 @@ const routes = [
 //   },
   {
     href: "/contributor",
-    label: "Contributor",
+    label: "Contributors",
   }
 ];
 

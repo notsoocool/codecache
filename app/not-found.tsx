@@ -2,15 +2,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { Header } from '@/components/global/header';
-import DarkModeLogo from '@/public/DarkModeLogo.png'; // Dark mode logo
-import LightModeLogo from '@/public/LightModeLogo.png'; // Light mode logo
 import Link from 'next/link';
 import GoBackButton from '@/components/ui/GoBackButton';
-import { useTheme } from 'next-themes';
 
 const Custom404: React.FC = () => {
-    const { resolvedTheme } = useTheme(); // Use resolvedTheme to check the current theme
-
     return (
         <>
             <Header />
