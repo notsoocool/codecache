@@ -37,6 +37,26 @@
 </div>
 <br>
 
+## Featured In
+
+<table>
+<tr>
+      <th>Event Logo</th>
+      <th>Event Name</th>
+      <th>Event Description</th>
+    </tr>
+    <tr>
+        <td><img src="https://user-images.githubusercontent.com/63473496/213306279-338f7ce9-9a9f-4427-8c2a-3e344874498f.png#gh-dark-mode-only" width="200" height="auto" loading="lazy" alt="GSSoC Ext 24"/></td>
+        <td>GirlScript Summer of Code Ext 2024</td>
+        <td>GSSOC Ext is a one-month-long open-source program by the GirlScript Foundation that runs from October 1 to November 10, 2024</td> 
+    </tr>
+   <tr>
+        <td><img src="https://cdn.prod.website-files.com/63bc83b29094ec80844b6dd5/66fc35d92c74c4e4103f3673_Flyte-at-Hacktoberfest-2024.png" width="200" height="auto" loading="lazy" alt="Hacktoberfest 24"/></td>
+        <td>Hacktoberfest 2024</td>
+        <td>Hacktober Fest is an annual celebration of open-source software development. It's a month-long event encouraging developers to contribute to open-source projects.</td> 
+    </tr>
+</table>
+
 ## Features 📋
 
 - **Code Snippet Management**: Save, view, and organize code snippets with metadata including language, tags, and descriptions. 🗂️
@@ -223,12 +243,42 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/Suhas-Koheda>
+            <img src=https://avatars.githubusercontent.com/u/72063139?v=4 width="100;"  alt=Suhas Koheda/>
+            <br />
+            <sub style="font-size:14px"><b>Suhas Koheda</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/yashksaini-coder>
             <img src=https://avatars.githubusercontent.com/u/115717039?v=4 width="100;"  alt=Yash Kumar Saini/>
             <br />
             <sub style="font-size:14px"><b>Yash Kumar Saini</b></sub>
         </a>
     </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/inkerton>
+            <img src=https://avatars.githubusercontent.com/u/127668005?v=4 width="100;"  alt=Janvi/>
+            <br />
+            <sub style="font-size:14px"><b>Janvi</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/Vivek7038>
+            <img src=https://avatars.githubusercontent.com/u/95691809?v=4 width="100;"  alt=Vivek Chavan/>
+            <br />
+            <sub style="font-size:14px"><b>Vivek Chavan</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/ZayedShahcode>
+            <img src=https://avatars.githubusercontent.com/u/115407231?v=4 width="100;"  alt=Zayed/>
+            <br />
+            <sub style="font-size:14px"><b>Zayed</b></sub>
+        </a>
+    </td>
+</tr>
+<tr>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/shubhagarwal1>
             <img src=https://avatars.githubusercontent.com/u/105449260?v=4 width="100;"  alt=Shubh Agarwal/>
@@ -237,10 +287,24 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/priyanshuverma-dev>
+            <img src=https://avatars.githubusercontent.com/u/112266318?v=4 width="100;"  alt=Priyanshu Verma/>
+            <br />
+            <sub style="font-size:14px"><b>Priyanshu Verma</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/samyak-aditya>
             <img src=https://avatars.githubusercontent.com/u/91079592?v=4 width="100;"  alt=Samyak Aditya/>
             <br />
             <sub style="font-size:14px"><b>Samyak Aditya</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/myselfshivams>
+            <img src=https://avatars.githubusercontent.com/u/143623476?v=4 width="100;"  alt=Shivam />
+            <br />
+            <sub style="font-size:14px"><b>Shivam </b></sub>
         </a>
     </td>
 </tr>
