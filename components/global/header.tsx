@@ -16,8 +16,7 @@ import {
 import { Input } from "../ui/input";
 
 export const Header = () => {
-  const { setTheme } = useTheme(); // Access theme state and setter
-
+  const { setTheme } = useTheme(); 
   return (
     <header className="sticky top-0 left-0 right-0 bg-transparent bg-opacity-20 backdrop-blur-md px-4 py-4 lg:px-14 z-50">
       <div className="max-w-screen-2xl mx-auto">
