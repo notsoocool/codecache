@@ -19,7 +19,7 @@ export const Header = () => {
   const { setTheme } = useTheme(); 
   return (
     <header className="sticky top-0 left-0 right-0 bg-transparent bg-opacity-20 backdrop-blur-md px-4 py-4 lg:px-14 z-50">
-      <div className="max-w-screen-2xl mx-auto">
+      <div className="mx-auto">
         <div className="w-full flex items-center justify-between">
           <div className="flex items-center lg:gap-x-16">
             <HeaderLogo />

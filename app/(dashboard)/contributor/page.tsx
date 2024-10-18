@@ -122,7 +122,7 @@ export default function Contributor() {
     <div className="min-h-screen ">
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center text-center bg-cover bg-center" >
-        <div className="absolute inset-0 bg-muted" />
+        <div className="absolute inset-0 bg-muted " />
         <div className="relative z-10 space-y-6 max-w-4xl mx-auto px-4">
           <motion.h1 
             className="text-5xl font-bold sm:text-6xl md:text-7xl "

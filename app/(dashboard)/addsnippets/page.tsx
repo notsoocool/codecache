@@ -10,11 +10,9 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ReactLenis } from "@/utils/lenis";
 import { toast } from "sonner";
 export default function AddSnippet() {
   const [title, setTitle] = useState("");
@@ -58,10 +56,8 @@ export default function AddSnippet() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Prepare tags as an array
     const tagsArray = tags.split(",").map((tag) => tag.trim());
 
-    // Check if required fields are empty
     if (!title) {
       toast.error("Title can't be empty");
       return;
@@ -124,7 +120,7 @@ export default function AddSnippet() {
         <div>
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-muted-foreground/80"
           >
             Title
           </label>
@@ -133,13 +129,13 @@ export default function AddSnippet() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="mt-1"
+            className="mt-1  max-w-[15vw]"
           />
         </div>
         <div>
           <label
             htmlFor="language"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-muted-foreground/80"
           >
             Language
           </label>
@@ -149,8 +145,6 @@ export default function AddSnippet() {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {/* choosing each value from the languages array and then rendering it to the dropdown menu
-                                        the map funtion is to reduce repetition */}
                 {languages.map((language) => (
                   <SelectItem key={language} value={language}>
                     {language}
@@ -163,7 +157,7 @@ export default function AddSnippet() {
         <div>
           <label
             htmlFor="code"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-muted-foreground/80"
           >
             Code
           </label>
@@ -171,14 +165,14 @@ export default function AddSnippet() {
             id="code"
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            className="mt-1"
+            className="mt-1  max-w-[40vw]"
             ref={codeRef}
           />
         </div>
         <div>
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-muted-foreground/80"
           >
             Description
           </label>
@@ -186,14 +180,14 @@ export default function AddSnippet() {
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="mt-1"
+            className="mt-1 max-w-[40vw]"
             ref={descriptionRef}
           />
         </div>
         <div>
           <label
             htmlFor="tags"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-muted-foreground/80"
           >
             Tags (comma-separated)
           </label>
@@ -202,14 +196,14 @@ export default function AddSnippet() {
             type="text"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
-            className="mt-1"
+            className="mt-1 max-w-[20vw]"
           />
         </div>
         <div className="flex gap-4 flex-wrap">
           <div>
             <label
               htmlFor="category"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-muted-foreground/80"
             >
               Category
             </label>
@@ -279,7 +273,7 @@ export default function AddSnippet() {
         <div className=" flex justify-end">
           <Button
             type="submit"
-            className="mt-4 hover:border hover:border-foreground hover:text-foreground hover:bg-transparent activer:border active:border-blue-500"
+            className="mt-4 hover:border hover:border-foreground hover:text-foreground hover:bg-transparent "
           >
             Add Snippet
           </Button>
