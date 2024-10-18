@@ -14,7 +14,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "../ui/input";
-import { ProfileDropdown } from "./ProfileDropdown";
 
 export const Header = () => {
   const { setTheme } = useTheme();
