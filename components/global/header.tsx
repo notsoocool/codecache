@@ -14,9 +14,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "../ui/input";
+import { useContext, useState } from "react";
+import { SearchContext } from "@/SearchContext"; // Import SearchContext
 
 export const Header = () => {
-  const { setTheme } = useTheme(); 
+  const { setTheme } = useTheme();
+  const { setSearchQuery } = useContext(SearchContext); // Access search term setter from context
+  const [inputValue, setInputValue] = useState(""); // Track input value locally
+
+  // Function to handle search input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setSearchQuery(value); // Update the search term in context
+  };
+
   return (
     <header className="sticky top-0 left-0 right-0 bg-transparent bg-opacity-20 backdrop-blur-md px-4 py-4 lg:px-14 z-50">
       <div className="mx-auto">
@@ -31,6 +43,8 @@ export const Header = () => {
                 type="text"
                 placeholder="Search snippets..."
                 className="pl-6 pr-4 py-2 w-full"
+                value={inputValue} // Bind input value
+                onChange={handleInputChange} // Handle input change
               />
             </div>
           </div>

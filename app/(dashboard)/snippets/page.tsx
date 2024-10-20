@@ -43,6 +43,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useContext } from "react";
+import { SearchContext } from "@/SearchContext";
 
 // Define the snippet type
 type Snippet = {
@@ -72,6 +74,8 @@ export default function Snippets() {
   const [userId, setUserId] = useState<string | null>(null);
   const [ratings, setRatings] = useState<{ [key: string]: any }>({});
   const [hoveredRating, setHoveredRating] = useState(0);
+
+  const { searchQuery } = useContext(SearchContext);
 
   // Refs for each snippet card to track visibility
   const snippetRefs = useRef<{ [key: string]: HTMLElement | null }>({});
@@ -135,17 +139,17 @@ export default function Snippets() {
         )
       );
 
-			// Show success toast message
-			if (updatedSnippet.bookmarkedBy.includes(userId)) {
-				toast.success("Snippet bookmarked");
-			} else {
-				toast.success("Bookmark removed");
-			}
-		} catch (error) {
-			console.error("Error toggling bookmark:", error);
-			toast.error("Error toggling bookmark");
-		}
-	};
+      // Show success toast message
+      if (updatedSnippet.bookmarkedBy.includes(userId)) {
+        toast.success("Snippet bookmarked");
+      } else {
+        toast.success("Bookmark removed");
+      }
+    } catch (error) {
+      console.error("Error toggling bookmark:", error);
+      toast.error("Error toggling bookmark");
+    }
+  };
 
   const handleCopy = (code: string, id: number) => {
     navigator.clipboard.writeText(code).then(() => {
@@ -172,10 +176,10 @@ export default function Snippets() {
 
   const filteredSnippets = snippets.filter(
     (snippet) =>
-      (snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        snippet.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (snippet.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        snippet.language.toLowerCase().includes(searchQuery.toLowerCase()) ||
         snippet.tags.some((tag) =>
-          tag.toLowerCase().includes(searchTerm.toLowerCase())
+          tag.toLowerCase().includes(searchQuery.toLowerCase())
         )) &&
       (languageFilter.length === 0 ||
         languageFilter.includes(snippet.language)) &&
