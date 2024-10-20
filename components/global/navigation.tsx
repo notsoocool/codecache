@@ -62,11 +62,6 @@ export const Navigation = () => {
     checkAdminStatus();
   }, []);
 
-  const onClick = (href: string) => {
-    router.push(href);
-    setIsOpened(false);
-  };
-
   if (isMobile) {
     return (
       <Sheet open={isOpened} onOpenChange={setIsOpened}>
