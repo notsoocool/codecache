@@ -6,8 +6,10 @@ import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { BookCheckIcon, MailCheckIcon, MailOpenIcon } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import Image from "next/image";
 
 import { Notification } from "@/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -122,13 +124,37 @@ export default function NotificationsPage() {
 
       {/* Loading Indicator */}
       {loading ? (
-        <div className="flex justify-center items-center">
-          <p>Loading notifications...</p>
+        <div className="grid gap-2">
+          <Card className="py-3  flex justify-between items-center px-2">
+            <Skeleton className=" h-6 w-[30vw]" />
+
+            <Skeleton className=" h-4 w-[10vw]" />
+          </Card>
+          <Card className="py-3 opacity-60 flex justify-between items-center px-2">
+            <Skeleton className=" h-6 w-[30vw]" />
+
+            <Skeleton className=" h-4 w-[10vw]" />
+          </Card>
+          <Card className="py-3 opacity-40  flex justify-between items-center px-2">
+            <Skeleton className=" h-6 w-[30vw]" />
+
+            <Skeleton className=" h-4 w-[10vw]" />
+          </Card>
         </div>
       ) : notifications.length === 0 ? (
         // No notifications message
-        <div className="flex justify-center items-center">
-          <p>No notifications found.</p>
+        <div className="flex flex-col h-[50vh] justify-center items-center">
+          <Image
+            src="/emptyinbox.png"
+            alt="Empty Inbox"
+            width="200"
+            height="200"
+          />
+          <h1 className=" font-semibold">You're all caught up!</h1>
+          <p className=" text-muted-foreground">
+            Take a break, explore some snippets, or write your next great piece
+            of code.
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-2">
