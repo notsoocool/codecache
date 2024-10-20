@@ -1,39 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db/connect";
-import { auth } from "@clerk/nextjs/server";
 import DeleteRequest from "@/lib/db/deleteRequestModel";
+import Notification from "@/lib/db/notificationModel";
+import { auth } from "@clerk/nextjs/server";
 
-// Get all unapproved snippet requests
+// Reject the snippet deletion request
 export async function PATCH(req: NextRequest) {
-	try {
-        const { userId } = auth();
+  await dbConnect();
 
-        const adminUserIds = process.env.ADMIN_USER_IDS?.split(",") || [];
-    
-        if (!userId || !adminUserIds.includes(userId)) {
-            return new NextResponse("Unauthorized", { status: 401 });
-        }
-    
-        // Handle your admin logic here
-		await dbConnect();
-        const { requestId } = await req.json();
+  try {
+    const { requestId, reason } = await req.json(); // Get the reason from request body
 
-        const pendingDeleteRequests = await DeleteRequest.findById(requestId);
-		if (!pendingDeleteRequests)
-			return NextResponse.json(
-				{ message: "Snippet request not found" },
-				{ status: 404 }
-			);		
-            
-            console.log("Fetched Pending DeleteRequest");
-			await DeleteRequest.findByIdAndDelete(requestId);
+    const request = await DeleteRequest.findById(requestId);
+    if (!request) {
+      return NextResponse.json(
+        { message: "Snippet request not found" },
+        { status: 404 }
+      );
+    }
 
-		return NextResponse.json({message: "Request Rejected"},{ status: 200 });
-	} catch (error) {
-		console.error("Error fetching pending DeleteRequest:", error);
-		return NextResponse.json(
-			{ error: "Error fetching pending DeleteRequest" },
-			{ status: 500 }
-		);
-	}
+    await DeleteRequest.findByIdAndDelete(requestId);
+
+    // Send a notification to the user about the rejection
+    await Notification.create({
+      userId: request.deletionRequestedBy, // Notify the user who requested the deletion
+      type: "deletion_request",
+      snippetId: request.snippetId,
+      message: `Your request to delete snippet has been rejected. Reason: ${reason}`,
+      status: "unread",
+    });
+
+    return NextResponse.json(
+      { message: "Snippet deletion request rejected and user notified" },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error rejecting snippet deletion request" },
+      { status: 500 }
+    );
+  }
 }

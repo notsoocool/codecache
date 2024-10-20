@@ -18,28 +18,20 @@ import { ReactLenis } from "@/utils/lenis";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataTable } from "@/components/global/data-table";
 import { columns } from "@/components/global/columns";
-import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog"; // Adjust this import based on your actual structure
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog"; // Adjust this import based on your actual structure
 
 // Define a snippet type
-type SnippetRequest = {
-  _id: string;
-  title: string;
-  language: string;
-  code: string;
-  description?: string;
-  tags?: string[];
-  category?: string;
-  difficulty?: string;
-  usage?: string;
-  approved: boolean;
-};
-
-type DeleteRequest = {
-  _id: string;
-  snippetId: string;
-  deletionRequestedBy: string;
-  reason: string;
-};
+import { SnippetRequest, DeleteRequest } from "@/types";
 
 export default function AdminPage() {
   const { theme } = useTheme();
@@ -47,11 +39,11 @@ export default function AdminPage() {
   const router = useRouter();
   const [snippetRequests, setSnippetRequests] = useState<SnippetRequest[]>([]);
   const [deleteRequests, setDeleteRequests] = useState<DeleteRequest[]>([]);
-  
+
   // New state for dialog and reason
   const [openAcceptDialog, setOpenAcceptDialog] = useState(false);
   const [openRejectDialog, setOpenRejectDialog] = useState(false);
-  const [reason, setReason] = useState<string>('');
+  const [reason, setReason] = useState<string>("");
   const [currentSnippetId, setCurrentSnippetId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -124,11 +116,11 @@ export default function AdminPage() {
 
       if (response.ok) {
         setSnippetRequests((prev) =>
-          prev.filter((request) => request._id !== requestId)
+          prev.filter((request) => request._id !== requestId),
         );
         toast.success("Snippet accepted and added to the database!");
         setOpenAcceptDialog(false);
-        setReason('');
+        setReason("");
         setCurrentSnippetId(null);
       } else {
         toast.error("Failed to accept snippet request.");
@@ -151,11 +143,11 @@ export default function AdminPage() {
 
       if (response.ok) {
         setSnippetRequests((prev) =>
-          prev.filter((request) => request._id !== requestId)
+          prev.filter((request) => request._id !== requestId),
         );
         toast.success("Snippet request rejected and deleted.");
         setOpenRejectDialog(false);
-        setReason('');
+        setReason("");
         setCurrentSnippetId(null);
       } else {
         toast.error("Failed to reject snippet request.");
@@ -200,15 +192,28 @@ export default function AdminPage() {
                       </p>
                     </div>
                     <div className="flex gap-4">
-                      <AlertDialog open={openAcceptDialog} onOpenChange={setOpenAcceptDialog}>
+                      <AlertDialog
+                        open={openAcceptDialog}
+                        onOpenChange={setOpenAcceptDialog}
+                      >
                         <AlertDialogTrigger>
-                          <Button onClick={() => { setCurrentSnippetId(request._id); setReason(''); }}>Approve</Button>
+                          <Button
+                            onClick={() => {
+                              setCurrentSnippetId(request._id);
+                              setReason("");
+                            }}
+                          >
+                            Approve
+                          </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Accept Snippet Request</AlertDialogTitle>
+                            <AlertDialogTitle>
+                              Accept Snippet Request
+                            </AlertDialogTitle>
                             <AlertDialogDescription>
-                              Please provide a reason for accepting this snippet.
+                              Please provide a reason for accepting this
+                              snippet.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <input
@@ -219,7 +224,11 @@ export default function AdminPage() {
                             className="border p-2 mt-2 w-full"
                           />
                           <AlertDialogFooter>
-                            <AlertDialogCancel onClick={() => setOpenAcceptDialog(false)}>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel
+                              onClick={() => setOpenAcceptDialog(false)}
+                            >
+                              Cancel
+                            </AlertDialogCancel>
                             <AlertDialogAction
                               onClick={async () => {
                                 await handleAccept(request._id);
@@ -231,15 +240,29 @@ export default function AdminPage() {
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>
-                      <AlertDialog open={openRejectDialog} onOpenChange={setOpenRejectDialog}>
+                      <AlertDialog
+                        open={openRejectDialog}
+                        onOpenChange={setOpenRejectDialog}
+                      >
                         <AlertDialogTrigger>
-                          <Button variant="destructive" onClick={() => { setCurrentSnippetId(request._id); setReason(''); }}>Reject</Button>
+                          <Button
+                            variant="destructive"
+                            onClick={() => {
+                              setCurrentSnippetId(request._id);
+                              setReason("");
+                            }}
+                          >
+                            Reject
+                          </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Reject Snippet Request</AlertDialogTitle>
+                            <AlertDialogTitle>
+                              Reject Snippet Request
+                            </AlertDialogTitle>
                             <AlertDialogDescription>
-                              Please provide a reason for rejecting this snippet.
+                              Please provide a reason for rejecting this
+                              snippet.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <input
@@ -250,7 +273,11 @@ export default function AdminPage() {
                             className="border p-2 mt-2 w-full"
                           />
                           <AlertDialogFooter>
-                            <AlertDialogCancel onClick={() => setOpenRejectDialog(false)}>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel
+                              onClick={() => setOpenRejectDialog(false)}
+                            >
+                              Cancel
+                            </AlertDialogCancel>
                             <AlertDialogAction
                               onClick={async () => {
                                 await handleReject(request._id);
@@ -297,7 +324,10 @@ export default function AdminPage() {
         </TabsContent>
         <TabsContent value="delete">
           <div className="container mx-auto py-10">
-            <DataTable columns={columns(updateDeleteRequests)} data={deleteRequests} />
+            <DataTable
+              columns={columns(updateDeleteRequests)}
+              data={deleteRequests}
+            />
           </div>
         </TabsContent>
       </Tabs>
