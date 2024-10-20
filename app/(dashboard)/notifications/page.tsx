@@ -13,7 +13,6 @@ export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState<boolean>(true); // Loading state
 
-  // Fetch notifications on component mount
   useEffect(() => {
     async function fetchNotifications() {
       try {
