@@ -15,14 +15,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "../ui/input";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SearchContext } from "@/SearchContext"; // Import SearchContext
 
 export const Header = () => {
   const [hasUnread, setHasUnread] = useState(false); // Tracks if there are unread notifications
-  
-  const { setTheme } = useTheme();
+
   const { setSearchQuery } = useContext(SearchContext); // Access search term setter from context
   const [inputValue, setInputValue] = useState(""); // Track input value locally
 
