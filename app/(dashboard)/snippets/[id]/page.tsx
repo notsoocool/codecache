@@ -20,23 +20,7 @@ import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 
-type Snippet = {
-  difficulty: string;
-  _id: string;
-  title: string;
-  language: string;
-  code: string;
-  tags: string[];
-};
-
-type Comment = {
-  _id: string;
-  snippetId: string;
-  userId: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import { Snippet, Comment } from "@/types";
 
 export default function SnippetPage() {
   const { theme } = useTheme();
@@ -325,7 +309,7 @@ export default function SnippetPage() {
                     <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
                       <img
                         src={`${DUMMY_AVATAR_URL}${encodeURIComponent(
-                          comment.userId
+                          comment.userId,
                         )}`}
                         alt={`Avatar for ${comment.userId}`}
                         className="w-full h-full object-cover"

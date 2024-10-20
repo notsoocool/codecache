@@ -46,18 +46,7 @@ import {
 import { useContext } from "react";
 import { SearchContext } from "@/SearchContext";
 
-// Define the snippet type
-type Snippet = {
-  _id: any;
-  title: string;
-  language: string;
-  code: string;
-  tags: string[];
-  bookmarkedBy: string[];
-  category: string;
-  difficulty: string;
-  usage: string;
-};
+import { Snippet } from "@/types";
 
 export default function Snippets() {
   const { theme } = useTheme();
@@ -135,8 +124,8 @@ export default function Snippets() {
       // Update your state or UI accordingly
       setSnippets(
         snippets.map((snippet) =>
-          snippet._id === updatedSnippet._id ? updatedSnippet : snippet
-        )
+          snippet._id === updatedSnippet._id ? updatedSnippet : snippet,
+        ),
       );
 
       // Show success toast message
@@ -184,7 +173,7 @@ export default function Snippets() {
       (languageFilter.length === 0 ||
         languageFilter.includes(snippet.language)) &&
       (difficultyFilter.length === 0 ||
-        difficultyFilter.includes(snippet.difficulty))
+        difficultyFilter.includes(snippet.difficulty)),
   );
 
   useEffect(() => {
@@ -192,10 +181,10 @@ export default function Snippets() {
   }, [filteredSnippets, theme, snippets]);
 
   const languages = Array.from(
-    new Set(snippets.map((snippet) => snippet.language))
+    new Set(snippets.map((snippet) => snippet.language)),
   );
   const difficulties = Array.from(
-    new Set(snippets.map((snippet) => snippet.difficulty))
+    new Set(snippets.map((snippet) => snippet.difficulty)),
   );
 
   if (loading) {
@@ -251,7 +240,7 @@ export default function Snippets() {
                       setLanguageFilter((prev) =>
                         checked
                           ? [...prev, lang]
-                          : prev.filter((l) => l !== lang)
+                          : prev.filter((l) => l !== lang),
                       );
                     }}
                   >
@@ -269,7 +258,7 @@ export default function Snippets() {
                       setDifficultyFilter((prev) =>
                         checked
                           ? [...prev, diff]
-                          : prev.filter((d) => d !== diff)
+                          : prev.filter((d) => d !== diff),
                       );
                     }}
                   >

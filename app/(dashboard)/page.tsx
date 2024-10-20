@@ -5,27 +5,50 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ReactLenis } from "@/utils/lenis";
-
+import Image from "next/image";
 export default function Home() {
 	return (
 		<ReactLenis root>
 			<main className="my-8 mx-5">
-				<h1 className=" font-bold text-3xl">Introduction</h1>
-				<p className="py-2 text-muted-foreground">
-					A powerful tool for developers to store, manage, and
-					organize code snippets efficiently. Boost productivity with
-					CodeCache!
-				</p>
-
-				<p className=" py-4">
-					Welcome to <strong>CodeCache</strong>, your go-to platform
-					for managing code snippets effectively. CodeCache is
-					designed to simplify how developers handle code snippets by
-					offering a customizable, searchable, and easy-to-use
-					interface. Whether you are building a small project or
-					working on large-scale applications, CodeCache helps you
-					stay organized and productive.
-				</p>
+				<div className=" h-screen flex items-center -mt-20">
+					<div>
+						<h1 className=" md:w-4/6 md:text-[4rem] text-5xl md:leading-snug font-mono">
+							Boost productivity with{" "}
+							<span className="font-bold ">CodeCache!</span>
+						</h1>
+						<div className="md:w-3/4">
+							<p className=" py-4">
+								Welcome to <strong>CodeCache</strong>, your
+								go-to platform for managing code snippets
+								effectively. CodeCache is designed to simplify
+								how developers handle code snippets by offering
+								a customizable, searchable, and easy-to-use
+								interface. Whether you are building a small
+								project or working on large-scale applications,
+								CodeCache helps you stay organized and
+								productive.
+							</p>
+						</div>
+						{/* <div className="mt-4">
+							<button className="underline underline-offset-4 decoration-dotted">
+								Know more
+							</button>
+						</div> */}
+					</div>
+					<div className="border-2 w-3/4 opacity-10">
+						<Image
+							src="/code.png"
+							width={600}
+							height={100}
+							alt="img"
+						/>
+					</div>
+				</div>
+				{/* <h1 className=" font-bold text-3xl">Introduction</h1>
+        <p className="py-2 text-muted-foreground">
+          A powerful tool for developers to store, manage, and organize code
+          snippets efficiently. 
+        </p> */}
 
 				<h2 className="pt-4 pb-2 font-bold text-lg">
 					What is CodeCache?
@@ -39,32 +62,52 @@ export default function Home() {
 					projects.
 				</p>
 
-				<h2 className=" pt-4 pb-2 font-bold text-lg">Key Features:</h2>
-				<ul className=" pl-2 pb-4 grid gap-2 ">
-					<li>
-						<strong>Snippet Management</strong>: Easily create,
-						edit, and organize your code snippets by language, tags,
-						or custom categories.
-					</li>
-					<li>
-						<strong>Search Functionality</strong>: Quickly find the
-						code you need with an advanced search feature.
-					</li>
-					<li>
-						<strong>Customization</strong>: Tailor the code snippets
-						with custom descriptions and tags, making them easy to
-						reference.
-					</li>
-					<li>
-						<strong>Multi-language Support</strong>: Store snippets
-						in multiple programming languages, including JavaScript,
-						Python, Go, and more.
-					</li>
-					<li>
-						<strong>Sharing Options</strong>: Share your favorite
-						snippets with your team or community effortlessly.
-					</li>
-				</ul>
+				<div className="flex flex-col items-center gap-5">
+					<h2 className="pt-4 pb-2 font-bold text-4xl">
+						Key Features
+					</h2>
+					<div className="flex flex-wrap md:flex-nowrap gap-4">
+						{[
+							{
+								title: "Snippet Management",
+								description:
+									"Easily create, edit, and organize your code snippets by language, tags, or custom categories.",
+							},
+							{
+								title: "Search Functionality",
+								description:
+									"Quickly find the code you need with an advanced search feature.",
+							},
+							{
+								title: "Customization",
+								description:
+									"Tailor the code snippets with custom descriptions and tags, making them easy to reference.",
+							},
+							{
+								title: "Multi-language Support",
+								description:
+									"Store snippets in multiple programming languages, including JavaScript, Python, Go, and more.",
+							},
+							{
+								title: "Sharing Options",
+								description:
+									"Share your favorite snippets with your team or community effortlessly.",
+							},
+						].map((feature, index) => (
+							<div
+								key={index}
+								className="border-2 p-8  gap-3 flex flex-col rounded-lg   w-full sm:w-1/2 lg:w-1/3 transition-transform duration-300 ease-in-out hover:translate-y-2 hover:bg-transparent shadow-inner dark:shadow-white/10 dark:bg-white/5 "
+							>
+								<p className="font-bold text-lg">
+									{feature.title}
+								</p>
+								<p className="text-sm dark:text-slate-300 ">
+									{feature.description}
+								</p>
+							</div>
+						))}
+					</div>
+				</div>
 
 				<p className=" py-4">
 					<em>

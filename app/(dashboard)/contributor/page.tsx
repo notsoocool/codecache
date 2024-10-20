@@ -1,34 +1,31 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ReactLenis } from '@/utils/lenis'
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ReactLenis } from "@/utils/lenis";
 
-interface Contributor {
-  id: number
-  login: string
-  avatar_url: string
-  html_url: string
-  contributions: number
-  type: string
-}
+import type { Contributor, RepoStats } from "@/types";
 
-interface RepoStats {
-  stars: number
-  forks: number
-  openIssues: number
-}
-
-const ContributorCard: React.FC<Contributor> = ({ login, avatar_url, html_url, contributions, type }) => (
+const ContributorCard: React.FC<Contributor> = ({
+  login,
+  avatar_url,
+  html_url,
+  contributions,
+  type,
+}) => (
   <motion.div
     whileHover={{ y: -5 }}
-    transition={{ type: 'spring', stiffness: 300 }}
+    transition={{ type: "spring", stiffness: 300 }}
     className=" rounded-xl shadow-md overflow-hidden border border-muted flex flex-col gap-5"
   >
     <div className="p-6 text-center flex flex-col gap-1">
-      <img src={avatar_url} alt={login} className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-muted" />
+      <img
+        src={avatar_url}
+        alt={login}
+        className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-muted"
+      />
       <h3 className="font-bold ">{login}</h3>
       <p className=" text-xs text-muted-foreground mb-2">{type}</p>
       <div className="mt-2 bg-muted text-sm rounded-full py-2 px-4 inline-block">
@@ -36,228 +33,308 @@ const ContributorCard: React.FC<Contributor> = ({ login, avatar_url, html_url, c
       </div>
     </div>
     <div className="bg-muted py-3 px-6 flex justify-between items-center">
-      <a 
-        href={html_url} 
-        target="_blank" 
-        rel="noopener noreferrer" 
+      <a
+        href={html_url}
+        target="_blank"
+        rel="noopener noreferrer"
         className="text-muted-foreground hover:text-primary/80 flex items-center text-sm"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5 mr-2"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
           <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
           <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
         </svg>
         View Profile
       </a>
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400 dark:text-gray-500">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="text-gray-400 dark:text-gray-500"
+      >
         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
       </svg>
     </div>
   </motion.div>
-)
+);
 
 interface StatCardProps {
-  label: string
-  value: number
-  icon: React.ReactNode
+  label: string;
+  value: number;
+  icon: React.ReactNode;
 }
 
 const StatCard: React.FC<StatCardProps> = ({ label, value, icon }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ type: 'spring', stiffness: 300, delay: 0.6 }}
+    transition={{ type: "spring", stiffness: 300, delay: 0.6 }}
     whileHover={{ y: -5 }}
     className=" rounded-xl shadow-md p-6 flex items-center border"
   >
-    <div className="rounded-full bg-muted p-3 mr-4">
-      {icon}
-    </div>
+    <div className="rounded-full bg-muted p-3 mr-4">{icon}</div>
     <div>
       <h3 className="text-xl font-bold text-primary/90">{value}</h3>
       <p className=" text-muted-foreground text-sm">{label}</p>
     </div>
   </motion.div>
-)
+);
 
 export default function Contributor() {
-  const [contributors, setContributors] = useState<Contributor[]>([])
-  const [repoStats, setRepoStats] = useState<RepoStats>({ stars: 0, forks: 0, openIssues: 0 })
-  const [loading, setLoading] = useState(true)
-  const [email, setEmail] = useState('')
-  const [notification, setNotification] = useState({ show: false, message: '' })
+  const [contributors, setContributors] = useState<Contributor[]>([]);
+  const [repoStats, setRepoStats] = useState<RepoStats>({
+    stars: 0,
+    forks: 0,
+    openIssues: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState("");
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const contributorsResponse = await fetch('https://api.github.com/repos/notsoocool/codecache/contributors')
-        const contributorsData: Contributor[] = await contributorsResponse.json()
-        setContributors(contributorsData)
+        const contributorsResponse = await fetch(
+          "https://api.github.com/repos/notsoocool/codecache/contributors",
+        );
+        const contributorsData: Contributor[] =
+          await contributorsResponse.json();
+        setContributors(contributorsData);
 
-        const repoResponse = await fetch('https://api.github.com/repos/notsoocool/codecache')
-        const repoData = await repoResponse.json()
+        const repoResponse = await fetch(
+          "https://api.github.com/repos/notsoocool/codecache",
+        );
+        const repoData = await repoResponse.json();
         setRepoStats({
           stars: repoData.stargazers_count,
           forks: repoData.forks_count,
           openIssues: repoData.open_issues_count,
-        })
+        });
       } catch (error) {
-        console.error('Error fetching data:', error)
+        console.error("Error fetching data:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setNotification({ show: true, message: `Thank you for subscribing with ${email}. We'll keep you updated!` })
-    setEmail('')
-    setTimeout(() => setNotification({ show: false, message: '' }), 5000)
-  }
+    e.preventDefault();
+    setNotification({
+      show: true,
+      message: `Thank you for subscribing with ${email}. We'll keep you updated!`,
+    });
+    setEmail("");
+    setTimeout(() => setNotification({ show: false, message: "" }), 5000);
+  };
 
   return (
     <ReactLenis root>
-    <div className="min-h-screen ">
-      {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center text-center bg-cover bg-center" >
-        <div className="absolute inset-0 bg-muted " />
-        <div className="relative z-10 space-y-6 max-w-4xl mx-auto px-4">
-          <motion.h1 
-            className="text-5xl font-bold sm:text-6xl md:text-7xl "
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Welcome to CodeCache
-          </motion.h1>
-          <motion.p 
-            className="text-xl sm:text-2xl text-muted-foreground"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Empowering writers, one commit at a time
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <Button
-              
-              onClick={() => document.getElementById('contribute')?.scrollIntoView({ behavior: 'smooth' })}
+      <div className="min-h-screen ">
+        {/* Hero Section */}
+        <section className="relative h-[60vh] flex items-center justify-center text-center bg-cover bg-center">
+          <div className="absolute inset-0 bg-muted " />
+          <div className="relative z-10 space-y-6 max-w-4xl mx-auto px-4">
+            <motion.h1
+              className="text-5xl font-bold sm:text-6xl md:text-7xl "
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              Become a Contributor
-            </Button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 ">
-        <div className="max-w-7xl mx-auto">
-          <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-xl font-bold text-center mb-8 ">Project Statistics</motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <StatCard 
-              label="Contributors" 
-              value={contributors.length} 
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-muted-foreground" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-              </svg>}
-            />
-            <StatCard 
-              label="Total Contributions" 
-              value={contributors.reduce((sum, contributor) => sum + contributor.contributions, 0)} 
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-muted-foreground" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-              </svg>}
-            />
-            <StatCard 
-              label="GitHub Stars" 
-              value={repoStats.stars} 
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-muted-foreground" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>}
-            />
-            <StatCard 
-              label="Forks" 
-              value={repoStats.forks} 
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-muted-foreground" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>}
-            />
+              Welcome to CodeCache
+            </motion.h1>
+            <motion.p
+              className="text-xl sm:text-2xl text-muted-foreground"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Empowering writers, one commit at a time
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <Button
+                onClick={() =>
+                  document
+                    .getElementById("contribute")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+              >
+                Become a Contributor
+              </Button>
+            </motion.div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Contributors Grid */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 ">
-        <div  className="max-w-7xl mx-auto">
-          <h2 className=" text-center mb-8 font-semibold text-xl">Meet Our Contributors</h2>
-          <AnimatePresence>
-            {loading ? (
+        {/* Stats Section */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8 ">
+          <div className="max-w-7xl mx-auto">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="text-xl font-bold text-center mb-8 "
+            >
+              Project Statistics
+            </motion.h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <StatCard
+                label="Contributors"
+                value={contributors.length}
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8 text-muted-foreground"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                  </svg>
+                }
+              />
+              <StatCard
+                label="Total Contributions"
+                value={contributors.reduce(
+                  (sum, contributor) => sum + contributor.contributions,
+                  0,
+                )}
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8 text-muted-foreground"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                }
+              />
+              <StatCard
+                label="GitHub Stars"
+                value={repoStats.stars}
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8 text-muted-foreground"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                }
+              />
+              <StatCard
+                label="Forks"
+                value={repoStats.forks}
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8 text-muted-foreground"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                }
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Contributors Grid */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8 ">
+          <div className="max-w-7xl mx-auto">
+            <h2 className=" text-center mb-8 font-semibold text-xl">
+              Meet Our Contributors
+            </h2>
+            <AnimatePresence>
+              {loading ? (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex justify-center items-center h-64"
+                >
+                  <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-8"
+                >
+                  {contributors.map((contributor) => (
+                    <ContributorCard key={contributor.id} {...contributor} />
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section
+          id="contribute"
+          className="py-16 px-4 sm:px-6 lg:px-8  bg-muted"
+        >
+          <div className="max-w-4xl mx-auto text-center flex flex-col gap-2">
+            <h2 className="text-2xl font-semibold">Ready to Make an Impact?</h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              Join our community and help shape the future of CodeCache.
+            </p>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="sm:w-auto"
+              />
+              <Button type="submit">Get Started</Button>
+            </form>
+            {notification.show && (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex justify-center items-center h-64"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                className="mt-4 p-4 bg-gray-800 dark:bg-gray-700 text-white rounded-md"
               >
-                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-8"
-              >
-                {contributors.map((contributor) => (
-                  <ContributorCard key={contributor.id} {...contributor} />
-                ))}
+                {notification.message}
               </motion.div>
             )}
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section id="contribute" className="py-16 px-4 sm:px-6 lg:px-8  bg-muted">
-        <div className="max-w-4xl mx-auto text-center flex flex-col gap-2">
-          <h2 className="text-2xl font-semibold">Ready to Make an Impact?</h2>
-          <p className="text-sm text-muted-foreground mb-4">
-            Join our community and help shape the future of CodeCache.
-          </p>
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="sm:w-auto"
-            />
-            <Button type="submit"  >
-              Get Started
-            </Button>
-          </form>
-          {notification.show && (
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              className="mt-4 p-4 bg-gray-800 dark:bg-gray-700 text-white rounded-md"
-            >
-              {notification.message}
-            </motion.div>
-          )}
-        </div>
-      </section>
-    </div>
+          </div>
+        </section>
+      </div>
     </ReactLenis>
-  )
+  );
 }

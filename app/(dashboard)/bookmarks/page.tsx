@@ -44,18 +44,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// Define the snippet type
-type Snippet = {
-  _id: any;
-  title: string;
-  language: string;
-  code: string;
-  tags: string[];
-  bookmarkedBy: string[];
-  category: string;
-  difficulty: string;
-  usage: string;
-};
+import { Snippet } from "@/types";
 
 export default function Bookmarks() {
   const { theme } = useTheme();
@@ -103,7 +92,10 @@ export default function Bookmarks() {
         // Fetch the bookmarked snippets using the user ID
         await fetchBookmarkedSnippets(userData.id);
       } catch (error) {
-        console.error("Error fetching current user or bookmarked snippets:", error);
+        console.error(
+          "Error fetching current user or bookmarked snippets:",
+          error,
+        );
       } finally {
         setLoading(false);
       }
@@ -148,8 +140,8 @@ export default function Bookmarks() {
       // Update your state or UI accordingly
       setSnippets(
         snippets.map((snippet) =>
-          snippet._id === updatedSnippet._id ? updatedSnippet : snippet
-        )
+          snippet._id === updatedSnippet._id ? updatedSnippet : snippet,
+        ),
       );
 
       // Show success toast message
@@ -192,12 +184,12 @@ export default function Bookmarks() {
       (snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         snippet.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
         snippet.tags.some((tag) =>
-          tag.toLowerCase().includes(searchTerm.toLowerCase())
+          tag.toLowerCase().includes(searchTerm.toLowerCase()),
         )) &&
       (languageFilter.length === 0 ||
         languageFilter.includes(snippet.language)) &&
       (difficultyFilter.length === 0 ||
-        difficultyFilter.includes(snippet.difficulty))
+        difficultyFilter.includes(snippet.difficulty)),
   );
 
   useEffect(() => {
@@ -205,10 +197,10 @@ export default function Bookmarks() {
   }, [filteredSnippets, theme, snippets]);
 
   const languages = Array.from(
-    new Set(snippets.map((snippet) => snippet.language))
+    new Set(snippets.map((snippet) => snippet.language)),
   );
   const difficulties = Array.from(
-    new Set(snippets.map((snippet) => snippet.difficulty))
+    new Set(snippets.map((snippet) => snippet.difficulty)),
   );
 
   if (loading) {
@@ -264,7 +256,7 @@ export default function Bookmarks() {
                       setLanguageFilter((prev) =>
                         checked
                           ? [...prev, lang]
-                          : prev.filter((l) => l !== lang)
+                          : prev.filter((l) => l !== lang),
                       );
                     }}
                   >
@@ -282,7 +274,7 @@ export default function Bookmarks() {
                       setDifficultyFilter((prev) =>
                         checked
                           ? [...prev, diff]
-                          : prev.filter((d) => d !== diff)
+                          : prev.filter((d) => d !== diff),
                       );
                     }}
                   >
