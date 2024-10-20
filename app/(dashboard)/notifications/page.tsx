@@ -149,6 +149,7 @@ export default function NotificationsPage() {
             alt="Empty Inbox"
             width="200"
             height="200"
+            className=" dark:invert"
           />
           <h1 className=" font-semibold">You're all caught up!</h1>
           <p className=" text-muted-foreground">
