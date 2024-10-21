@@ -1,0 +1,35 @@
+
+name: Add contributors
+
+on:
+  # Scheduled daily update at midnight
+  schedule:
+    - cron:  '0 0 * * *'
+
+  # Trigger on push to any branch
+  push:
+
+  # Trigger when a pull request is merged
+  pull_request:
+    types: [closed]
+
+  # Trigger on manual run
+  workflow_dispatch:
+
+jobs:
+  add-contributors:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Fetch all contributors
+      uses: BobAnkh/add-contributors@master
+      with:
+        CONTRIBUTOR: '### Contributors'
+        COLUMN_PER_ROW: '20'
+        ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        IMG_WIDTH: '100'
+        FONT_SIZE: '14'
+        PATH: '/README.md' 
+        COMMIT_MESSAGE: 'docs(README): update contributors'
+        AVATAR_SHAPE: 'circle'
+        EXCLUDE_CONTRIBUTOR: 'false'
