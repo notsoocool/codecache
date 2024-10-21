@@ -1,4 +1,4 @@
-"use client";
+  "use client";
 
 import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
 import { Inbox, Loader2, Search, Sun, User2 } from "lucide-react";
@@ -198,7 +198,6 @@ export const Header = () => {
             </div>
           </div>
         </div>
-      </div>
-    </header>
-  );
-};
+      </header>
+    );
+  };
