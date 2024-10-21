@@ -53,7 +53,7 @@ jobs:
         CONTRIBUTOR: '### Contributors'
         COLUMN_PER_ROW: '20'
         ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        IMG_WIDTH: '100'
+        IMG_WIDTH: '10'
         FONT_SIZE: '14'
         PATH: '/README.md' 
         COMMIT_MESSAGE: 'docs(README): update contributors'
