@@ -83,7 +83,7 @@ export const Header = () => {
                       key={snippet._id}
                       href={`/snippets/${snippet._id}`}
                       className="block px-4 py-2  transition-colors"
-                      onClick={() => setInputValue(snippet.title)}
+                      onClick={() => setInputValue("")}
                     >
                       {snippet.title}
                     </Link>
