@@ -25,7 +25,6 @@
 #         COMMIT_MESSAGE: 'docs(README): update contributors'
 #         AVATAR_SHAPE: 'circle'
 
-
 name: Add contributors
 
 on:
@@ -48,13 +47,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: BobAnkh/add-contributors@master
+    - name: Fetch all contributors
+      uses: BobAnkh/add-contributors@master
       with:
         CONTRIBUTOR: '### Contributors'
         COLUMN_PER_ROW: '6'
         ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
         IMG_WIDTH: '100'
         FONT_SIZE: '14'
-        PATH: '/README.md'
+        PATH: '/README.md'  # Ensure the file exists
         COMMIT_MESSAGE: 'docs(README): update contributors'
         AVATAR_SHAPE: 'circle'
+        # Add this to ensure all contributors are considered
+        EXCLUDE_CONTRIBUTOR: 'false'
