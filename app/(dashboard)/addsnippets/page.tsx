@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 
+// Constants for form options
 const languages = [
   "Java", "Python", "JavaScript", "C++", "C#", "Go", "Kotlin", "Ruby", "Swift",
   "PHP", "TypeScript", "Rust", "Dart", "Scala", "Perl", "R", "Elixir",
@@ -29,7 +30,66 @@ const difficultyLevels = ["Beginner", "Intermediate", "Advanced"];
 
 const usageTypes = ["Educational", "Utility", "Template", "Other"];
 
+// Props interface for FormField component
+interface FormFieldProps {
+  label: string;
+  name: string;
+  value: string;
+  onChange: any; // Keep any to maintain compatibility
+  maxWidth?: string;
+  component?: typeof Input | typeof Textarea;
+  options?: string[];
+  ref?: React.RefObject<HTMLTextAreaElement>;
+}
+
+// Reusable FormField component
+const FormField = ({ label, name, value, onChange, maxWidth, component: Component = Input, options, ref }: FormFieldProps) => {
+  // Handle Select component rendering
+  if (options) {
+    return (
+      <div>
+        <label htmlFor={name} className="block text-sm font-medium text-muted-foreground/80">
+          {label}
+        </label>
+        <Select name={name} onValueChange={(value) => onChange({ target: { name, value } })}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {options.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+    );
+  }
+
+  // Handle Input/Textarea rendering
+  return (
+    <div>
+      <label htmlFor={name} className="block text-sm font-medium text-muted-foreground/80">
+        {label}
+      </label>
+      <Component
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
+        className={`mt-1 ${maxWidth}`}
+        ref={ref}
+      />
+    </div>
+  );
+};
+
+// Main form component
 export default function AddSnippet() {
+  // Form state management
   const [formData, setFormData] = useState({
     title: "",
     language: "",
@@ -40,20 +100,24 @@ export default function AddSnippet() {
     difficulty: "",
     usage: "",
   });
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const codeRef = useRef<HTMLTextAreaElement>(null);
 
+  // Handle input changes
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   }, []);
 
+  // Handle select changes
   const handleSelectChange = useCallback((name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   }, []);
 
+  // Form validation
   const validateForm = useCallback(() => {
     const requiredFields = ['title', 'language', 'code', 'category', 'difficulty', 'usage'];
     for (const field of requiredFields) {
@@ -65,6 +129,7 @@ export default function AddSnippet() {
     return true;
   }, [formData]);
 
+  // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm() || isSubmitting) return;
@@ -168,52 +233,6 @@ export default function AddSnippet() {
           </Button>
         </div>
       </form>
-    </div>
-  );
-}
-
-interface FormFieldProps {
-  label: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  maxWidth?: string;
-  component?: typeof Input | typeof Textarea;
-  options?: string[];
-  ref?: React.RefObject<HTMLTextAreaElement>;
-}
-
-function FormField({ label, name, value, onChange, maxWidth, component: Component = Input, options, ref }: FormFieldProps) {
-  return (
-    <div>
-      <label htmlFor={name} className="block text-sm font-medium text-muted-foreground/80">
-        {label}
-      </label>
-      {options ? (
-        <Select onValueChange={(value) => onChange({ target: { name, value } } as any)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {options.map((option) => (
-                <SelectItem key={option} value={option}>
-                  {option}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      ) : (
-        <Component
-          id={name}
-          name={name}
-          value={value}
-          onChange={onChange}
-          className={`mt-1 ${maxWidth}`}
-          ref={ref}
-        />
-      )}
     </div>
   );
 }
