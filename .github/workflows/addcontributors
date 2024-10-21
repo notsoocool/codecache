@@ -59,3 +59,5 @@ jobs:
         COMMIT_MESSAGE: 'docs(README): update contributors'
         AVATAR_SHAPE: 'circle'
         EXCLUDE_CONTRIBUTOR: 'false'
+
+      
