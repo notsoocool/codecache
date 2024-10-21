@@ -233,52 +233,7 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
 
 ### Contributors
 
-<table>
-<tr>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/notsoocool>
-            <img src=https://avatars.githubusercontent.com/u/35025375?v=4 width="100;"  alt=Yajush Vyas/>
-            <br />
-            <sub style="font-size:14px"><b>Yajush Vyas</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/yashksaini-coder>
-            <img src=https://avatars.githubusercontent.com/u/115717039?v=4 width="100;"  alt=Yash Kumar Saini/>
-            <br />
-            <sub style="font-size:14px"><b>Yash Kumar Saini</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/EfrataAron>
-            <img src=https://avatars.githubusercontent.com/u/126228991?v=4 width="100;"  alt=Efrata Aron/>
-            <br />
-            <sub style="font-size:14px"><b>Efrata Aron</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/shubhagarwal1>
-            <img src=https://avatars.githubusercontent.com/u/105449260?v=4 width="100;"  alt=Shubh Agarwal/>
-            <br />
-            <sub style="font-size:14px"><b>Shubh Agarwal</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/samyak-aditya>
-            <img src=https://avatars.githubusercontent.com/u/91079592?v=4 width="100;"  alt=Samyak Aditya/>
-            <br />
-            <sub style="font-size:14px"><b>Samyak Aditya</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/tarunkumar2005>
-            <img src=https://avatars.githubusercontent.com/u/158801564?v=4 width="100;"  alt=Tarun kumar/>
-            <br />
-            <sub style="font-size:14px"><b>Tarun kumar</b></sub>
-        </a>
-    </td>
-</tr>
-</table>
+
 
 
 We are immensely grateful to the following amazing individuals who have contributed their time, effort, and expertise to make this project better. Your contributions, whether through code, documentation, bug reports, or feature suggestions, have been invaluable. Thank you for helping us build and improve CodeCache! 🌟✨
