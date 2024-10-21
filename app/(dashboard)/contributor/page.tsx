@@ -18,7 +18,7 @@ const ContributorCard: React.FC<Contributor> = ({
   <motion.div
     whileHover={{ y: -5 }}
     transition={{ type: "spring", stiffness: 300 }}
-    className=" rounded-xl shadow-md overflow-hidden border border-muted flex flex-col gap-5"
+    className=" rounded-xl shadow-md z-5 overflow-hidden border border-muted flex flex-col gap-5"
   >
     <div className="p-6 text-center flex flex-col gap-1">
       <img
@@ -145,7 +145,7 @@ export default function Contributor() {
 
   return (
     <ReactLenis root>
-      <div className="min-h-screen ">
+      <div className="min-h-screen z-5">
         {/* Hero Section */}
         <section className="relative h-[60vh] flex items-center justify-center text-center bg-cover bg-center">
           <div className="absolute inset-0 bg-muted " />
