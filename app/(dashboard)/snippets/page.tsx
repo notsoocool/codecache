@@ -55,43 +55,51 @@ export default function Snippets() {
   const [languageFilter, setLanguageFilter] = useState<string[]>([]);
   const [difficultyFilter, setDifficultyFilter] = useState<string[]>([]);
 
-  const [loading, setLoading] = useState(true); // Loading state
-  const [snippets, setSnippets] = useState<Snippet[]>([]);
+  // const [loading, setLoading] = useState(true); // Loading state
+  // const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [copied, setCopied] = useState<number | null>(null); // For copy feedback
   const snippetsRef = useRef<HTMLDivElement>(null); // Reference to the snippets container
   const [activeSnippetId, setActiveSnippetId] = useState<string | null>(null); // To track active snippet
-  const [userId, setUserId] = useState<string | null>(null);
+  // const [userId, setUserId] = useState<string | null>(null);
   const [ratings, setRatings] = useState<{ [key: string]: any }>({});
   const [hoveredRating, setHoveredRating] = useState(0);
 
-  const { searchQuery } = useContext(SearchContext);
-
+  const {
+    searchQuery,
+    snippets,
+    setSnippets,
+    userId,
+    setUserId,
+    loading,
+    setLoading,
+  } = useContext(SearchContext);
+  console.log(snippets);
   // Refs for each snippet card to track visibility
   const snippetRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
-  useEffect(() => {
-    const fetchSnippets = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch("/api/snippets");
-        const data = await response.json();
-        setSnippets(data);
-      } catch (error) {
-        console.error("Error fetching snippets:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchSnippets = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await fetch("/api/snippets");
+  //       const data = await response.json();
+  //       setSnippets(data);
+  //     } catch (error) {
+  //       console.error("Error fetching snippets:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    const fetchCurrentUser = async () => {
-      const response = await fetch("/api/getCurrentUser");
-      const userData = await response.json();
-      setUserId(userData.id);
-    };
+  //   const fetchCurrentUser = async () => {
+  //     const response = await fetch("/api/getCurrentUser");
+  //     const userData = await response.json();
+  //     setUserId(userData.id);
+  //   };
 
-    fetchSnippets();
-    fetchCurrentUser();
-  }, []);
+  //   fetchSnippets();
+  //   fetchCurrentUser();
+  // }, []);
 
   useEffect(() => {
     const fetchRatings = async (snippetId: string) => {
@@ -163,21 +171,29 @@ export default function Snippets() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const filteredSnippets = snippets.filter(
-    (snippet) =>
-      (snippet.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        snippet.language.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  const filteredSnippets = snippets.filter((snippet) => {
+    const matchesSearchQuery =
+      snippet.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      snippet.language.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (snippet.tags &&
         snippet.tags.some((tag) =>
-          tag.toLowerCase().includes(searchQuery.toLowerCase())
-        )) &&
-      (languageFilter.length === 0 ||
-        languageFilter.includes(snippet.language)) &&
-      (difficultyFilter.length === 0 ||
-        difficultyFilter.includes(snippet.difficulty)),
-  );
+          tag.toLowerCase().includes(searchQuery.toLowerCase()),
+        ));
+
+    const matchesLanguageFilter =
+      languageFilter.length === 0 || languageFilter.includes(snippet.language);
+
+    const matchesDifficultyFilter =
+      difficultyFilter.length === 0 ||
+      difficultyFilter.includes(snippet.difficulty);
+
+    return (
+      matchesSearchQuery && matchesLanguageFilter && matchesDifficultyFilter
+    );
+  });
 
   useEffect(() => {
-    Prism.highlightAll(); // Reapply syntax highlighting after filtered snippets are rendered
+    Prism.highlightAll();
   }, [filteredSnippets, theme, snippets]);
 
   const languages = Array.from(
@@ -292,10 +308,9 @@ export default function Snippets() {
         </div>
       </div>
 
-      {/* Snippet Cards */}
       <div className="p-2 pt-8 w-9/12">
         <div className="grid grid-cols-1 gap-6" ref={snippetsRef}>
-          {filteredSnippets.map((snippet) => (
+          {snippets.map((snippet) => (
             <Link href={`/snippets/${snippet._id}`} key={snippet._id}>
               <Card
                 id={snippet._id}
@@ -378,15 +393,16 @@ export default function Snippets() {
                     {snippet.language}
                   </Badge>
                   <div className="flex gap-2">
-                    {snippet.tags.map((tag) => (
-                      <Badge
-                        key={`${snippet._id}-${tag}`}
-                        variant="outline"
-                        className="text-xs"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
+                    {snippet.tags &&
+                      snippet.tags.map((tag) => (
+                        <Badge
+                          key={`${snippet._id}-${tag}`}
+                          variant="outline"
+                          className="text-xs"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
                   </div>
                 </CardFooter>
               </Card>
