@@ -47,8 +47,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    
 
     # Add the image embed (replace with your actual URL)
     - name: Add contributors image
       run: |
         echo "<a href=\"https://github.com/notsoocool/codecache/graphs/contributors\"> <img src=\"https://contrib.rocks/image?repo=notsoocool/codecache" /> </a>" >> README.md
+        PATH: '/README.md'
