@@ -51,12 +51,11 @@ jobs:
       uses: BobAnkh/add-contributors@master
       with:
         CONTRIBUTOR: '### Contributors'
-        COLUMN_PER_ROW: '6'
+        COLUMN_PER_ROW: '20'
         ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
         IMG_WIDTH: '100'
         FONT_SIZE: '14'
-        PATH: '/README.md'  # Ensure the file exists
+        PATH: '/README.md' 
         COMMIT_MESSAGE: 'docs(README): update contributors'
         AVATAR_SHAPE: 'circle'
-        # Add this to ensure all contributors are considered
         EXCLUDE_CONTRIBUTOR: 'false'
