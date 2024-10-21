@@ -29,6 +29,10 @@ const routes = [
   {
     href: "/contributor",
     label: "Contributors",
+  },
+  {
+    href:"/faq",
+    label:"FAQ",
   }
 ];
 

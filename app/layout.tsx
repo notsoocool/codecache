@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./styles/globals.css";
-import { ThemeProvider } from "@/components/global/theme-provider";
+import { ThemeProvider } from "next-themes";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ReactLenis } from "@/utils/lenis";
 
@@ -40,7 +40,7 @@ export default function RootLayout({
         <body>
           <ThemeProvider
             attribute="class"
-            defaultTheme="dark"
+            defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
