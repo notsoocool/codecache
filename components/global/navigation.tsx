@@ -7,7 +7,7 @@ import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { NavButton } from "./nav-button";
-import { auth } from "@clerk/nextjs/server";
+import TransitionLink from "@/utils/transitionLink";
 
 const routes = [
   {
@@ -22,14 +22,15 @@ const routes = [
     href: "/addsnippets",
     label: "Add Snippet",
   },
-//   {
-//     href: "/docs",
-//     label: "Documentation",
-//   },
+  //   {
+  //     href: "/docs",
+  //     label: "Documentation",
+  //   },
   {
     href: "/contributor",
     label: "Contributors",
   },
+
   {
     href:"/faq",
     label:"FAQ",
@@ -52,9 +53,9 @@ export const Navigation = () => {
       const data = await response.json(); // Convert the response to JSON
       const userId = data.id; // Access the `id` from the response JSON
 
-	 if(userId) {
-		setIsUser(true);
-	 } 
+      if (userId) {
+        setIsUser(true);
+      }
 
       const adminIds = process.env.ADMIN_USER_IDS?.split(",") || [];
 
@@ -65,11 +66,6 @@ export const Navigation = () => {
 
     checkAdminStatus();
   }, []);
-
-  const onClick = (href: string) => {
-    router.push(href);
-    setIsOpened(false);
-  };
 
   if (isMobile) {
     return (
@@ -86,35 +82,10 @@ export const Navigation = () => {
         <SheetContent side="left" className="px-2">
           <nav className="flex flex-col gap-y-2 pt-6">
             {routes.map((route) => (
-              <Button
-                key={route.href}
-                variant={route.href === pathname ? "secondary" : "ghost"}
-                onClick={() => onClick(route.href)}
-                className="w-full justify-start"
-              >
-                {route.label}
-              </Button>
+              <TransitionLink href={route.href} label={route.label} />
             ))}
 
-            {isUser && (
-              <Button
-                variant={pathname === "/bookmarks" ? "secondary" : "ghost"}
-                onClick={() => onClick("/bookmarks")}
-                className="w-full justify-start"
-              >
-                Bookmarks
-              </Button>
-            )}
-
-            {isAdmin && (
-              <Button
-                variant={pathname === "/root" ? "secondary" : "ghost"}
-                onClick={() => onClick("/root")}
-                className="w-full justify-start"
-              >
-                Admin
-              </Button>
-            )}
+            {isAdmin && <TransitionLink href={"root"} label={"Admin"} />}
           </nav>
         </SheetContent>
       </Sheet>
@@ -130,7 +101,7 @@ export const Navigation = () => {
           isActive={pathname === route.href}
         />
       ))}
-	  {/* {isUser && (
+      {/* {isUser && (
         <NavButton
           href="/bookmarks"
           label="Bookmarks"

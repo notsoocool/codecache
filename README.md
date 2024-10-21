@@ -280,6 +280,20 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
 </tr>
 <tr>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/Ameerjafar>
+            <img src=https://avatars.githubusercontent.com/u/105500361?v=4 width="100;"  alt=Ameer jafar/>
+            <br />
+            <sub style="font-size:14px"><b>Ameer jafar</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/Bhum-ika>
+            <img src=https://avatars.githubusercontent.com/u/91523494?v=4 width="100;"  alt=Bhumika Sharma/>
+            <br />
+            <sub style="font-size:14px"><b>Bhumika Sharma</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/shubhagarwal1>
             <img src=https://avatars.githubusercontent.com/u/105449260?v=4 width="100;"  alt=Shubh Agarwal/>
             <br />
@@ -307,11 +321,20 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
             <sub style="font-size:14px"><b>Shivam </b></sub>
         </a>
     </td>
+</tr>
+<tr>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/tarunkumar2005>
             <img src=https://avatars.githubusercontent.com/u/158801564?v=4 width="100;"  alt=Tarun kumar/>
             <br />
             <sub style="font-size:14px"><b>Tarun kumar</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/dev129>
+            <img src=https://avatars.githubusercontent.com/u/76431221?v=4 width="100;"  alt=dev129/>
+            <br />
+            <sub style="font-size:14px"><b>dev129</b></sub>
         </a>
     </td>
 </tr>
