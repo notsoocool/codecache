@@ -243,13 +243,6 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/Suhas-Koheda>
-            <img src=https://avatars.githubusercontent.com/u/72063139?v=4 width="100;"  alt=Suhas Koheda/>
-            <br />
-            <sub style="font-size:14px"><b>Suhas Koheda</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/yashksaini-coder>
             <img src=https://avatars.githubusercontent.com/u/115717039?v=4 width="100;"  alt=Yash Kumar Saini/>
             <br />
@@ -257,40 +250,17 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/inkerton>
-            <img src=https://avatars.githubusercontent.com/u/127668005?v=4 width="100;"  alt=Janvi/>
+        <a href=https://github.com/EfrataAron>
+            <img src=https://avatars.githubusercontent.com/u/126228991?v=4 width="100;"  alt=Efrata Aron/>
             <br />
-            <sub style="font-size:14px"><b>Janvi</b></sub>
+            <sub style="font-size:14px"><b>Efrata Aron</b></sub>
         </a>
     </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/Vivek7038>
-            <img src=https://avatars.githubusercontent.com/u/95691809?v=4 width="100;"  alt=Vivek Chavan/>
-            <br />
-            <sub style="font-size:14px"><b>Vivek Chavan</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/ZayedShahcode>
-            <img src=https://avatars.githubusercontent.com/u/115407231?v=4 width="100;"  alt=Zayed/>
-            <br />
-            <sub style="font-size:14px"><b>Zayed</b></sub>
-        </a>
-    </td>
-</tr>
-<tr>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/shubhagarwal1>
             <img src=https://avatars.githubusercontent.com/u/105449260?v=4 width="100;"  alt=Shubh Agarwal/>
             <br />
             <sub style="font-size:14px"><b>Shubh Agarwal</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/priyanshuverma-dev>
-            <img src=https://avatars.githubusercontent.com/u/112266318?v=4 width="100;"  alt=Priyanshu Verma/>
-            <br />
-            <sub style="font-size:14px"><b>Priyanshu Verma</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
@@ -301,24 +271,10 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/myselfshivams>
-            <img src=https://avatars.githubusercontent.com/u/143623476?v=4 width="100;"  alt=Shivam />
-            <br />
-            <sub style="font-size:14px"><b>Shivam </b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/tarunkumar2005>
             <img src=https://avatars.githubusercontent.com/u/158801564?v=4 width="100;"  alt=Tarun kumar/>
             <br />
             <sub style="font-size:14px"><b>Tarun kumar</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/dev129>
-            <img src=https://avatars.githubusercontent.com/u/76431221?v=4 width="100;"  alt=dev129/>
-            <br />
-            <sub style="font-size:14px"><b>dev129</b></sub>
         </a>
     </td>
 </tr>
