@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  web:
+    image: nextapp
+    build:
+      context: . 
+      dockerfile: Dockerfile
+    command: sh -c "npm i && npm run dev"
+    restart: always 
+    ports:
+      - "3000:3000" 
+    volumes:
+      - ./app:/nextapp/app
+      - ./components:/nextapp/components
+      - ./lib:/nextapp/lib
+      - ./public:/nextapp/public
+      - ./utils:/nextapp/utils
+    env_file:
+      - .env
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

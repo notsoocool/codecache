@@ -127,6 +127,20 @@ To get started with CodeCache, follow these steps:
 
 ---
 
+## Running the Project Locally Using Docker
+
+You can also run CodeCache locally using Docker by following these steps:
+
+1. Make sure you have Docker installed on your machine.
+
+2. To start the application using Docker, run the following command in your terminal:
+
+```bash
+docker-compose up --build
+```
+
+This command builds the image and starts the container. You can then access the application at `http://localhost:3000`. 
+
 ### Usage 📖
 
 - **Homepage**: The homepage serves as the central hub of CodeCache, offering a comprehensive introduction to the application. It features a well-structured header and footer for seamless navigation, ensuring users can easily access different sections of the site. The homepage highlights the core functionalities of CodeCache, providing users with an overview of what they can achieve with the platform. 🏠
