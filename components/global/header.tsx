@@ -88,13 +88,13 @@ export const Header = () => {
 
   const { setTheme } = useTheme();
 
-
   useEffect(() => {
     const results = snippets.filter((snippet) =>
       snippet.title.toLowerCase().includes(inputValue.toLowerCase()),
     );
     setFilteredSnippets(results);
   }, [inputValue, snippets]);
+
   return (
     <header className="sticky top-0 left-0 right-0 bg-transparent bg-opacity-20 backdrop-blur-md px-4 py-4 lg:px-14 z-40">
       <div className="mx-auto">
@@ -160,8 +160,6 @@ export const Header = () => {
                 )}
               </Button>
             </Link>
-
-            {/* Theme Toggle Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -182,7 +180,6 @@ export const Header = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-
             <div className="pr-2 flex items-center">
               <ClerkLoaded>
                 <UserButton>
@@ -199,7 +196,6 @@ export const Header = () => {
                 <Loader2 className="size-8 animate-spin text-slate-400" />
               </ClerkLoading>
             </div>
-
           </div>
         </div>
       </div>
