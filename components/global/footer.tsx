@@ -4,6 +4,7 @@ import { Github } from "lucide-react";
 import { Linkedin } from "lucide-react";
 import { Instagram } from "lucide-react";
 import { Facebook } from "lucide-react";
+
 export const Footer = () => {
   return (
     <footer className="w-full border-t bg-background">
@@ -67,22 +68,15 @@ export const Footer = () => {
                 <span className="sr-only">GitHub</span>
               </Button>
             </Link>
-
-            {/* <Link
-							href="https://twitter.com/"
-							target="_blank"
-							rel="noreferrer"
-						>
-							<Button variant="ghost" size="icon">
-								<Twitter className="h-5 w-5" />
-								<span className="sr-only">Twitter</span>
-							</Button>
-						</Link> */}
           </div>
         </div>
         {/* Copyright Statement */}
-
         <div className="mt-4 text-center text-sm text-muted-foreground">
+          <Link href="/terms">
+            <p className="cursor-pointer">Terms and Conditions</p>
+          </Link>
+        </div>
+        <div className="text-center text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} CodeCache. All rights reserved.</p>
         </div>
       </div>
