@@ -1,4 +1,4 @@
-  "use client";
+"use client";
 
 import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
 import { Inbox, Loader2, Sun, User2 } from "lucide-react";
@@ -42,7 +42,9 @@ export const Header = () => {
     // Clear the interval when the component is unmounted
     return () => clearInterval(intervalId);
   }, []);
+
   const { setTheme } = useTheme();
+
   return (
     <header className="sticky top-0 left-0 right-0 bg-transparent bg-opacity-20 backdrop-blur-md px-4 py-4 lg:px-14 z-50">
       <div className="mx-auto">
@@ -64,12 +66,14 @@ export const Header = () => {
             <Link href="/notifications">
               <Button variant="outline" size="icon">
                 {hasUnread ? (
-                  <Inbox className="h-[1.2rem] w-[1.2rem] text-blue-500" /> // Default icon when no unread notifications
+                  <Inbox className="h-[1.2rem] w-[1.2rem] text-blue-500" />
                 ) : (
-                  <Inbox className="h-[1.2rem] w-[1.2rem]" /> // Default icon when no unread notifications
+                  <Inbox className="h-[1.2rem] w-[1.2rem]" />
                 )}
               </Button>
             </Link>
+
+            {/* Theme Toggle Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -90,24 +94,25 @@ export const Header = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <div className=" pr-2 flex items-center">
-              <ClerkLoaded>
-                <UserButton>
-                  <UserButton.MenuItems>
-                    <UserButton.Link
-                      label="View Profile"
-                      labelIcon={<User2 className="w-9 h-4 pr-5" />}
-                      href="/profile"
-                    />
-                  </UserButton.MenuItems>
-                </UserButton>
-              </ClerkLoaded>
-              <ClerkLoading>
-                <Loader2 className="size-8 animate-spin text-slate-400" />
-              </ClerkLoading>
-            </div>
+
+            {/* User Button */}
+            <ClerkLoaded>
+              <UserButton afterSignOutUrl="/">
+                <UserButton.MenuItems>
+                  <UserButton.Link
+                    label="View Profile"
+                    labelIcon={<User2 className="w-9 h-4 pr-5" />}
+                    href="/profile"
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
+            </ClerkLoaded>
+            <ClerkLoading>
+              <Loader2 className="size-8 animate-spin text-slate-400" />
+            </ClerkLoading>
           </div>
         </div>
-      </header>
-    );
-  };
+      </div>
+    </header>
+  );
+};

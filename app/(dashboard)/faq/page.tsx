@@ -1,47 +1,63 @@
-'use client'
-import React from 'react';
-import { motion } from 'framer-motion';
-import FAQ from '@/components/ui/faq';
-import FAQImage from '@/app/images/FAQ Image.png' 
-import Image from 'next/image';
+"use client";
+import React from "react";
+import { motion } from "framer-motion";
+import FAQ from "@/components/ui/faq";
+import Image from "next/image";
 
 const Page = () => {
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, ease: "easeOut" },
+  };
 
   return (
-    <div className="min-h-screen">
-      <section className="bg-background">
-        <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-          <motion.div 
-            className="mr-auto place-self-center lg:col-span-7"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="max-w-2xl mb-4 text-4xl font-bold tracking-tight leading-none md:text-5xl xl:text-5xl">
-              Have questions buzzing in your mind?
+    <div className="min-h-screen bg-background">
+      <section className="container mx-auto px-4 py-16 md:py-24">
+        <div className="grid gap-12 md:grid-cols-2 items-center">
+          <motion.div className="space-y-6" {...fadeIn}>
+            <h1 className="text-3xl md:text-5xl font-light tracking-tight">
+              Questions?
+              <span className="block mt-2 text-muted-foreground">
+                We have answers.
+              </span>
             </h1>
-            <p className="max-w-2xl mb-6 font-light text-muted-foreground lg:mb-8 md:text-lg lg:text-xl">
-              Well, Here we are to solve all your problems.
+            <p className="text-lg text-muted-foreground/80 max-w-md">
+              Browse our carefully curated FAQ section for quick solutions to
+              common inquiries.
             </p>
           </motion.div>
-          <motion.div 
-            className="hidden lg:mt-0 lg:col-span-5 lg:flex"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+
+          <motion.div
+            className="hidden md:block"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <Image
-              src={FAQImage}
-              alt="FAQ illustration"
-              className="rounded-lg"
-            />
+            <div className="relative w-full aspect-square max-w-md mx-auto">
+              <Image
+                src="/faq.svg"
+                className="dark:invert opacity-90"
+                fill
+                priority
+                alt="FAQ illustration"
+                style={{ objectFit: "contain" }}
+              />
+            </div>
           </motion.div>
         </div>
       </section>
-      
-      <FAQ />
+
+      <motion.section
+        className="container mx-auto px-4 py-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
+        <FAQ />
+      </motion.section>
     </div>
   );
-}
+};
 
 export default Page;
