@@ -145,6 +145,7 @@ To get started with CodeCache, follow these steps:
    cp .env.sample .env.local
    ```
 
+
    Update the `.env.local` file with your MongoDB connection string and other necessary environment variables.
 
 4. **Run the Development Server**
@@ -331,14 +332,15 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/dev129>
-            <img src=https://avatars.githubusercontent.com/u/76431221?v=4 width="100;"  alt=dev129/>
+        <a href=https://github.com/EfrataAron>
+            <img src=https://avatars.githubusercontent.com/u/76431221?v=4 width="100;"  alt=Efrata/>
             <br />
             <sub style="font-size:14px"><b>dev129</b></sub>
         </a>
     </td>
 </tr>
 </table>
+<a href="https://github.com/notsoocool/codecache/graphs/contributors"> <img src="https://contrib.rocks/image?repo=notsoocool/codecache" /> </a>
 
 
 We are immensely grateful to the following amazing individuals who have contributed their time, effort, and expertise to make this project better. Your contributions, whether through code, documentation, bug reports, or feature suggestions, have been invaluable. Thank you for helping us build and improve CodeCache! 🌟✨
