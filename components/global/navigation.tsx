@@ -32,9 +32,13 @@ const routes = [
   },
 
   {
-    href:"/faq",
-    label:"FAQ",
-  }
+    href: "/faq",
+    label: "FAQ",
+  },
+  {
+    href: "/contact",
+    label: "Contact Us",
+  },
 ];
 
 export const Navigation = () => {
