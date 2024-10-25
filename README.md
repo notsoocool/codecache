@@ -233,7 +233,7 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
 ---
 
 ### Contributors
-
+<!-- 
 <table>
 <tr>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
@@ -339,7 +339,8 @@ Explore the project on [GitHub](https://github.com/notsoocool/codecache) and joi
         </a>
     </td>
 </tr>
-</table>
+</table> -->
+
 <a href="https://github.com/notsoocool/codecache/graphs/contributors"> <img src="https://contrib.rocks/image?repo=notsoocool/codecache" /> </a>
 
 
