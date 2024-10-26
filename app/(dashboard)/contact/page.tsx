@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Send, Mail, User, MessageSquare, Loader2 } from "lucide-react";
 import Image from "next/image";
 
+import TrailingCursor from "@/components/ui/TrailingCursor";
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,6 +31,7 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center p-4 md:p-8">
+      <TrailingCursor />
       <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-center gap-8">
         <motion.div
           className="w-full md:w-1/2 flex flex-col justify-between h-full"

@@ -1,5 +1,6 @@
 "use client";
 
+import TrailingCursor from "@/components/ui/TrailingCursor";
 import Prism from "prismjs";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -235,6 +236,7 @@ export default function Snippets() {
   return (
     <div className="flex">
       {/* Snippet List */}
+      <TrailingCursor />
       <div className=" w-3/12">
         <div className="sticky top-24 overflow-auto h-[85vh] flex items-start flex-col gap-2">
           <div className=" flex items-center justify-between w-full">

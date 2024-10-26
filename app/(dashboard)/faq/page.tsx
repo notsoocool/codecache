@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import FAQ from "@/components/ui/faq";
 import Image from "next/image";
 
+import TrailingCursor from "@/components/ui/TrailingCursor";
 const Page = () => {
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -13,6 +14,7 @@ const Page = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <TrailingCursor />
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid gap-12 md:grid-cols-2 items-center">
           <motion.div className="space-y-6" {...fadeIn}>

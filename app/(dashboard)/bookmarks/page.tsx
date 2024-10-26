@@ -2,6 +2,8 @@
 
 import Prism from "prismjs";
 import Link from "next/link";
+
+import TrailingCursor from "@/components/ui/TrailingCursor";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -206,6 +208,7 @@ export default function Bookmarks() {
   if (loading) {
     return (
       <div className="flex">
+        <TrailingCursor />
         <div className="w-3/12">
           <div className="sticky top-24 overflow-auto h-auto flex items-start flex-col gap-3">
             <strong className="p-2">Snippets</strong>
