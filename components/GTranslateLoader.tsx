@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-
-const handleScroll = (e) => {
+import React from "react";
+const handleScroll = (e: React.UIEvent) => {
   e.stopPropagation();
 };
 
