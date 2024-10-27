@@ -71,3 +71,6 @@
 		@apply bg-background text-foreground;
 	}
 }
+body{
+	cursor:none;
+}

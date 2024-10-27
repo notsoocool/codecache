@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import styles from "./TrailingCursor.module.css"; // Import the CSS module
 
 const TrailingCursor = () => {
   const cursorRef = useRef(null);
@@ -9,17 +10,18 @@ const TrailingCursor = () => {
     const handleMouseMove = (e) => {
       const cursor = cursorRef.current;
       if (cursor) {
-        // Use clientX and clientY for viewport-based positioning
+        // Position the main cursor
         cursor.style.left = `${e.clientX}px`;
         cursor.style.top = `${e.clientY}px`;
 
-        // Animate trailing dots with slight delay
+        // Animate trailing dots with a negative effect
         dotRefs.current.forEach((dot, index) => {
           const delay = index * 50; // Adjust delay for trailing effect
           setTimeout(() => {
             if (dot) {
               dot.style.left = `${e.clientX}px`;
               dot.style.top = `${e.clientY}px`;
+              dot.style.animation = `${styles.negativeTrail} 0.3s forwards`; // Apply negative trail animation
             }
           }, delay);
         });
@@ -38,17 +40,7 @@ const TrailingCursor = () => {
       {/* Main cursor */}
       <div
         ref={cursorRef}
-        style={{
-          position: "fixed", // Keeps it fixed to the viewport
-          width: "20px",
-          height: "20px",
-          backgroundColor: "white",
-          borderRadius: "50%",
-          pointerEvents: "none",
-          zIndex: 9999,
-          transition: "transform 0.1s ease",
-          willChange: "transform",
-        }}
+        className={styles.mainCursor} // Use the CSS module class
       />
 
       {/* Trailing dots */}
@@ -56,17 +48,7 @@ const TrailingCursor = () => {
         <div
           key={index}
           ref={(el) => (dotRefs.current[index] = el)}
-          style={{
-            position: "fixed", // Keeps each dot fixed to the viewport
-            width: "10px",
-            height: "10px",
-            backgroundColor: "white",
-            borderRadius: "50%",
-            pointerEvents: "none",
-            zIndex: 9998,
-            transition: "transform 0.1s ease",
-            willChange: "transform",
-          }}
+          className={styles.trailDot} // Use the CSS module class
         />
       ))}
     </>
