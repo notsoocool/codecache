@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ReactLenis } from "@/utils/lenis";
 
+import TrailingCursor from "@/components/ui/TrailingCursor";
 import type { Contributor, RepoStats } from "@/types";
 
 const ContributorCard: React.FC<Contributor> = ({
@@ -145,6 +146,7 @@ export default function Contributor() {
 
   return (
     <ReactLenis root>
+      <TrailingCursor />
       <div className="min-h-screen z-5">
         {/* Hero Section */}
         <section className="relative h-[60vh] flex items-center justify-center text-center bg-cover bg-center">

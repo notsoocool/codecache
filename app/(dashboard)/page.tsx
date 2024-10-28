@@ -6,9 +6,11 @@ import {
 } from "@/components/ui/accordion";
 import { ReactLenis } from "@/utils/lenis";
 import Image from "next/image";
+import TrailingCursor from "@/components/ui/TrailingCursor";
 export default function Home() {
   return (
     <ReactLenis root>
+      <TrailingCursor />
       <main className="my-8 mx-5">
         <div className=" h-screen flex items-center -mt-20">
           <div>

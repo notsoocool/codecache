@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+
+import TrailingCursor from "@/components/ui/TrailingCursor";
 import {
   Select,
   SelectContent,
@@ -14,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+
 export default function AddSnippet() {
   const [title, setTitle] = useState("");
   const [language, setLanguage] = useState("");
@@ -115,6 +118,7 @@ export default function AddSnippet() {
 
   return (
     <div className="w-full p-8">
+      <TrailingCursor />
       <h1 className="text-4xl font-bold mb-6">Add New Snippet</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

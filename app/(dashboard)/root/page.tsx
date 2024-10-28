@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+
+import TrailingCursor from "@/components/ui/TrailingCursor";
 import {
   Card,
   CardHeader,
@@ -168,6 +170,7 @@ export default function AdminPage() {
 
   return (
     <ReactLenis root>
+      <TrailingCursor />
       <Tabs defaultValue="request" className="w-full">
         <TabsList>
           <TabsTrigger value="request">Snippet Requests</TabsTrigger>
