@@ -1,0 +1,45 @@
+
+
+.mainCursor {
+  position: fixed;
+  width: 15px; /* Increased size for visibility */
+  height: 15px; /* Increased size for visibility */
+  background-color: rgb(253, 253, 253); /* Changed color to green as per your requirement */
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  animation: clickEffect 0.2s ease-out;
+}
+
+.trailDot {
+  position: fixed;
+  width: 4px; /* Decreased size for a negative effect */
+  height: 4px; /* Decreased size for a negative effect */
+  background-color: green; /* Changed color to match the main cursor */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.5; /* Decreased opacity for a less visible effect */
+  transition: all 0.15s ease-out; /* Added transform transition */
+}
+
+@keyframes clickEffect {
+  0% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes negativeTrail {
+  0% {
+    transform: scale(0.5); /* Start smaller */
+    opacity: 0.5; /* Start with lower opacity */
+  }
+  100% {
+    transform: scale(1); /* Scale to normal size */
+    opacity: 0; /* Fade out */
+  }
+}
