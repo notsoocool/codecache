@@ -36,8 +36,14 @@ export const Header = () => {
 
     // Simulating an API call with setTimeout
     setTimeout(() => {
-      const filtered = snippets.filter((snippet) =>
-        snippet.title.toLowerCase().includes(value.toLowerCase()),
+      const filtered = snippets.filter(
+        (snippet) =>
+          snippet.title.toLowerCase().includes(value.toLowerCase()) ||
+          snippet.category.toLowerCase().includes(value.toLowerCase()) ||
+          snippet.tags.some((tag) =>
+            tag.toLowerCase().includes(value.toLowerCase()),
+          ) ||
+          snippet.language.toLowerCase().includes(value.toLowerCase()),
       );
       setFilteredSnippets(value ? filtered : []);
       setIsLoading(false);
