@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function ScrollProgressBar() {
   const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
@@ -14,20 +15,29 @@ export default function ScrollProgressBar() {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+
+    const darkModeMediaQuery = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    );
+    setIsDarkMode(darkModeMediaQuery.matches);
+
+    const handleDarkModeChange = (e) => setIsDarkMode(e.matches);
+    darkModeMediaQuery.addEventListener("change", handleDarkModeChange);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      darkModeMediaQuery.removeEventListener("change", handleDarkModeChange);
     };
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-2 z-50">
+    <div className="fixed top-0 left-0 w-full h-2 z-50 bg-white">
       <div
         className="h-full rounded-full transition-all duration-150"
         style={{
           width: `${scrollPercentage}%`,
-          background: `white`,
-          borderRadius: "0px", // Sharp rectangle edges
-          height: "8px", // Adjust height if needed for better realism
+          background: isDarkMode ? "#030712" : "white",
+          height: "8px",
         }}
       />
     </div>
