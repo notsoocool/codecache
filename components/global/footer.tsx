@@ -51,6 +51,11 @@ export const Footer = () => {
 						</Link> */}
 					</div>
 				</div>
+				<div className="flex justify-center mt-4">
+                    			<p className="text-center text-sm text-muted-foreground">
+                        			&copy; {new Date().getFullYear()} CodeCache. All rights reserved.
+                    			</p>
+                		</div>
 			</div>
 		</footer>
 	);
