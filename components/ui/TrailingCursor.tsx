@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react";
 import styles from "./TrailingCursor.module.css"; // Import the CSS module
 
 const TrailingCursor = () => {
-  const cursorRef = useRef(null);
-  const dotRefs = useRef([]);
+  const cursorRef = useRef<HTMLDivElement | null>(null);
+  const dotRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       const cursor = cursorRef.current;
       if (cursor) {
         // Position the main cursor
