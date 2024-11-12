@@ -20,7 +20,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "../ui/badge";
-import { Bookmark, Star, Trash } from "lucide-react";
+import { Bookmark, Star, Trash, BookmarkCheck } from "lucide-react";
 import Prism from "prismjs";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -28,6 +28,9 @@ import { toast } from "sonner";
 import router from "next/router";
 import { Button } from "../ui/button";
 import { ProfileData, Rating, Snippet } from "@/types";
+
+import { useContext } from "react";
+import { SearchContext } from "@/SearchContext";
 
 interface userDetails {
   id: string;
@@ -48,6 +51,12 @@ export default function ProfileTabs({
   const currentUserId = userDetails.id;
   const currentUserName = userDetails.name;
 
+  const { snippets, setSnippets } = useContext(SearchContext);
+
+  const [bookmarkedSnippets, setBookmarkedSnippets] = useState<Snippet[]>(
+    profileData.bookmarked,
+  );
+
   const tabVariants = {
     hidden: { opacity: 0, x: -10 },
     visible: { opacity: 1, x: 0 },
@@ -57,6 +66,10 @@ export default function ProfileTabs({
   useEffect(() => {
     Prism.highlightAll();
   }, [activeTab]);
+
+  useEffect(() => {
+    setBookmarkedSnippets(profileData.bookmarked);
+  }, [profileData.bookmarked]);
 
   return (
     <Tabs defaultValue="submitted" className="space-y-4">
@@ -110,8 +123,13 @@ export default function ProfileTabs({
           transition={{ duration: 0.3 }}
         >
           <h2 className="text-xl font-semibold">Bookmarked Snippets</h2>
-          {profileData.bookmarked.length > 0 ? (
-            renderBookmarkedSnippetList(profileData.bookmarked)
+          {bookmarkedSnippets.length > 0 ? (
+            renderBookmarkedSnippetList(
+              profileData.bookmarked,
+              currentUserId,
+              setSnippets,
+              setBookmarkedSnippets,
+            )
           ) : (
             <SkeletonCard type="bookmarked" />
           )}
@@ -316,57 +334,129 @@ const renderSnippetList = (
   </div>
 );
 
-const renderBookmarkedSnippetList = (snippets: Snippet[]) => (
+const renderBookmarkedSnippetList = (
+  snippets: Snippet[],
+  currentUserId: string,
+  setSnippets: any,
+  setBookmarkedSnippets: any,
+) => (
   <div className="space-y-4">
-    {snippets.map((snippet) => (
-      <Link href={`/snippets/${snippet._id}`} key={snippet._id}>
-        <Card
-          key={snippet._id}
-          className="mt-4 hover:shadow-lg transition-shadow transform hover:scale-102 duration-300"
-        >
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold">
-              {snippet.title}
-            </CardTitle>
-            <CardDescription>{snippet.description}</CardDescription>
-            <div className="flex">
-              <h3 className="text-gray-500 mt-2 text-sm mr-1">Related Tags:</h3>
-              <div className="flex gap-2 flex-wrap mt-2">
-                {snippet.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary">
-                    {tag}
-                  </Badge>
-                ))}
+    {snippets.map((snippet) => {
+      const handleBookmarkToggle = async (snippetId: string) => {
+        try {
+          const response = await fetch(`/api/bookmark/${snippetId}`, {
+            method: "PATCH",
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to toggle bookmark");
+          }
+
+          const updatedSnippet = await response.json();
+          // Update your state or UI accordingly
+          setSnippets((prevSnippets: Snippet[]) =>
+            prevSnippets.map((snippet) =>
+              snippet._id === updatedSnippet._id ? updatedSnippet : snippet,
+            ),
+          );
+
+          // Show success toast message
+          if (updatedSnippet.bookmarkedBy.includes(currentUserId)) {
+            setBookmarkedSnippets((prev: Snippet[]) =>
+              prev.find((snippet) => snippet._id === updatedSnippet._id)
+                ? prev.map((snippet) =>
+                    snippet._id === updatedSnippet._id
+                      ? updatedSnippet
+                      : snippet,
+                  )
+                : [...prev, updatedSnippet],
+            );
+          } else {
+            setBookmarkedSnippets((prev: Snippet[]) =>
+              prev.filter((snippet) => snippet._id !== updatedSnippet._id),
+            );
+          }
+
+          toast.success(
+            updatedSnippet.bookmarkedBy.includes(currentUserId)
+              ? "Snippet bookmarked"
+              : "Bookmark removed",
+          );
+        } catch (error) {
+          console.error("Error toggling bookmark:", error);
+          toast.error("Error toggling bookmark");
+        }
+      };
+
+      return (
+        <Link href={`/snippets/${snippet._id}`} key={snippet._id}>
+          <Card
+            key={snippet._id}
+            className="mt-4 hover:shadow-lg transition-shadow transform hover:scale-102 duration-300"
+          >
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold">
+                {snippet.title}
+              </CardTitle>
+              <CardDescription>{snippet.description}</CardDescription>
+              <div className="flex">
+                <h3 className="text-gray-500 mt-2 text-sm mr-1">
+                  Related Tags:
+                </h3>
+                <div className="flex gap-2 flex-wrap mt-2">
+                  {snippet.tags.map((tag) => (
+                    <Badge key={tag} variant="secondary">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="p-4 relative">
-              <pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm bg-gray-50 border border-gray-200">
-                <code className={`language-${snippet.language}`}>
-                  {snippet.code}
-                </code>
-              </pre>
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-2">
-                <Bookmark className="w-4 h-4" />
-                <span>
-                  {snippet.bookmarkedBy ? snippet.bookmarkedBy.length : 0}
-                </span>
+            </CardHeader>
+            <CardContent>
+              <div className="p-4 relative">
+                <pre className="rounded-md max-h-[300px] overflow-y-auto p-4 overflow-x-auto text-sm bg-gray-50 border border-gray-200">
+                  <code className={`language-${snippet.language}`}>
+                    {snippet.code}
+                  </code>
+                </pre>
               </div>
-              <div className="flex items-center space-x-2">
-                <Badge variant="secondary">{snippet.language}</Badge>
-                {/* <Badge variant="secondary">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="outline"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (snippet._id) {
+                        handleBookmarkToggle(snippet._id);
+                      } else {
+                        console.error("Snippet ID is null");
+                      }
+                    }}
+                  >
+                    {currentUserId &&
+                    snippet.bookmarkedBy?.includes(currentUserId) ? (
+                      <BookmarkCheck size={16} />
+                    ) : (
+                      <Bookmark size={16} />
+                    )}
+                  </Button>
+                  <span>
+                    {snippet.bookmarkedBy ? snippet.bookmarkedBy.length : 0}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Badge variant="secondary">{snippet.language}</Badge>
+                  {/* <Badge variant="secondary">
 									{snippet.category}
 								</Badge> */}
-                <Badge variant="secondary">{snippet.usage}</Badge>
+                  <Badge variant="secondary">{snippet.usage}</Badge>
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
-    ))}
+            </CardContent>
+          </Card>
+        </Link>
+      );
+    })}
   </div>
 );
 
